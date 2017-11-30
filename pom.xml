@@ -90,7 +90,7 @@
         <!-- plugins version -->
         <plugin.maven.compiler.version>3.2</plugin.maven.compiler.version>
         <plugin.frontend.version>1.6</plugin.frontend.version>
-        <plugin.rpm.cersion>2.1.5</plugin.rpm.cersion>
+        <plugin.springboot.version>1.1.8.RELEASE</plugin.springboot.version>
         <!-- dependencie version -->
         <spring.cloud.version>1.0.0-SC</spring.cloud.version>
     </properties>
@@ -133,6 +133,19 @@
     <build>
         <pluginManagement>
             <plugins>
+                <!-- 构建可执行jar -->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${plugin.springboot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
