@@ -39,6 +39,7 @@
         <module>wikift-support</module>
         <module>wikift-server</module>
         <module>wikift-web</module>
+        <module>wikift-center</module>
     </modules>
 
     <!-- url -->
