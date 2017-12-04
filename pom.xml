@@ -22,6 +22,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.3.RELEASE</version>
+        <relativePath/>
     </parent>
 
     <groupId>com.wikift</groupId>
@@ -92,19 +93,63 @@
         <plugin.frontend.version>1.6</plugin.frontend.version>
         <plugin.springboot.version>1.1.8.RELEASE</plugin.springboot.version>
         <!-- dependencie version -->
-        <spring.cloud.version>1.0.0-SC</spring.cloud.version>
+        <spring.boot.version>1.5.6.RELEASE</spring.boot.version>
+        <spring.security.version>1.5.9.RELEASE</spring.security.version>
+        <spring.security.jwt.version>1.0.8.RELEASE</spring.security.jwt.version>
+        <spring.security.oauth2.version>2.1.1.RELEASE</spring.security.oauth2.version>
+        <lombok.version>1.16.16</lombok.version>
+        <jackson.databind.version>2.8.6</jackson.databind.version>
     </properties>
 
     <!-- dependencyManagement -->
     <dependencyManagement>
         <dependencies>
-            <!-- spring cloud -->
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>com.wikift</groupId>
+                <artifactId>wikift-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wikift</groupId>
+                <artifactId>wikift-support</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- spring boot -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-devtools</artifactId>
+                <version>${spring.boot.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring.security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth2</artifactId>
+                <version>${spring.security.oauth2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-jwt</artifactId>
+                <version>${spring.security.jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.databind.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

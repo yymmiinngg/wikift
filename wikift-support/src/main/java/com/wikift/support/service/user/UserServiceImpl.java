@@ -15,4 +15,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wikift.center;
+package com.wikift.support.service.user;
+
+import com.wikift.model.user.UserEntity;
+import com.wikift.support.repository.user.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service(value = "userService")
+public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Override
+    public UserEntity findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+}

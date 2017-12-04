@@ -15,4 +15,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wikift.center;
+package com.wikift.server;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+
+@SpringBootApplication
+@ComponentScan(value = "com.wikift")
+public class WikiftServerLaunch {
+
+    public static void main(String[] args) {
+        SpringApplication.run(WikiftServerLaunch.class, args);
+    }
+
+}

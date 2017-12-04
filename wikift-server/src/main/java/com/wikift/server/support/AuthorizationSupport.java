@@ -15,4 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wikift.center;
+package com.wikift.server.support;
+
+public class AuthorizationSupport {
+
+    public static String CLIENT_ID = "wikift-client";
+    public static String RESOURCE_ID = "wikift-resource";
+    public static String CLIENT_SECRET = "wikift-web";
+    public static String SIGNING_KEY = "wikift-signing-key";
+    public static Integer ENGING_STRENGTH = 256;
+    public static String SECURITY_REALM = "wikift-application";
+
+
+}
