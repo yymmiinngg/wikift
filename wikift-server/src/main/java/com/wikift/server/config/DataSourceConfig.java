@@ -18,9 +18,11 @@
 package com.wikift.server.config;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
@@ -40,13 +42,43 @@ import java.beans.PropertyVetoException;
 @EnableJpaRepositories(basePackages = "com.wikift.support.repository")
 public class DataSourceConfig {
 
+    @Value(value = "${wikift.database.embedded.enable}")
+    private Boolean embeddedDatabase;
+
+    @Value(value = "${wikift.database.type}")
+    private String type;
+
+    @Value(value = "${wikift.database.mysql.class}")
+    private String mysqlClass;
+
+    @Value(value = "${wikift.database.mysql.url}")
+    private String mysqlUrl;
+
+    @Value(value = "{wikift.database.mysql.username}")
+    private String mysqlUserName;
+
+    @Value(value = "${wikift.database.mysql.password}")
+    private String mysqlPassword;
+
     @Bean
     public DataSource dataSource() throws PropertyVetoException {
-        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        EmbeddedDatabase database = builder.setType(EmbeddedDatabaseType.H2)
-                .addScripts("schema.sql", "data.sql")
-                .build();
-        return database;
+        if (embeddedDatabase) {
+            EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+            EmbeddedDatabase dataSource = builder.setType(EmbeddedDatabaseType.H2)
+                    .addScripts("schema.sql", "data.sql")
+                    .build();
+            return dataSource;
+        } else {
+            DriverManagerDataSource dataSource = new DriverManagerDataSource();
+            switch (type) {
+                case "mysql":
+                    dataSource.setDriverClassName(mysqlClass);
+                    dataSource.setUrl(mysqlUrl);
+                    dataSource.setUsername(mysqlUserName);
+                    dataSource.setPassword(mysqlPassword);
+            }
+            return dataSource;
+        }
     }
 
     @Bean
