@@ -15,42 +15,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wikift.model.user;
+package com.wikift.model.result;
 
+import com.wikift.common.enums.MessageEnums;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.*;
-import java.util.List;
-
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "groups")
-public class GroupEntity {
+public class CommonResult<T> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "g_id")
-    private Long id;
+    private int code;
+    private String message;
+    private T data;
 
-    @Column(name = "g_name")
-    private String name;
+    private void setCodeMessage(MessageEnums enums) {
+        this.code = enums.getCode();
+        this.message = enums.getValue();
+    }
 
-    @Column(name = "g_description")
-    private String description;
+    public static <T> CommonResult success(T data) {
+        CommonResult result = new CommonResult();
+        result.setCodeMessage(MessageEnums.SUCCESS);
+        result.setData(data);
+        return result;
+    }
 
-    @Column(name = "g_enabled")
-    private String enabled;
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinTable(name = "users_groups_relation",
-            joinColumns = @JoinColumn(name = "ugr_user_id"),
-            inverseJoinColumns = @JoinColumn(name = "ugr_group_id"))
-    private List<UserEntity> userEntityList;
+    public static CommonResult success() {
+        return success(null);
+    }
 
 }

@@ -24,6 +24,22 @@ import java.util.List;
 public interface GroupService {
 
     /**
+     * 保存组信息
+     *
+     * @param entity 组信息
+     * @return 组信息
+     */
+    GroupEntity save(GroupEntity entity);
+
+    /**
+     * 删除组信息
+     *
+     * @param entity 组信息
+     * @return 删除的组信息
+     */
+    GroupEntity delete(GroupEntity entity);
+
+    /**
      * 查询所有的组
      *
      * @return 组列表

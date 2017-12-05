@@ -15,35 +15,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wikift.support.service.user;
+package com.wikift.common.enums;
 
-import com.wikift.model.user.GroupEntity;
-import com.wikift.support.repository.user.GroupRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+public enum MessageEnums {
 
-import java.util.List;
+    // 系统提示信息
+    SUCCESS(0000, "成功"),
 
-@Service(value = "groupService")
-public class GroupServiceImpl implements GroupService {
+    PARAMS_NOT_NULL(1000, "params is not null");
 
-    @Autowired
-    private GroupRepository groupRepository;
 
-    @Override
-    public GroupEntity save(GroupEntity entity) {
-        return groupRepository.save(entity);
+    private Integer code;
+    private String value;
+
+    MessageEnums(Integer code, String value) {
+        this.code = code;
+        this.value = value;
     }
 
-    @Override
-    public GroupEntity delete(GroupEntity entity) {
-        groupRepository.delete(entity);
-        return entity;
+    public String getValue() {
+        return value;
     }
 
-    @Override
-    public List<GroupEntity> findAll() {
-        return (List<GroupEntity>) groupRepository.findAll();
+    public Integer getCode() {
+        return code;
     }
 
 }

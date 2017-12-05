@@ -17,12 +17,16 @@
  */
 package com.wikift.server.controller;
 
+import com.wikift.common.enums.MessageEnums;
+import com.wikift.model.result.CommonResult;
+import com.wikift.model.user.GroupEntity;
 import com.wikift.support.service.user.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/group")
@@ -31,10 +35,24 @@ public class GroupController {
     @Autowired
     private GroupService groupService;
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "new", method = RequestMethod.POST)
+    CommonResult<GroupEntity> save(@RequestBody GroupEntity entity) {
+        Assert.isNull(entity, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(groupService.save(entity));
+    }
+
+    @RequestMapping(value = "delete", method = RequestMethod.DELETE)
+    CommonResult<GroupEntity> delete(@RequestParam(value = "groupId") Long groupId) {
+        Assert.isNull(groupId, MessageEnums.PARAMS_NOT_NULL.getValue());
+        GroupEntity entity = new GroupEntity();
+        entity.setId(groupId);
+        return CommonResult.success(groupService.delete(entity));
+    }
+
+    @RequestMapping(value = "list", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ADMIN')")
-    Object list() {
-        return groupService.findAll();
+    CommonResult<List<GroupEntity>> list() {
+        return CommonResult.success(groupService.findAll());
     }
 
 }

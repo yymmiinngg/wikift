@@ -21,4 +21,5 @@ import com.wikift.model.user.GroupEntity;
 import org.springframework.data.repository.CrudRepository;
 
 public interface GroupRepository extends CrudRepository<GroupEntity, Long> {
+
 }
