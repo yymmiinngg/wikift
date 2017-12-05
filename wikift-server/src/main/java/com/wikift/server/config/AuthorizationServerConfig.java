@@ -49,7 +49,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         clients.inMemory()
                 .withClient(AuthorizationSupport.CLIENT_ID)
                 .secret(AuthorizationSupport.CLIENT_SECRET)
-                .authorizedGrantTypes("password")
+                .authorizedGrantTypes(AuthorizationSupport.GRANT_TYPES)
                 .scopes("select", "write", "read")
                 .resourceIds(AuthorizationSupport.RESOURCE_ID);
     }

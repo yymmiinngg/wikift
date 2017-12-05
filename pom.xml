@@ -114,6 +114,11 @@
                 <artifactId>wikift-support</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.wikift</groupId>
+                <artifactId>wikift-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!-- spring boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>

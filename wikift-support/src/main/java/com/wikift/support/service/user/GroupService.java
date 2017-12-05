@@ -15,27 +15,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wikift.server.controller;
+package com.wikift.support.service.user;
 
-import com.wikift.model.user.UserEntity;
-import com.wikift.support.service.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.wikift.model.user.GroupEntity;
 
-@RestController
-@RequestMapping(value = "/user")
-public class UserController {
+import java.util.List;
 
-    @Autowired
-    private UserService userService;
+public interface GroupService {
 
-    @RequestMapping(value = "/info", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority(('USER'))")
-    UserEntity info() {
-        return userService.findByUsername("admin");
-    }
+    /**
+     * 查询所有的组
+     *
+     * @return 组列表
+     */
+    List<GroupEntity> findAll();
 
 }

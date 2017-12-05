@@ -25,6 +25,6 @@ public class AuthorizationSupport {
     public static String SIGNING_KEY = "wikift-signing-key";
     public static Integer ENGING_STRENGTH = 256;
     public static String SECURITY_REALM = "wikift-application";
-
+    public static String GRANT_TYPES = "password";
 
 }

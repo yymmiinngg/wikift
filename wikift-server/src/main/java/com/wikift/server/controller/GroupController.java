@@ -17,8 +17,7 @@
  */
 package com.wikift.server.controller;
 
-import com.wikift.model.user.UserEntity;
-import com.wikift.support.service.user.UserService;
+import com.wikift.support.service.user.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,16 +25,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/user")
-public class UserController {
+@RequestMapping(value = "/group")
+public class GroupController {
 
     @Autowired
-    private UserService userService;
+    private GroupService groupService;
 
-    @RequestMapping(value = "/info", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority(('USER'))")
-    UserEntity info() {
-        return userService.findByUsername("admin");
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ADMIN')")
+    Object list() {
+        return groupService.findAll();
     }
 
 }

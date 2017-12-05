@@ -15,42 +15,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wikift.model.user;
+package com.wikift.model.role;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wikift.model.role.RoleEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
-public class UserEntity {
+@Table(name = "role")
+public class RoleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "u_id")
+    @Column(name = "r_id")
     private Long id;
 
-    @Column(name = "u_username")
-    private String username;
+    @Column(name = "r_name")
+    private String roleName;
 
-    @Column(name = "u_password")
-    @JsonIgnore
-    private String password;
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinTable(name = "users_role_relation",
-            joinColumns = @JoinColumn(name = "urr_user_id", referencedColumnName = "u_id"),
-            inverseJoinColumns = @JoinColumn(name = "urr_role_id", referencedColumnName = "r_id"))
-    private List<RoleEntity> userRoles;
+    @Column(name = "r_description")
+    private String description;
 
 }

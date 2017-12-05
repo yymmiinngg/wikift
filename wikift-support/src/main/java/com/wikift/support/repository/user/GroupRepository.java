@@ -15,32 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wikift.model.role;
+package com.wikift.support.repository.user;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.wikift.model.user.GroupEntity;
+import org.springframework.data.repository.CrudRepository;
 
-import javax.persistence.*;
-
-@Data
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "user_role")
-public class UserRoleEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ur_id")
-    private Long id;
-
-    @Column(name = "ur_name")
-    private String roleName;
-
-    @Column(name = "ur_description")
-    private String description;
-
+public interface GroupRepository extends CrudRepository<GroupEntity, Long> {
 }

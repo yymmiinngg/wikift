@@ -17,8 +17,6 @@
  */
 package com.wikift.model.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wikift.model.role.RoleEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,25 +30,27 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
-public class UserEntity {
+@Table(name = "groups")
+public class GroupEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "u_id")
+    @Column(name = "g_id")
     private Long id;
 
-    @Column(name = "u_username")
-    private String username;
+    @Column(name = "g_name")
+    private String name;
 
-    @Column(name = "u_password")
-    @JsonIgnore
-    private String password;
+    @Column(name = "g_description")
+    private String description;
+
+    @Column(name = "g_enabled")
+    private String enabled;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinTable(name = "users_role_relation",
-            joinColumns = @JoinColumn(name = "urr_user_id", referencedColumnName = "u_id"),
-            inverseJoinColumns = @JoinColumn(name = "urr_role_id", referencedColumnName = "r_id"))
-    private List<RoleEntity> userRoles;
+    @JoinTable(name = "users_groups_relation",
+            joinColumns = @JoinColumn(name = "ugr_user_id"),
+            inverseJoinColumns = @JoinColumn(name = "ugr_group_id"))
+    private List<UserEntity> userEntityList;
 
 }
