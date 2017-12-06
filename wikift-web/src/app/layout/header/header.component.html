@@ -1,0 +1,63 @@
+<header class="header">
+  <navigation-trigger></navigation-trigger>
+  <div class="header__logo">
+    <h1>
+      <a [routerLink]="['/']">Wikift</a>
+    </h1>
+  </div>
+  <!-- 搜索框 -->
+  <header-search #search class="toggled" [class.toggled]="search.searchActive"></header-search>
+  <!-- 工具栏 -->
+  <ul class="top-nav">
+    <li class="d-xl-none">
+      <a (click)="search.searchActive = true">
+        <i class="zmdi zmdi-search"></i>
+      </a>
+    </li>
+    <!-- 个人消息 -->
+    <li dropdown>
+      <a dropdownToggle>
+        <i class="zmdi zmdi-email"></i>
+      </a>
+      <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown-menu--block" role="menu">
+        <div class="listview listview--hover">
+          <div class="listview__header"></div>
+        </div>
+      </div>
+    </li>
+    <!-- 个人私信 -->
+    <li dropdown>
+      <a dropdownToggle class="top-nav__notify">
+        <i class="zmdi zmdi-notifications"></i>
+      </a>
+      <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown-menu--block" role="menu">
+        <div class="listview listview--hover">
+          <div class="listview__header"></div>
+        </div>
+      </div>
+    </li>
+    <!-- 个人工具 -->
+    <li dropdown class="d-none d-sm-inline-block">
+      <a dropdownToggle>
+        <i class="zmdi zmdi-apps"></i>
+      </a>
+      <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown-menu--block" role="menu">
+        <div class="row app-shortcuts"></div>
+      </div>
+    </li>
+    <!-- 个人信息 -->
+    <li dropdown class="d-none d-sm-inline-block">
+      <a dropdownToggle=""></a>
+      <div class="user" dropdown>
+        <div class="user__info" dropdownToggle>
+          <img class="user__img" src="./assets/demo/img/profile-pics/8.jpg" alt="">
+        </div>
+        <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown-menu--block" role="menu">
+          <div class="listview listview--hover">
+            <div class="listview__header"></div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</header>
