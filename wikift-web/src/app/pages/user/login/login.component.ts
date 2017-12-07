@@ -15,31 +15,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
-@Injectable()
-export class SharedService {
+import { LoginParamModel } from '../../../shared/model/param/login.patam.model';
 
-    sidebarVisible: boolean;
-    sidebarVisibilitySubject: Subject<boolean> = new Subject<boolean>();
+import { UserService } from '../../../../services/user.service';
 
-    toggleSidebarVisibilty() {
-        this.sidebarVisible = !this.sidebarVisible;
-        this.sidebarVisibilitySubject.next(this.sidebarVisible);
+@Component({
+    selector: 'wikift-user-login',
+    templateUrl: 'login.component.html'
+})
+
+export class LoginComponent implements OnInit {
+
+    // 页面登录用户
+    user: LoginParamModel;
+
+    constructor(private router: Router,
+        private userService: UserService) { }
+
+    ngOnInit() {
+        // 初始化数据模型
+        this.user = new LoginParamModel();
     }
 
-    maTheme: string;
-    maThemeSubject: Subject<string> = new Subject<string>();
-
-    setTheme(color) {
-        this.maTheme = color;
-        this.maThemeSubject.next(this.maTheme);
-    }
-
-    constructor() {
-        this.sidebarVisible = true;
-        this.maTheme = 'green';
+    login() {
+        this.userService.login(this.user);
     }
 
 }

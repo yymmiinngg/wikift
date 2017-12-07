@@ -15,31 +15,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { NgModule } from '@angular/core';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
-@Injectable()
-export class SharedService {
+import { SharedModule } from '../shared/shared.module';
 
-    sidebarVisible: boolean;
-    sidebarVisibilitySubject: Subject<boolean> = new Subject<boolean>();
+import { AuthGuard } from './auth.guard';
 
-    toggleSidebarVisibilty() {
-        this.sidebarVisible = !this.sidebarVisible;
-        this.sidebarVisibilitySubject.next(this.sidebarVisible);
-    }
+import { UserService } from '../../services/user.service';
 
-    maTheme: string;
-    maThemeSubject: Subject<string> = new Subject<string>();
+@NgModule({
+    imports: [
+        SharedModule,
+        BsDropdownModule.forRoot()
+    ],
+    declarations: [
+    ],
+    providers: [
+        AuthGuard,
+        UserService
+    ],
+    exports: [
+    ]
+})
 
-    setTheme(color) {
-        this.maTheme = color;
-        this.maThemeSubject.next(this.maTheme);
-    }
-
-    constructor() {
-        this.sidebarVisible = true;
-        this.maTheme = 'green';
-    }
-
-}
+export class AuthModule { }

@@ -15,31 +15,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Response } from '@angular/http';
 
-@Injectable()
-export class SharedService {
+import { CommonResultModel } from '../../shared/model/result/result.model';
 
-    sidebarVisible: boolean;
-    sidebarVisibilitySubject: Subject<boolean> = new Subject<boolean>();
+export class ResultUtils {
 
-    toggleSidebarVisibilty() {
-        this.sidebarVisible = !this.sidebarVisible;
-        this.sidebarVisibilitySubject.next(this.sidebarVisible);
-    }
-
-    maTheme: string;
-    maThemeSubject: Subject<string> = new Subject<string>();
-
-    setTheme(color) {
-        this.maTheme = color;
-        this.maThemeSubject.next(this.maTheme);
-    }
-
-    constructor() {
-        this.sidebarVisible = true;
-        this.maTheme = 'green';
+    public static extractData(res: Response): CommonResultModel {
+        const body = res.json();
+        const commonResponseModel: CommonResultModel = new CommonResultModel();
+        if (body) {
+            commonResponseModel.code = body.code;
+            commonResponseModel.msg = body.msg;
+            commonResponseModel.data = body.data;
+        }
+        return commonResponseModel;
     }
 
 }

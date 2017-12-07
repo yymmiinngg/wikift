@@ -15,31 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+export class ApiConfig {
 
-@Injectable()
-export class SharedService {
+    public static AUTHORIZATION_API = 'http://localhost:8080/oauth/token';
 
-    sidebarVisible: boolean;
-    sidebarVisibilitySubject: Subject<boolean> = new Subject<boolean>();
-
-    toggleSidebarVisibilty() {
-        this.sidebarVisible = !this.sidebarVisible;
-        this.sidebarVisibilitySubject.next(this.sidebarVisible);
-    }
-
-    maTheme: string;
-    maThemeSubject: Subject<string> = new Subject<string>();
-
-    setTheme(color) {
-        this.maTheme = color;
-        this.maThemeSubject.next(this.maTheme);
-    }
-
-    constructor() {
-        this.sidebarVisible = true;
-        this.maTheme = 'green';
-    }
+    private static V1_API_ROOT = '/api/v1/';
 
 }
