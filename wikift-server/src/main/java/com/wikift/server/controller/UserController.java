@@ -17,13 +17,14 @@
  */
 package com.wikift.server.controller;
 
+import com.wikift.common.enums.MessageEnums;
+import com.wikift.model.result.CommonResult;
 import com.wikift.model.user.UserEntity;
 import com.wikift.support.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -32,10 +33,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/info", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority(('USER'))")
-    UserEntity info() {
-        return userService.findByUsername("admin");
+    @RequestMapping(value = "/info/{username}", method = RequestMethod.GET)
+    CommonResult<UserEntity> info(@PathVariable(value = "username") String username) {
+        Assert.notNull(username, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(userService.findByUsername(username));
     }
 
 }

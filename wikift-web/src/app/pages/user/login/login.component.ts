@@ -18,7 +18,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { LoginParamModel } from '../../../shared/model/param/login.patam.model';
+import { LoginParamModel } from '../../../shared/model/param/login.param.model';
 
 import { UserService } from '../../../../services/user.service';
 

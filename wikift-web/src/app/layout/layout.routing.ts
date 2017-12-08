@@ -24,8 +24,13 @@ import { LoginComponent } from '../pages/user/login/login.component';
 
 const LAYOUT_ROUTES: Routes = [
     {
-        path: '', component: LayoutComponent, canActivate: [AuthGuard], children: [
+        path: '', component: LayoutComponent, children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
+        ]
+    },
+    {
+        path: '', component: LayoutComponent, canActivate: [AuthGuard], children: [
+            { path: 'article/create', loadChildren: '../pages/article/create.article.module#CreateArticleModule' },
 
         ]
     },

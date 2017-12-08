@@ -17,7 +17,8 @@
  */
 package com.wikift.model.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.wikift.model.role.RoleEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +34,8 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties({"password"})
 public class UserEntity {
 
     @Id
@@ -44,7 +47,6 @@ public class UserEntity {
     private String username;
 
     @Column(name = "u_password")
-    @JsonIgnore
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})

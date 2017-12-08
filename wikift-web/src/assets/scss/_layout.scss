@@ -3,7 +3,7 @@
 }
 
 .main--alt {
-  padding-top: 40px;
+  // padding-top: 40px;
 }
 
 .content {
@@ -24,11 +24,13 @@
 
 .content--full {
   @include media-breakpoint-up(sm) {
-    padding: ($header-height + $grid-gutter-width) $grid-gutter-width 0;
+    // padding: ($header-height + $grid-gutter-width) $grid-gutter-width 0;
+    margin-top: $header-height;
   }
 
   @include media-breakpoint-down(sm) {
-    padding: ($header-height + $grid-gutter-width/2) $grid-gutter-width/2 0;
+    // padding: ($header-height + $grid-gutter-width/2) $grid-gutter-width/2 0;
+    margin-top: $header-height;
   }
 }
 

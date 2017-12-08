@@ -17,8 +17,10 @@
  */
 export class ApiConfig {
 
-    public static AUTHORIZATION_API = 'http://localhost:8080/oauth/token';
+    public static AUTHORIZATION_API = '/oauth/token';
 
     private static V1_API_ROOT = '/api/v1/';
+
+    public static API_USER_INFO = '/user/info/';
 
 }

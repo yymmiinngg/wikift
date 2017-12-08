@@ -21,5 +21,6 @@ export class CommonConfig {
     public static readonly AUTH_CLIENT_SECRET = 'wikift-web';
     public static readonly AUTH_TOKEN = 'access_token';
     public static readonly AUTH_GRANT_TYPE = 'password';
+    public static readonly AUTH_USER_NAME = 'username';
 
 }

@@ -19,6 +19,8 @@ import { Headers, RequestOptions, URLSearchParams, QueryEncoder } from '@angular
 
 import { CommonConfig } from '../../../config/common.config';
 
+import { CookieUtils } from '../utils/cookie.util';
+
 /**
  * 全局HTTP请求
  *
@@ -42,6 +44,15 @@ export class HttpUtils {
         const headers = new Headers({
             'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
             'Authorization': 'Basic ' + btoa(CommonConfig.AUTH_CLIENT_ID + ':' + CommonConfig.AUTH_CLIENT_SECRET)
+        });
+        const options = new RequestOptions({ headers: headers });
+        return options;
+    }
+
+    public static getDefaultRequestOptionsByToken() {
+        const headers = new Headers({
+            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+            'Authorization': 'Bearer ' + CookieUtils.get()
         });
         const options = new RequestOptions({ headers: headers });
         return options;

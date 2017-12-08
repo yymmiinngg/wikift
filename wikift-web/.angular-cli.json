@@ -36,7 +36,15 @@
         "../src/assets/vendors/bower_components/flot.curvedlines/curvedLines.js",
         "../src/assets/vendors/bower_components/flot.orderbars/js/jquery.flot.orderBars.js",
         "../node_modules/jqvmap/dist/jquery.vmap.min.js",
-        "../node_modules/jqvmap/dist/maps/jquery.vmap.world.js"
+        "../node_modules/jqvmap/dist/maps/jquery.vmap.world.js",
+        "../src/assets/js/wikift-editor/editormd.min.js",
+        "../src/assets/js/wikift-editor/lib/marked.min.js",
+        "../src/assets/js/wikift-editor/lib/prettify.min.js",
+        "../src/assets/js/wikift-editor/lib/raphael.min.js",
+        "../src/assets/js/wikift-editor/lib/underscore.min.js",
+        "../src/assets/js/wikift-editor/lib/sequence-diagram.min.js",
+        "../src/assets/js/wikift-editor/lib/flowchart.min.js",
+        "../src/assets/js/wikift-editor/lib/jquery.flowchart.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

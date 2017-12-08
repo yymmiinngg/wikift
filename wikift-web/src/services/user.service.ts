@@ -24,13 +24,16 @@ import 'rxjs/add/operator/map';
 import { Cookie } from 'ng2-cookies';
 
 import { HttpUtils } from '../app/shared/utils/http.util';
+import { CookieUtils } from '../app/shared/utils/cookie.util';
 
 import { ApiConfig } from '../config/api.config';
+import { CommonConfig } from '../config/common.config';
 
-import { LoginParamModel } from '../app/shared/model/param/login.patam.model';
+import { LoginParamModel } from '../app/shared/model/param/login.param.model';
+import { UserParamModel } from '../app/shared/model/param/user.param.model';
 import { UserModel } from '../app/shared/model/user/user.model';
 import { CommonResultModel } from '../app/shared/model/result/result.model';
-import { CommonConfig } from '../config/common.config';
+import { ResultUtils } from '../app/shared/utils/result.util';
 
 /**
  * 用户服务
@@ -49,6 +52,7 @@ export class UserService {
      */
     login(param: LoginParamModel) {
         console.log(`用户 ${param.username} 正在登录...`);
+        Cookie.set(CommonConfig.AUTH_USER_NAME, param.username);
         const params = HttpUtils.getParams();
         params.append('username', param.username);
         params.append('password', param.password);
@@ -64,15 +68,39 @@ export class UserService {
                 return true;
             },
             err => {
+                CookieUtils.clearBy(CommonConfig.AUTH_USER_NAME);
                 alert('Invalid Credentials');
                 return false;
             });
     }
 
+    /**
+     * 保存授权的token
+     * @param token token
+     */
     saveToken(token) {
         const expireDate = new Date().getTime() + (1000 * token.expires_in);
         Cookie.set(CommonConfig.AUTH_TOKEN, token.access_token, expireDate);
         this.router.navigate(['/']);
+    }
+
+    /**
+     * 检查是否有效
+     */
+    checkCredentials() {
+        if (!CookieUtils.get()) {
+            this.router.navigate(['/login']);
+        }
+    }
+
+    /**
+     * 获取用户信息
+     * @param param 用户信息
+     */
+    info(param: UserParamModel): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        const path = ApiConfig.API_USER_INFO + param.username;
+        return this.http.get(path, options).map(ResultUtils.extractData);
     }
 
 }

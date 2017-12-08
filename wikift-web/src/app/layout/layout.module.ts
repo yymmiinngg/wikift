@@ -33,6 +33,8 @@ import { NavigationTriggerComponent } from './header/navigation-trigger/navigati
 
 import { LoginComponent } from '../pages/user/login/login.component';
 
+import { UserService } from '../../services/user.service';
+
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -53,6 +55,9 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ProgressbarModule.forRoot(),
     ButtonsModule.forRoot(),
     PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG)
+  ],
+  providers: [
+    UserService
   ]
 })
 
