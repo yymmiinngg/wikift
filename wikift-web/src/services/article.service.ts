@@ -53,8 +53,11 @@ export class ArticleService {
             .map(ResultUtils.extractData);
     }
 
+    /**
+     * 获取文章列表
+     */
     list(): Observable<CommonResultModel> {
-        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        const options = HttpUtils.getDefaultRequestOptions();
         return this.http.get(ApiConfig.API_ARTICLE_LIST, options).map(ResultUtils.extractData);
     }
 

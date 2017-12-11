@@ -15,6 +15,13 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<div id="{{id}}" (mouseleave)="getValue()">
-  <textarea required="true" id="editorText"></textarea>
-</div>
+<ng-container *ngIf="preview; else editorMode">
+  <div id="{{id}}">
+    <textarea required="true" id="editorText"></textarea>
+  </div>
+</ng-container>
+<ng-template #editorMode>
+  <div id="{{id}}" (mouseleave)="getValue()">
+    <textarea required="true" id="editorText"></textarea>
+  </div>
+</ng-template>

@@ -20,6 +20,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home.component';
+import { WikiftEditorComponent } from '../../shared/directives/wikift-editor/wikift-editor.component';
 
 import { ArticleService } from '../../../services/article.service';
 
@@ -34,7 +35,8 @@ const HOME_ROUTES: Routes = [
     ],
     exports: [],
     declarations: [
-        HomeComponent
+        HomeComponent,
+        WikiftEditorComponent
     ],
     providers: [
         ArticleService

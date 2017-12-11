@@ -26,6 +26,8 @@ const LAYOUT_ROUTES: Routes = [
     {
         path: '', component: LayoutComponent, children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
+            { path: 'home', loadChildren: '../pages/home/home.module#HomeModule' },
+
         ]
     },
     {

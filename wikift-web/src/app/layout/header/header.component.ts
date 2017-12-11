@@ -25,6 +25,7 @@ import { UserService } from '../../../services/user.service';
 
 import { UserModel } from '../../shared/model/user/user.model';
 import { UserParamModel } from '../../shared/model/param/user.param.model';
+import { CommonConfig } from '../../../config/common.config';
 
 @Component({
   selector: 'app-header',
@@ -63,6 +64,8 @@ export class HeaderComponent implements OnInit {
       this.userService.info(param).subscribe(
         data => {
           this.userInfo = data.data;
+          // 将用户信息存放到cookie中
+          CookieUtils.setBy(CommonConfig.AUTH_USER_INFO, JSON.stringify(this.userInfo));
         }
       );
     }

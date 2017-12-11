@@ -33,6 +33,15 @@
     margin-top: $header-height;
   }
 }
+.content--row {
+  @include media-breakpoint-up(sm) {
+    padding: ($header-height + $grid-gutter-width) $grid-gutter-width 0;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding: ($header-height + $grid-gutter-width/2) $grid-gutter-width/2 0;
+  }
+}
 
 .content__inner {
   margin: auto;

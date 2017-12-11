@@ -19,10 +19,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { ArticleModel } from '../../shared/model/article/article.model';
 import { UserModel } from '../../shared/model/user/user.model';
-import { CookieUtils } from '../../shared/utils/cookie.util';
-import { CommonConfig } from '../../../config/common.config';
-import { ArticleService } from '../../../services/article.service';
 import { CommonResultModel } from '../../shared/model/result/result.model';
+
+import { CookieUtils } from '../../shared/utils/cookie.util';
+
+import { CommonConfig } from '../../../config/common.config';
+
+import { ArticleService } from '../../../services/article.service';
 
 @Component({
     selector: 'wikift-home',

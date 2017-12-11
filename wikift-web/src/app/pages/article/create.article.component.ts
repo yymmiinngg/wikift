@@ -17,6 +17,12 @@
  */
 import { Component, OnInit, ViewChild } from '@angular/core';
 
+import { ArticleModel } from '../../../app/shared/model/article/article.model';
+import { UserModel } from '../../../app/shared/model/user/user.model';
+import { CookieUtils } from '../../shared/utils/cookie.util';
+import { CommonConfig } from '../../../config/common.config';
+import { ArticleService } from '../../../services/article.service';
+
 @Component({
     selector: 'wikift-article-create',
     templateUrl: 'create.article.component.html'
@@ -26,14 +32,28 @@ export class CreateArticleComponent implements OnInit {
 
     dataText;
 
-    constructor() { }
+    constructor(private articleService: ArticleService) { }
 
     ngOnInit() {
     }
 
     getData(value) {
         this.dataText = value;
-        console.log(this.dataText);
+    }
+
+    published() {
+        const articleModel = new ArticleModel();
+        articleModel.title = new Date().getMilliseconds().toString();
+        articleModel.content = this.dataText;
+        const userModel = new UserModel();
+        const user = JSON.parse(CookieUtils.getBy(CommonConfig.AUTH_USER_INFO));
+        userModel.id = user.id;
+        articleModel.userEntity = userModel;
+        this.articleService.save(articleModel).subscribe(
+            result => {
+                console.log(result.data);
+            }
+        );
     }
 
 }

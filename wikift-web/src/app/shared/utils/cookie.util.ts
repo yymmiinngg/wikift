@@ -27,9 +27,16 @@ export class CookieUtils {
     public static get() {
         return Cookie.get(CommonConfig.AUTH_TOKEN);
     }
+    public static getBy(key: string) {
+        return Cookie.get(key);
+    }
 
     public static getUserName() {
         return Cookie.get(CommonConfig.AUTH_USER_NAME);
+    }
+
+    public static setBy(key: string, value: string) {
+        return Cookie.set(key, value);
     }
 
     public static clear() {

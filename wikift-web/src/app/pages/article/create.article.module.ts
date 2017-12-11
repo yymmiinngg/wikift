@@ -22,6 +22,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { CreateArticleComponent } from './create.article.component';
 import { WikiftEditorComponent } from '../../shared/directives/wikift-editor/wikift-editor.component';
 
+import { ArticleService } from '../../../services/article.service';
+
 const CREATE_ARTICLE_ROUTES: Routes = [
     { path: '', component: CreateArticleComponent }
 ];
@@ -36,6 +38,8 @@ const CREATE_ARTICLE_ROUTES: Routes = [
         CreateArticleComponent,
         WikiftEditorComponent
     ],
-    providers: [],
+    providers: [
+        ArticleService
+    ],
 })
 export class CreateArticleModule { }

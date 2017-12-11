@@ -37,18 +37,29 @@ export class WikiftEditorComponent implements OnInit {
     @Input('markdown')
     markdown: string;
 
+    // 是否预览模式
+    @Input('preview')
+    preview: Boolean = false;
+
     constructor() { }
 
     // 初始化组件
     ngAfterViewInit() {
-        this.editor = editormd({
-            id: this.id,
-            width: '100%',
-            height: 490,
-            syncScrolling: 'single',
-            path: '../../../../assets/js/wikift-editor/lib/',
-            imageUploadURL: 'api/upload/mdupload?test=dfdf'
-        });
+        if (this.preview) {
+            editormd.markdownToHTML(this.id, {
+                markdown: this.markdown,
+                taskList: true
+            });
+        } else {
+            this.editor = editormd({
+                id: this.id,
+                width: '100%',
+                height: 490,
+                syncScrolling: 'single',
+                path: '../../../../assets/js/wikift-editor/lib/',
+                imageUploadURL: 'api/upload/mdupload?test=dfdf'
+            });
+        }
     }
 
     /**
@@ -68,7 +79,6 @@ export class WikiftEditorComponent implements OnInit {
     @Output()
     getEditorValue = new EventEmitter<any>();
     getValue() {
-        console.log(this.editor.getMarkdown());
         this.getEditorValue.emit(this.editor.getMarkdown());
     }
 

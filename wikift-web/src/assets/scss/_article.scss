@@ -1,0 +1,35 @@
+
+.user {
+    border-radius: $border-radius;
+    margin: 0 0 1.5rem 0;
+    position: relative;
+    .dropdown-menu {
+      width: 100%;
+    }
+  }
+  
+  .article__user__info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0.2rem;
+    border-radius: $border-radius;
+    @include transition(background-color 300ms);
+  }
+  .article__user__img {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    margin-right: 0.8rem;
+  }
+  
+  .user__name {
+    color: $headings-color;
+    font-weight: $font-weight-bold;
+  }
+  
+  .user__email {
+    color: lighten($body-color, 15%);
+  }

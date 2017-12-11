@@ -14,8 +14,6 @@ export class AuthGuard implements CanActivate {
     constructor(private router: Router) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const appToken = route.queryParams['appToken'];
-        const userToken = route.queryParams['userToken'];
         // 存储appToken到session
         if (!Cookie.get(CommonConfig.AUTH_TOKEN)) {
             this.router.navigate(['/login']);
