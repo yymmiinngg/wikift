@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 import { Component, OnInit, Output, Input, EventEmitter, Directive } from '@angular/core';
-import { AfterViewInit, ViewChild } from '@angular/core';
+import { AfterViewInit, OnChanges, ViewChild } from '@angular/core';
 
 declare var jQuery: any;
 declare var editormd: any;
@@ -29,34 +29,35 @@ export class WikiftEditorComponent implements OnInit {
 
     public editor: any;
 
+    // 编辑器ID
+    @Input('id')
+    id: string;
+
     // 传递的markdown数据
-    // tslint:disable-next-line:no-input-rename
     @Input('markdown')
     markdown: string;
 
     constructor() { }
 
+    // 初始化组件
+    ngAfterViewInit() {
+        this.editor = editormd({
+            id: this.id,
+            width: '100%',
+            height: 490,
+            syncScrolling: 'single',
+            path: '../../../../assets/js/wikift-editor/lib/',
+            imageUploadURL: 'api/upload/mdupload?test=dfdf'
+        });
+    }
+
     /**
      * 初始化组件信息
      */
+    ngOnChanges() {
+    }
+
     ngOnInit() {
-        this.editor = editormd('editormd', {
-            markdown: this.markdown,
-            width: '100%',
-            height: 240,
-            syncScrolling: 'single',
-            path: '../../../../assets/js/wikift-editor/lib/',
-            imageUpload: true,
-            imageFormats: ['jpg', 'jpeg', 'gif', 'png', 'bmp'],
-            imageUploadURL: 'api/upload/mdupload?test=dfdf',
-            emoji: true,
-            taskList: true,
-            tocDropdown: true,
-            tex: true,  // 默认不解析
-            flowChart: true,  // 默认不解析
-            sequenceDiagram: true,  // 默认不解析SS
-        });
-        // 全窗口预览关闭按钮初始化没有隐藏（原因未知），手动隐藏
         jQuery('.editormd-preview-close-btn').hide();
     }
 
@@ -67,6 +68,7 @@ export class WikiftEditorComponent implements OnInit {
     @Output()
     getEditorValue = new EventEmitter<any>();
     getValue() {
+        console.log(this.editor.getMarkdown());
         this.getEditorValue.emit(this.editor.getMarkdown());
     }
 

@@ -15,56 +15,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wikift.model.user;
+package com.wikift.model.article;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.wikift.model.article.ArticleEntity;
-import com.wikift.model.role.RoleEntity;
+import com.wikift.model.user.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties({"password", "userEntity", "articleEntityList"})
-public class UserEntity {
+@Table(name = "article")
+@JsonIgnoreProperties(value = { "articleEntityList" })
+public class ArticleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "u_id")
+    @Column(name = "a_id")
     private Long id;
 
-    @Column(name = "u_username")
-    private String username;
+    @Column(name = "a_title")
+    private String title;
 
-    @Column(name = "u_password")
-    private String password;
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinTable(name = "users_role_relation",
-            joinColumns = @JoinColumn(name = "urr_user_id", referencedColumnName = "u_id"),
-            inverseJoinColumns = @JoinColumn(name = "urr_role_id", referencedColumnName = "r_id"))
-    private List<RoleEntity> userRoles;
+    @Column(name = "a_content")
+    private String content;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE})
     @JoinTable(name = "users_article_relation",
-            joinColumns = @JoinColumn(name = "uar_user_id"),
-            inverseJoinColumns = @JoinColumn(name = "uar_article_id"))
-    private List<ArticleEntity> articleEntityList;
+            joinColumns = @JoinColumn(name = "uar_article_id"),
+            inverseJoinColumns = @JoinColumn(name = "uar_user_id"))
+    private UserEntity userEntity;
 
 }

@@ -15,15 +15,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export class ApiConfig {
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
-    public static AUTHORIZATION_API = '/oauth/token';
+import { HomeComponent } from './home.component';
 
-    private static V1_API_ROOT = '/api/v1/';
+import { ArticleService } from '../../../services/article.service';
 
-    public static API_USER_INFO = '/user/info/';
+const HOME_ROUTES: Routes = [
+    { path: '', component: HomeComponent }
+];
 
-    public static API_ARTICLE_LIST = '/article/list';
-    public static API_ARTICLE_SAVE = '/article/create';
-
-}
+@NgModule({
+    imports: [
+        CommonModule,
+        RouterModule.forChild(HOME_ROUTES)
+    ],
+    exports: [],
+    declarations: [
+        HomeComponent
+    ],
+    providers: [
+        ArticleService
+    ],
+})
+export class HomeModule { }

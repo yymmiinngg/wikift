@@ -41,3 +41,19 @@ CREATE TABLE users_groups_relation (
   CONSTRAINT FK_user_relation_id FOREIGN KEY (ugr_user_id) REFERENCES users (u_id),
   CONSTRAINT FK_group_relation_id FOREIGN KEY (ugr_group_id) REFERENCES groups (g_id)
 );
+-- 文章表
+DROP TABLE IF EXISTS article;
+CREATE TABLE article (
+  a_id      BIGINT(20)   NOT NULL AUTO_INCREMENT,
+  a_title   VARCHAR(255) NOT NULL,
+  a_content TEXT         NOT NULL,
+  PRIMARY KEY (a_id)
+);
+-- 用户与文章关系表
+DROP TABLE IF EXISTS users_article_relation;
+CREATE TABLE users_article_relation (
+  uar_user_id    BIGINT(20) NOT NULL,
+  uar_article_id BIGINT(20) NOT NULL,
+  CONSTRAINT FK_users_relation_id FOREIGN KEY (uar_user_id) REFERENCES users (u_id),
+  CONSTRAINT FK_article_relation_id FOREIGN KEY (uar_article_id) REFERENCES article (a_id)
+);

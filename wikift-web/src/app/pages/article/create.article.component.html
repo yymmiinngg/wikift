@@ -16,5 +16,18 @@
   limitations under the License.
 -->
 <section class="content content--full">
-  <wikift-editor (getEditorValue)="getData($event)">loading...</wikift-editor>
+  <wikift-editor [id]="'editor'" (getEditorValue)="getData($event)"></wikift-editor>
 </section>
+<footer class="footer hidden-xs-down">
+  <ul class="nav footer__nav">
+    <a class="nav-link" href="">Homepage</a>
+
+    <a class="nav-link" href="">Company</a>
+
+    <a class="nav-link" href="">Support</a>
+
+    <a class="nav-link" href="">News</a>
+
+    <a class="nav-link" href="">Contacts</a>
+  </ul>
+</footer>

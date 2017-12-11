@@ -15,15 +15,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export class ApiConfig {
+package com.wikift.support.repository.article;
 
-    public static AUTHORIZATION_API = '/oauth/token';
+import com.wikift.model.article.ArticleEntity;
+import org.springframework.data.repository.CrudRepository;
 
-    private static V1_API_ROOT = '/api/v1/';
-
-    public static API_USER_INFO = '/user/info/';
-
-    public static API_ARTICLE_LIST = '/article/list';
-    public static API_ARTICLE_SAVE = '/article/create';
+public interface ArticleRepository extends CrudRepository<ArticleEntity, Long> {
 
 }

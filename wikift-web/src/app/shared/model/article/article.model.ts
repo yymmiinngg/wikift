@@ -15,15 +15,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export class ApiConfig {
+import { UserModel } from '../user/user.model';
 
-    public static AUTHORIZATION_API = '/oauth/token';
+export class ArticleModel {
 
-    private static V1_API_ROOT = '/api/v1/';
-
-    public static API_USER_INFO = '/user/info/';
-
-    public static API_ARTICLE_LIST = '/article/list';
-    public static API_ARTICLE_SAVE = '/article/create';
+    public id: Number;
+    public title: String;
+    public content: String;
+    public userEntity: UserModel;
 
 }

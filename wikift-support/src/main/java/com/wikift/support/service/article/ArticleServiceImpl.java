@@ -15,15 +15,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export class ApiConfig {
+package com.wikift.support.service.article;
 
-    public static AUTHORIZATION_API = '/oauth/token';
+import com.wikift.model.article.ArticleEntity;
+import com.wikift.support.repository.article.ArticleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-    private static V1_API_ROOT = '/api/v1/';
+import java.util.List;
 
-    public static API_USER_INFO = '/user/info/';
+@Service(value = "articleService")
+public class ArticleServiceImpl implements ArticleService {
 
-    public static API_ARTICLE_LIST = '/article/list';
-    public static API_ARTICLE_SAVE = '/article/create';
+    @Autowired
+    private ArticleRepository articleRepository;
+
+    @Override
+    public ArticleEntity save(ArticleEntity entity) {
+        return articleRepository.save(entity);
+    }
+
+    @Override
+    public List<ArticleEntity> findAll() {
+        return (List<ArticleEntity>) articleRepository.findAll();
+    }
+
+    @Override
+    public ArticleEntity info(Long id) {
+        return articleRepository.findOne(id);
+    }
 
 }

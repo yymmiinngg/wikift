@@ -58,6 +58,15 @@ export class HttpUtils {
         return options;
     }
 
+    public static getDefaultRequestOptionsByTokenAndJSON() {
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + CookieUtils.get()
+        });
+        const options = new RequestOptions({ headers: headers });
+        return options;
+    }
+
     /**
      * 分页查询参数
      * @param page 页数
