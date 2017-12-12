@@ -3836,6 +3836,15 @@
   width: 100%;
   background-color: #fff;
 }
+.editormd-preview-container-article {
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 10px;
+  overflow: auto;
+  width: 100%;
+  background-color: #fff;
+}
 .editormd-preview-container blockquote, .editormd-html-preview blockquote {
   color: #666;
   border-left: 4px solid #ddd;
