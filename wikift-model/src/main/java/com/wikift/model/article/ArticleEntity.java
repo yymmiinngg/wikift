@@ -24,8 +24,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @ToString
@@ -34,6 +37,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "article")
 @JsonIgnoreProperties(value = { "articleEntityList" })
+@EntityListeners(value = AuditingEntityListener.class)
 public class ArticleEntity {
 
     @Id
@@ -46,6 +50,10 @@ public class ArticleEntity {
 
     @Column(name = "a_content")
     private String content;
+
+    @Column(name = "a_create_time")
+    @CreatedDate
+    private Date createTime;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE})

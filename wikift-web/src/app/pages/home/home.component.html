@@ -23,7 +23,8 @@
                 <!-- 文章用户信息 -->
                 <div class="card-header border-b-1 px-4 py-3">
                     <div class="card-block">
-                        <h5>{{ aritcle.title }}
+                        <h5>
+                            <a [routerLink]="['/article/info', aritcle.id]">{{ aritcle.title }}</a>
                             <span class="badge badge-pill badge-danger">新</span>
                         </h5>
                     </div>

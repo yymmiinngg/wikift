@@ -25,5 +25,6 @@ export class ApiConfig {
 
     public static API_ARTICLE_LIST = '/article/list';
     public static API_ARTICLE_SAVE = '/article/create';
+    public static API_ARTICLE_INFO = '/article/info/';
 
 }

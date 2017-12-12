@@ -33,6 +33,10 @@ export class WikiftEditorComponent implements OnInit {
     @Input('id')
     id: string;
 
+    // 编辑器TOCid
+    @Input('tocId')
+    tocId = 'wikift-toc-container';
+
     // 传递的markdown数据
     @Input('markdown')
     markdown: string;
@@ -48,7 +52,8 @@ export class WikiftEditorComponent implements OnInit {
         if (this.preview) {
             editormd.markdownToHTML(this.id, {
                 markdown: this.markdown,
-                taskList: true
+                taskList: true,
+                tocContainer: this.tocId
             });
         } else {
             this.editor = editormd({

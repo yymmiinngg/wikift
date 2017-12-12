@@ -19,6 +19,11 @@
     width: 100%;
   }
 }
+.dropdown-menu--block--article {
+  @include media-breakpoint-down(xs) {
+    width: 100%;
+  }
+}
 
 .dropdown-menu--icon {
   .dropdown-item {

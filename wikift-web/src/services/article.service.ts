@@ -61,4 +61,9 @@ export class ArticleService {
         return this.http.get(ApiConfig.API_ARTICLE_LIST, options).map(ResultUtils.extractData);
     }
 
+    info(param: ArticleModel): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptions();
+        return this.http.get(ApiConfig.API_ARTICLE_INFO + param.id, options).map(ResultUtils.extractData);
+    }
+
 }

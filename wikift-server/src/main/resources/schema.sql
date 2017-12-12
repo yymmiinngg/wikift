@@ -44,9 +44,10 @@ CREATE TABLE users_groups_relation (
 -- 文章表
 DROP TABLE IF EXISTS article;
 CREATE TABLE article (
-  a_id      BIGINT(20)   NOT NULL AUTO_INCREMENT,
-  a_title   VARCHAR(255) NOT NULL,
-  a_content TEXT         NOT NULL,
+  a_id          BIGINT(20)   NOT NULL AUTO_INCREMENT,
+  a_title       VARCHAR(255) NOT NULL,
+  a_content     TEXT         NOT NULL,
+  a_create_time TIMESTAMP,
   PRIMARY KEY (a_id)
 );
 -- 用户与文章关系表
