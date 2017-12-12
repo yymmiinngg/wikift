@@ -16,12 +16,14 @@
  * limitations under the License.
  */
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ArticleModel } from '../../../app/shared/model/article/article.model';
 import { UserModel } from '../../../app/shared/model/user/user.model';
 import { CookieUtils } from '../../shared/utils/cookie.util';
 import { CommonConfig } from '../../../config/common.config';
 import { ArticleService } from '../../../services/article.service';
+import { ModalDirective } from '_ngx-bootstrap@2.0.0-beta.10@ngx-bootstrap/modal/modal.directive';
 
 @Component({
     selector: 'wikift-article-create',
@@ -30,28 +32,38 @@ import { ArticleService } from '../../../services/article.service';
 
 export class CreateArticleComponent implements OnInit {
 
-    dataText;
+    articleModel: ArticleModel;
 
-    constructor(private articleService: ArticleService) { }
+    // 文章属性框
+    @ViewChild('settingAritcleModel')
+    public settingAritcleModel: ModalDirective;
+
+    constructor(private router: Router,
+        private articleService: ArticleService) { }
 
     ngOnInit() {
+        this.articleModel = new ArticleModel();
     }
 
+    // 获取编辑器内容
     getData(value) {
-        this.dataText = value;
+        this.articleModel.content = value;
+    }
+
+    showSettingModel() {
+        this.settingAritcleModel.show();
     }
 
     published() {
-        const articleModel = new ArticleModel();
-        articleModel.title = new Date().getMilliseconds().toString();
-        articleModel.content = this.dataText;
         const userModel = new UserModel();
         const user = JSON.parse(CookieUtils.getBy(CommonConfig.AUTH_USER_INFO));
         userModel.id = user.id;
-        articleModel.userEntity = userModel;
-        this.articleService.save(articleModel).subscribe(
+        this.articleModel.userEntity = userModel;
+        this.articleService.save(this.articleModel).subscribe(
             result => {
-                console.log(result.data);
+                this.settingAritcleModel.hide();
+                // 跳转到首页
+                this.router.navigate(['/']);
             }
         );
     }

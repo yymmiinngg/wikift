@@ -20,9 +20,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home.component';
-import { WikiftEditorComponent } from '../../shared/directives/wikift-editor/wikift-editor.component';
 
 import { ArticleService } from '../../../services/article.service';
+import { WikiftEditorModule } from '../../shared/directives/wikift-editor/wikift-editor.module';
 
 const HOME_ROUTES: Routes = [
     { path: '', component: HomeComponent }
@@ -30,13 +30,13 @@ const HOME_ROUTES: Routes = [
 
 @NgModule({
     imports: [
+        WikiftEditorModule,
         CommonModule,
         RouterModule.forChild(HOME_ROUTES)
     ],
     exports: [],
     declarations: [
-        HomeComponent,
-        WikiftEditorComponent
+        HomeComponent
     ],
     providers: [
         ArticleService

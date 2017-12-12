@@ -19,7 +19,53 @@
   <wikift-editor [id]="'editor'" (getEditorValue)="getData($event)"></wikift-editor>
 </section>
 <footer class="footer hidden-xs-down">
-  <ul class="nav footer__nav">
-    <a class="nav-link" (click)="published()">发布文章</a>
-  </ul>
+  <div class="mr-auto"></div>
+  <div>
+    <ul class="nav footer__nav">
+      <a class="btn btn-primary waves-effect" [ngClass]="{'disabled': articleModel.content == ''}" (click)="showSettingModel()">发布文章</a>
+    </ul>
+  </div>
 </footer>
+<!-- 文章属性 -->
+<div bsModal #settingAritcleModel="bs-modal" class="modal fade">
+  <ng-container>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header border-b-1">
+          <h5 class="modal-title pull-left">设置文章相关属性</h5>
+        </div>
+        <div class="modal-body">
+          <wizard navBarLayout="large-empty-symbols" style="width: 300px;">
+            <wizard-step stepTitle="文章标题" navigationSymbol="&#xf0b1;" navigationSymbolFontFamily="FontAwesome">
+              <div style="margin-top: 10px;">
+                <div class="form-group form-group--centered">
+                  <input type="text" [(ngModel)]="articleModel.title" name="articleModel.title" class="form-control" placeholder="请输入文章标题">
+                  <i class="form-group__bar"></i>
+                </div>
+              </div>
+              <a class="btn btn-info" [ngClass]="{'disabled': articleModel.title == ''}" nextStep>下一步</a>
+            </wizard-step>
+            <!-- <wizard-step stepTitle="文章类型" navigationSymbol="&#xf085;" navigationSymbolFontFamily="FontAwesome">
+              <div class="card-block" style="margin-top: 10px;">
+                <p>
+                  <mark>该功能正在努力开发中...</mark>
+                </p>
+              </div>
+              <a class="btn btn-secondary" previousStep>上一步</a>
+              <a class="btn btn-info" [ngClass]="{'disabled': articleModel.title == ''}" nextStep>下一步</a>
+            </wizard-step> -->
+            <wizard-step stepTitle="发布详情" navigationSymbol="&#xf00c;" navigationSymbolFontFamily="FontAwesome">
+              <div class="card-block" style="margin-top: 10px;">
+                <p>文章标题:
+                  <mark>{{ articleModel.title }}</mark>
+                </p>
+              </div>
+              <a class="btn btn-secondary" previousStep>上一步</a>
+              <a class="btn btn-primary" (click)="published()">发布</a>
+            </wizard-step>
+          </wizard>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

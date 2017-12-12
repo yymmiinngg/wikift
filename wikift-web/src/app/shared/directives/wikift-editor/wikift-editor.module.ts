@@ -17,35 +17,19 @@
  */
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
-import { ModalModule } from 'ngx-bootstrap/modal';
-import { ArchwizardModule } from 'ng2-archwizard';
 
-import { CreateArticleComponent } from './create.article.component';
-
-import { ArticleService } from '../../../services/article.service';
-import { WikiftEditorModule } from '../../shared/directives/wikift-editor/wikift-editor.module';
-
-const CREATE_ARTICLE_ROUTES: Routes = [
-    { path: '', component: CreateArticleComponent }
-];
+import { WikiftEditorComponent } from './wikift-editor.component';
 
 @NgModule({
     imports: [
-        WikiftEditorModule,
-        CommonModule,
-        ArchwizardModule,
-        FormsModule,
-        ModalModule.forRoot(),
-        RouterModule.forChild(CREATE_ARTICLE_ROUTES)
+        CommonModule
     ],
-    exports: [],
     declarations: [
-        CreateArticleComponent
+        WikiftEditorComponent
     ],
-    providers: [
-        ArticleService
+    exports: [
+        WikiftEditorComponent
     ],
+    providers: [],
 })
-export class CreateArticleModule { }
+export class WikiftEditorModule { }

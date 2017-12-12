@@ -20,8 +20,8 @@ import { UserModel } from '../user/user.model';
 export class ArticleModel {
 
     public id: Number;
-    public title: String;
-    public content: String;
+    public title: String = '';
+    public content: String = '';
     public userEntity: UserModel;
 
 }
