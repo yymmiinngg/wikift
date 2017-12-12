@@ -85,7 +85,7 @@
                                 <i class="zmdi zmdi-more"></i>
                             </a>
                             <div *dropdownMenu class="dropdown-menu dropdown-menu-left">
-                                <a (click)="modifyAppmetaNameOpen()" class="dropdown-item">
+                                <a [routerLink]="['/article/', article.id, 'editor']" class="dropdown-item">
                                     <i class="zmdi zmdi-edit"></i>
                                     <small> 编辑该文章</small>
                                 </a>

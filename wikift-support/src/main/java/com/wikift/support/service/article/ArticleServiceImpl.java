@@ -36,6 +36,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public ArticleEntity update(ArticleEntity entity) {
+        return articleRepository.save(entity);
+    }
+
+    @Override
     public List<ArticleEntity> findAll() {
         return (List<ArticleEntity>) articleRepository.findAll();
     }
@@ -43,6 +48,12 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleEntity info(Long id) {
         return articleRepository.findOne(id);
+    }
+
+    @Override
+    public Long delete(Long id) {
+        articleRepository.delete(id);
+        return id;
     }
 
 }

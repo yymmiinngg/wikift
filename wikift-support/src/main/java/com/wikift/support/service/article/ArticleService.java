@@ -15,6 +15,14 @@ public interface ArticleService {
     ArticleEntity save(ArticleEntity entity);
 
     /**
+     * 更新文章信息
+     *
+     * @param entity 文章信息
+     * @return 文章信息
+     */
+    ArticleEntity update(ArticleEntity entity);
+
+    /**
      * 查询所有文章
      *
      * @return 文章列表
@@ -28,5 +36,13 @@ public interface ArticleService {
      * @return 文章信息
      */
     ArticleEntity info(Long id);
+
+    /**
+     * 删除文章
+     *
+     * @param id 文章ID
+     * @return
+     */
+    Long delete(Long id);
 
 }

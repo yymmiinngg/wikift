@@ -42,20 +42,24 @@ export class ArticleService {
         private options: RequestOptions) {
     }
 
-    /**
-     * 创建文章
-     * @param param 文章
-     */
     save(param: ArticleModel): Observable<CommonResultModel> {
-        console.log(`用户 ${param.userEntity.username} 创建 ${param.title} 文章`);
         const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
         return this.http.post(ApiConfig.API_ARTICLE_SAVE, JSON.stringify(param), options)
             .map(ResultUtils.extractData);
     }
 
-    /**
-     * 获取文章列表
-     */
+    update(param: ArticleModel): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
+        return this.http.put(ApiConfig.API_ARTICLE_UPDATE, JSON.stringify(param), options)
+            .map(ResultUtils.extractData);
+    }
+
+    delete(param: ArticleModel): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
+        return this.http.delete(ApiConfig.API_ARTICLE_DELETE + param.id, options)
+            .map(ResultUtils.extractData);
+    }
+
     list(): Observable<CommonResultModel> {
         const options = HttpUtils.getDefaultRequestOptions();
         return this.http.get(ApiConfig.API_ARTICLE_LIST, options).map(ResultUtils.extractData);

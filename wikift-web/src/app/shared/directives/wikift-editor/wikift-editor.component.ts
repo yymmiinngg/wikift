@@ -52,12 +52,19 @@ export class WikiftEditorComponent implements OnInit {
         if (this.preview) {
             editormd.markdownToHTML(this.id, {
                 markdown: this.markdown,
+                tocContainer: this.tocId,
+                tex: true,
+                flowChart: true,
+                emoji: true,
                 taskList: true,
-                tocContainer: this.tocId
+                sequenceDiagram: true
             });
         } else {
+            console.log(this.id);
+            console.log(this.markdown);
             this.editor = editormd({
                 id: this.id,
+                markdown: this.markdown,
                 width: '100%',
                 height: 490,
                 syncScrolling: 'single',

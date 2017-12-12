@@ -1,0 +1,67 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+  <p>
+  http://www.apache.org/licenses/LICENSE-2.0
+  <p>
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<section class="content content--full">
+    <span *ngIf="article.id; else loadingData">
+        <wikift-editor id="editormd-{{article.id}}" markdown="{{article.content}}" (getEditorValue)="getData($event)"></wikift-editor>
+    </span>
+    <ng-template #loadingData>
+        数据加载中...
+    </ng-template>
+</section>
+<footer class="footer hidden-xs-down">
+    <div class="mr-auto"></div>
+    <div>
+        <ul class="nav footer__nav">
+            <a class="btn btn-primary waves-effect" [ngClass]="{'disabled': article.content == ''}" (click)="showSettingModel()">更新文章</a>
+        </ul>
+    </div>
+</footer>
+<!-- 文章属性 -->
+<div bsModal #settingAritcleModel="bs-modal" class="modal fade">
+    <ng-container>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header border-b-1">
+                    <h5 class="modal-title pull-left">设置文章相关属性</h5>
+                </div>
+                <div class="modal-body">
+                    <wizard navBarLayout="large-empty-symbols" style="width: 300px;">
+                        <wizard-step stepTitle="文章标题" navigationSymbol="&#xf0b1;" navigationSymbolFontFamily="FontAwesome">
+                            <div style="margin-top: 10px;">
+                                <div class="form-group form-group--centered">
+                                    <input type="text" [(ngModel)]="article.title" name="article.title" class="form-control" placeholder="请输入文章标题">
+                                    <i class="form-group__bar"></i>
+                                </div>
+                            </div>
+                            <a class="btn btn-info" [ngClass]="{'disabled': article.title == ''}" nextStep>下一步</a>
+                        </wizard-step>
+                        <wizard-step stepTitle="发布详情" navigationSymbol="&#xf00c;" navigationSymbolFontFamily="FontAwesome">
+                            <div class="card-block" style="margin-top: 10px;">
+                                <p>文章标题:
+                                    <mark>{{ article.title }}</mark>
+                                </p>
+                            </div>
+                            <a class="btn btn-secondary" previousStep>上一步</a>
+                            <a class="btn btn-primary" (click)="updated()">更新</a>
+                        </wizard-step>
+                    </wizard>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

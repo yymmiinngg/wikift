@@ -39,6 +39,18 @@ public class ArticleController {
         return CommonResult.success(articleService.save(entity));
     }
 
+    @RequestMapping(value = "update", method = RequestMethod.PUT)
+    CommonResult<ArticleEntity> update(@RequestBody ArticleEntity entity) {
+        Assert.notNull(entity, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(articleService.update(entity));
+    }
+
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+    CommonResult<ArticleEntity> delete(@PathVariable(value = "id") Long id) {
+        Assert.notNull(id, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(articleService.delete(id));
+    }
+
     @RequestMapping(value = "info/{id}", method = RequestMethod.GET)
     CommonResult<ArticleEntity> info(@PathVariable(value = "id") Long id) {
         Assert.notNull(id, MessageEnums.PARAMS_NOT_NULL.getValue());
