@@ -23,7 +23,6 @@ import { CookieUtils } from '../../shared/utils/cookie.util';
 import { SharedService } from '../../shared/services/shared.service';
 import { UserService } from '../../../services/user.service';
 
-import { UserModel } from '../../shared/model/user/user.model';
 import { UserParamModel } from '../../shared/model/param/user.param.model';
 import { CommonConfig } from '../../../config/common.config';
 
@@ -37,7 +36,7 @@ import { CommonConfig } from '../../../config/common.config';
 export class HeaderComponent implements OnInit {
 
   token: String;
-  userInfo: UserModel;
+  userInfo;
   maThemeModel = 'green';
 
   setTheme() {

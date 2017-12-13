@@ -22,6 +22,7 @@ import com.wikift.model.article.ArticleEntity;
 import com.wikift.model.result.CommonResult;
 import com.wikift.support.service.article.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,7 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
+    @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "create", method = RequestMethod.POST)
     CommonResult<ArticleEntity> save(@RequestBody ArticleEntity entity) {
         Assert.notNull(entity, MessageEnums.PARAMS_NOT_NULL.getValue());
@@ -39,12 +41,14 @@ public class ArticleController {
         return CommonResult.success(articleService.save(entity));
     }
 
+    @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "update", method = RequestMethod.PUT)
     CommonResult<ArticleEntity> update(@RequestBody ArticleEntity entity) {
         Assert.notNull(entity, MessageEnums.PARAMS_NOT_NULL.getValue());
         return CommonResult.success(articleService.update(entity));
     }
 
+    @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
     CommonResult<ArticleEntity> delete(@PathVariable(value = "id") Long id) {
         Assert.notNull(id, MessageEnums.PARAMS_NOT_NULL.getValue());
@@ -52,11 +56,13 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "info/{id}", method = RequestMethod.GET)
+//    @PreAuthorize("hasAuthority(('USER'))")
     CommonResult<ArticleEntity> info(@PathVariable(value = "id") Long id) {
         Assert.notNull(id, MessageEnums.PARAMS_NOT_NULL.getValue());
         return CommonResult.success(articleService.info(id));
     }
 
+//    @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "list", method = RequestMethod.GET)
     CommonResult<ArticleEntity> list() {
         return CommonResult.success(articleService.findAll());

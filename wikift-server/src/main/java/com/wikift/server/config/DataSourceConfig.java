@@ -54,7 +54,7 @@ public class DataSourceConfig {
     @Value(value = "${wikift.database.mysql.url}")
     private String mysqlUrl;
 
-    @Value(value = "{wikift.database.mysql.username}")
+    @Value(value = "${wikift.database.mysql.username}")
     private String mysqlUserName;
 
     @Value(value = "${wikift.database.mysql.password}")

@@ -53,6 +53,15 @@ public class UserEntity {
     @Column(name = "u_password")
     private String password;
 
+    @Column(name = "u_avatar")
+    private String avatar;
+
+    @Column(name = "u_alias_name")
+    private String aliasName;
+
+    @Column(name = "u_signature")
+    private String signature;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(name = "users_role_relation",
             joinColumns = @JoinColumn(name = "urr_user_id", referencedColumnName = "u_id"),

@@ -29,3 +29,9 @@ select,
 textarea {
   font-family: $font-family-sans-serif;
 }
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: $hr-border-width solid $hr-border-color;
+}

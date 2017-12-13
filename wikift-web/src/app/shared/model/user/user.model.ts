@@ -19,5 +19,8 @@ export class UserModel {
 
     public id: Number;
     public username: String;
+    public avatar: String;
+    public aliasName: String;
+    public signature: String;
 
 }

@@ -40,7 +40,7 @@ export class CookieUtils {
     }
 
     public static clear() {
-        Cookie.delete(CommonConfig.AUTH_TOKEN);
+        Cookie.deleteAll();
     }
 
     public static clearBy(key: string) {

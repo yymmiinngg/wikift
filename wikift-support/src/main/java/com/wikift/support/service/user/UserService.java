@@ -21,6 +21,12 @@ import com.wikift.model.user.UserEntity;
 
 public interface UserService {
 
+    UserEntity save(UserEntity entity);
+
+    UserEntity update(UserEntity entity);
+
+    Long delete(Long id);
+
     UserEntity findByUsername(String username);
 
 }

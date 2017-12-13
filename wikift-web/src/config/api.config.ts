@@ -22,6 +22,7 @@ export class ApiConfig {
     private static V1_API_ROOT = '/api/v1/';
 
     public static API_USER_INFO = '/user/info/';
+    public static API_USER_UPDATE = '/user/update';
 
     public static API_ARTICLE_LIST = '/article/list';
     public static API_ARTICLE_SAVE = '/article/create';

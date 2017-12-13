@@ -60,8 +60,6 @@ export class WikiftEditorComponent implements OnInit {
                 sequenceDiagram: true
             });
         } else {
-            console.log(this.id);
-            console.log(this.markdown);
             this.editor = editormd({
                 id: this.id,
                 markdown: this.markdown,

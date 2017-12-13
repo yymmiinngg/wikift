@@ -57,7 +57,8 @@
                             <div class="user-sm">
                                 <div class="article__user__info">
                                     <img class="article__user__img" src="https://sfault-avatar.b0.upaiyun.com/211/010/2110103846-58b3dd19aa7ba_big64" alt="">
-                                    <div class="article__user__name">{{ article?.userEntity.username }} - {{ article?.createTime | date:'yyyy年MM月dd日HH:mm:ss'
+                                    <div *ngIf="article?.userEntity" class="article__user__name">
+                                        <a [routerLink]="['/account', article.userEntity.username, 'info']">{{ article?.userEntity.username }}</a> - {{ article?.createTime | date:'yyyy年MM月dd日HH:mm:ss'
                                         }} 发布</div>
                                 </div>
                             </div>
@@ -68,7 +69,7 @@
                 <div class="card-body border-b-1">
                     <p class="mb-0">
                         <span *ngIf="article; else loadingData">
-                            <wikift-editor id="editormd-{{article?.id}}" markdown="{{article.content}}" [tocId]="'#wikift-toc-container'" [preview]="'true'"></wikift-editor>
+                            <wikift-editor id="editormd-{{article.id}}" markdown="{{article.content}}" [tocId]="'#wikift-toc-container'" [preview]="'true'"></wikift-editor>
                         </span>
                         <ng-template #loadingData>
                             数据加载中...
@@ -79,8 +80,8 @@
                 <div class="card-footer d-flex px-4 py-3">
                     <div class="mr-auto">
                         该文章由用户
-                        <a href="">{{ article?.userEntity.username }}</a> 于 {{ article?.createTime | date:'yyyy年MM月dd日HH:mm:ss' }} 发布&nbsp;
-                        <div dropdown class="d-none d-sm-inline-block">
+                        <a *ngIf="article?.userEntity" [routerLink]="['/account', article.userEntity.username, 'info']">{{ article.userEntity.username }}</a> 于 {{ article?.createTime | date:'yyyy年MM月dd日HH:mm:ss' }} 发布&nbsp;
+                        <div *ngIf="currentUser?.id === article?.userEntity.id" dropdown class="d-none d-sm-inline-block">
                             <a dropdownToggle class="top-nav__notify">
                                 <i class="zmdi zmdi-more"></i>
                             </a>

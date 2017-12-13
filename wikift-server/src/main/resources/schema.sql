@@ -11,9 +11,12 @@ CREATE TABLE role (
 -- 用户表
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
-  u_id       BIGINT(20)   NOT NULL AUTO_INCREMENT,
-  u_username VARCHAR(255) NOT NULL,
-  u_password VARCHAR(255) NOT NULL,
+  u_id         BIGINT(20)   NOT NULL AUTO_INCREMENT,
+  u_username   VARCHAR(25)  NOT NULL,
+  u_password   VARCHAR(255) NOT NULL,
+  u_avatar     VARCHAR(255),
+  u_alias_name VARCHAR(25),
+  u_signature  VARCHAR(200),
   PRIMARY KEY (u_id)
 );
 -- 用户路由关系表

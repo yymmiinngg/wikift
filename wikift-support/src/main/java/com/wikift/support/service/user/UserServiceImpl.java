@@ -29,6 +29,22 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
+    public UserEntity save(UserEntity entity) {
+        return userRepository.save(entity);
+    }
+
+    @Override
+    public UserEntity update(UserEntity entity) {
+        return userRepository.save(entity);
+    }
+
+    @Override
+    public Long delete(Long id) {
+        userRepository.delete(id);
+        return id;
+    }
+
+    @Override
     public UserEntity findByUsername(String username) {
         return userRepository.findByUsername(username);
     }

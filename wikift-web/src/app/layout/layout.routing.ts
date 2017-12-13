@@ -34,6 +34,7 @@ const LAYOUT_ROUTES: Routes = [
         path: '', component: LayoutComponent, canActivate: [AuthGuard], children: [
             { path: 'article/create', loadChildren: '../pages/article/create.article.module#CreateArticleModule' },
             { path: 'article/:id/editor', loadChildren: '../pages/article/editor.article.module#EditorArticleModule' },
+            { path: 'account/:username/info', loadChildren: '../pages/user/info/user.info.module#UserInfoModule' },
         ]
     },
     {

@@ -36,7 +36,6 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "article")
-@JsonIgnoreProperties(value = { "articleEntityList" })
 @EntityListeners(value = AuditingEntityListener.class)
 public class ArticleEntity {
 

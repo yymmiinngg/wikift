@@ -103,4 +103,10 @@ export class UserService {
         return this.http.get(path, options).map(ResultUtils.extractData);
     }
 
+    update(param: UserModel): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
+        return this.http.put(ApiConfig.API_USER_UPDATE, JSON.stringify(param), options)
+            .map(ResultUtils.extractData);
+    }
+
 }

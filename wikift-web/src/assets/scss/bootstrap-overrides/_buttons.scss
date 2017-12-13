@@ -146,3 +146,53 @@
     }
   }
 }
+.btn-icon {
+	padding: 0;
+	line-height: 2rem;
+	width: 2rem;
+	height: 2rem;
+	border: 1px solid $border-color-default;
+	cursor: pointer;
+
+	&.btn-sm {
+		line-height: 1.5rem;
+		width: 1.5rem;
+		height: 1.5rem;
+	}
+	
+	&.btn-lg {
+		line-height: 2.5rem;
+		width: 2.5rem;
+		height: 2.5rem;
+	}
+}
+.btn-icon-flip {
+	position: relative;
+	overflow: hidden;
+	&,
+	&:focus,
+	&:active {
+		outline: none;
+		box-shadow: none;
+	}
+
+	i {
+		border-radius: inherit;
+		transition: top .25s;
+		line-height: inherit;
+		position: absolute;
+		display: block;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		&:last-child { top: 100%; }
+	}
+
+	&:hover i:first-child {
+		top: -100%;
+	}
+
+	&:hover i:last-child {
+		top: 0;
+	}
+}

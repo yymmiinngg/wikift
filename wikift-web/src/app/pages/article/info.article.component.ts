@@ -22,6 +22,8 @@ import { ArticleModel } from '../../../app/shared/model/article/article.model';
 import { UserModel } from '../../../app/shared/model/user/user.model';
 import { ArticleService } from '../../../services/article.service';
 import { CommonResultModel } from '../../shared/model/result/result.model';
+import { CookieUtils } from '../../shared/utils/cookie.util';
+import { CommonConfig } from '../../../config/common.config';
 
 @Component({
     selector: 'wikift-article-info',
@@ -30,6 +32,8 @@ import { CommonResultModel } from '../../shared/model/result/result.model';
 
 export class InfoArticleComponent implements OnInit {
 
+    // 当前登录的用户
+    currentUser;
     // 文章id
     id: number;
     // 文章内容
@@ -42,6 +46,9 @@ export class InfoArticleComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (CookieUtils.getBy(CommonConfig.AUTH_USER_INFO)) {
+            this.currentUser = JSON.parse(CookieUtils.getBy(CommonConfig.AUTH_USER_INFO));
+        }
         const params = new ArticleModel();
         params.id = this.id;
         this.articleService.info(params).subscribe(

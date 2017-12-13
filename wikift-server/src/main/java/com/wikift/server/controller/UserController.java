@@ -24,6 +24,7 @@ import com.wikift.support.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -38,6 +39,15 @@ public class UserController {
     CommonResult<UserEntity> info(@PathVariable(value = "username") String username) {
         Assert.notNull(username, MessageEnums.PARAMS_NOT_NULL.getValue());
         return CommonResult.success(userService.findByUsername(username));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    CommonResult<UserEntity> update(@RequestBody UserEntity entity) {
+        Assert.notNull(entity, MessageEnums.PARAMS_NOT_NULL.getValue());
+        UserEntity targetUserEntity = userService.findByUsername(entity.getUsername());
+        entity.setPassword(targetUserEntity.getPassword());
+        return CommonResult.success(userService.update(entity));
     }
 
 }

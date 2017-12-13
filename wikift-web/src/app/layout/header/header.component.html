@@ -72,16 +72,25 @@
       <!-- 个人信息 -->
       <li dropdown class="d-none d-sm-inline-block">
         <a dropdownToggle=""></a>
-        <div class="user" dropdown>
+        <div *ngIf="userInfo" class="user" dropdown>
           <div class="user__info" dropdownToggle>
-            <img class="user__img" src="http://wiki.ttxit.com/download/attachments/327682/atl.site.logo?version=1&modificationDate=1496159729000&api=v2"
-              alt="">
+            <img class="user__img" src="{{userInfo.avatar}}" alt="{{ userInfo.username }}">
           </div>
           <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown-menu--block" role="menu">
-            <div class="listview listview--hover">
+            <div class="listview listview--hover mr-center">
               <div class="listview__header">欢迎:
                 <span class="red">{{ userInfo.username }}</span>
               </div>
+              <a [routerLink]="['/account', userInfo.username, 'info']" class="listview__item">
+                <div class="listview__content">
+                  <div class="listview__heading">
+                    <span>
+                      <i class="zmdi zmdi-account zmdi-hc-fw"></i>
+                      <span>个人资料</span>
+                    </span>
+                  </div>
+                </div>
+              </a>
               <a href="#" (click)="logout()" class="listview__item">
                 <div class="listview__content">
                   <div class="listview__heading">
