@@ -1,0 +1,119 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+  <p>
+  http://www.apache.org/licenses/LICENSE-2.0
+  <p>
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<section class="content--row">
+    <div class="row">
+        <!-- 文章内容 -->
+        <div class="col-md-9">
+            <div class="card">
+                <!-- 文章用户信息 -->
+                <div class="card-header border-b-1 px-4 py-3">
+                    <div class="card-block d-flex py-3">
+                        <div class="mr-auto">
+                            <h5>
+                                {{ article?.title }}
+                                <span class="badge badge-pill badge-danger">新</span>
+                            </h5>
+                        </div>
+                        <!-- 赞功能 -->
+                        <!-- <div>
+                            <div class="btn btn-outline-success btn-icon btn-sm disabled">
+                                <a href="">
+                                    <i class="zmdi zmdi-thumb-up zmdi-hc-fw"></i>
+                                </a> |
+                                <a href="">
+                                    <span>0</span>
+                                </a>
+                            </div>
+                        </div> -->
+                        <!-- 收藏功能 -->
+                        <!-- <div class="ml-4">
+                            <div class="btn btn-outline-info btn-icon btn-sm disabled">
+                                <a href="">
+                                    <i class="fa fa-share-alt"></i>
+                                </a> |
+                                <a href="">
+                                    <span>0</span>
+                                </a>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="media">
+                        <div class="media-body">
+                            <div class="user-sm">
+                                <div class="article__user__info">
+                                    <img class="article__user__img" src="https://sfault-avatar.b0.upaiyun.com/211/010/2110103846-58b3dd19aa7ba_big64" alt="">
+                                    <div *ngIf="article?.userEntity" class="article__user__name">
+                                        <a [routerLink]="['/account', article.userEntity.username, 'info']">{{ article?.userEntity.username }}</a> - {{ article?.createTime | date:'yyyy年MM月dd日HH:mm:ss'
+                                        }} 发布</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 文章内容信息 -->
+                <div class="card-body border-b-1">
+                    <p class="mb-0">
+                        <span *ngIf="article; else loadingData">
+                            <wikift-editor id="editormd-{{article.id}}" markdown="{{article.content}}" [tocId]="'#wikift-toc-container'" [preview]="'true'"></wikift-editor>
+                        </span>
+                        <ng-template #loadingData>
+                            数据加载中...
+                        </ng-template>
+                    </p>
+                </div>
+                <!-- 文章附属信息 -->
+                <div class="card-footer d-flex px-4 py-3">
+                    <div class="mr-auto">
+                        该文章由用户
+                        <a *ngIf="article?.userEntity" [routerLink]="['/account', article.userEntity.username, 'info']">{{ article.userEntity.username }}</a> 于 {{ article?.createTime | date:'yyyy年MM月dd日HH:mm:ss' }} 发布&nbsp;
+                        <div *ngIf="currentUser?.id === article?.userEntity.id" dropdown class="d-none d-sm-inline-block">
+                            <a dropdownToggle class="top-nav__notify">
+                                <i class="zmdi zmdi-more"></i>
+                            </a>
+                            <div *dropdownMenu class="dropdown-menu dropdown-menu-left">
+                                <a [routerLink]="['/article/', article.id, 'editor']" class="dropdown-item">
+                                    <i class="zmdi zmdi-edit"></i>
+                                    <small> 编辑该文章</small>
+                                </a>
+                                <a (click)="deleteArticle()" class="dropdown-item">
+                                    <i class="zmdi zmdi-delete"></i>
+                                    <small> 删除该文章</small>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 文章目录 -->
+        <div class="col-md-3">
+            <div>
+                <div class="card" style="position: fixed;">
+                    <div class="card-header border-b-1 px-4 py-3 mr-center">
+                        <div class="card-block">
+                            <h2 class="card-title">文章目录</h2>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="markdown-body editormd-preview-container-article" style="height:430px" id="wikift-toc-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

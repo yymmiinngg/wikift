@@ -1,0 +1,107 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+  <p>
+  http://www.apache.org/licenses/LICENSE-2.0
+  <p>
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<section class="content--row">
+  <div class="row">
+    <div class="site-content col-12">
+      <div class="profile-wrapper">
+        <!-- 个人信息 -->
+        <div *ngIf="user" class="profile-section-user col-3">
+          <div class="profile-cover-img">
+            <img src="{{user.avatar}}" alt="{{user.username}}">
+          </div>
+          <!-- 用户名, 头像 -->
+          <div class="profile-info-brief p-3">
+            <img class="img-fluid user-profile-avatar" src="{{user.avatar}}" alt="{{user.username}}">
+            <div class="text-center">
+              <h5 class="mb-4">{{user.username}}
+                <a *ngIf="currentUser?.id === user?.id" (click)="openSettingsUserProfile()" class="btn btn-sm btn-icon bg-twitter">
+                  <i class="zmdi zmdi-edit"></i>
+                </a>
+              </h5>
+              <p class="text-muted fz-base">{{user.signature ? user.signature : user.username + ' 太懒了什么都没写'}}</p>
+            </div>
+          </div>
+          <hr class="m-0">
+          <!-- 第三方授权 -->
+          <!-- <div class="d-flex justify-content-center flex-wrap p-2">
+            <a href="#" class="btn btn-icon btn-icon-flip text-white m-2">
+              <i class="fa fa-facebook bg-eee"></i>
+              <i class="fa fa-facebook bg-facebook"></i>
+            </a>
+            <a href="#" class="btn btn-icon btn-icon-flip text-white m-2">
+              <i class="fa fa-twitter bg-eee"></i>
+              <i class="fa fa-twitter bg-twitter"></i>
+            </a>
+            <a href="#" class="btn btn-icon btn-icon-flip text-white m-2">
+              <i class="fa fa-google-plus bg-eee"></i>
+              <i class="fa fa-google-plus bg-google-plus"></i>
+            </a>
+            <a href="#" class="btn btn-icon btn-icon-flip text-white m-2">
+              <i class="fa fa-flickr bg-eee"></i>
+              <i class="fa fa-flickr bg-flickr"></i>
+            </a>
+          </div> -->
+          <hr class="m-0">
+          <!-- 功能按钮 -->
+          <div *ngIf="currentUser?.id !== user?.id" class="d-flex justify-content-center flex-wrap p-2">
+            <button class="btn btn-success btn-sm m-2">
+              <i class="zmdi zmdi-account zmdi-hc-fw mr-1"></i>关注该用户
+            </button>
+          </div>
+          <!-- 文章属性 -->
+          <div bsModal #settingsUserProfile="bs-modal" class="modal fade">
+            <ng-container>
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header border-b-1">
+                    <h5 class="modal-title pull-left">设置用户相关属性</h5>
+                  </div>
+                  <div class="modal-body">
+                    <wizard navBarLayout="large-empty-symbols" style="width: 300px;">
+                      <wizard-step stepTitle="基本信息" navigationSymbol="&#xf0b1;" navigationSymbolFontFamily="FontAwesome">
+                        <div style="margin-top: 10px;">
+                          <div class="form-group form-group--centered">
+                            <input type="text" [(ngModel)]="commitUser.avatar" value="{{user.avatar}}" class="form-control" placeholder="请输入用户头像路径">
+                            <i class="form-group__bar"></i>
+                          </div>
+                          <div class="form-group form-group--centered">
+                            <textarea type="text" [(ngModel)]="commitUser.signature" value="{{user.signature}}" class="form-control" placeholder="请输入用户签名"></textarea>
+                            <i class="form-group__bar"></i>
+                          </div>
+                        </div>
+                        <a class="btn btn-info" nextStep>下一步</a>
+                      </wizard-step>
+                      <wizard-step stepTitle="信息预览" navigationSymbol="&#xf00c;" navigationSymbolFontFamily="FontAwesome">
+                        <div class="form-group row form-group--centered">
+                        </div>
+                        <a class="btn btn-secondary" previousStep>上一步</a>
+                        <a class="btn btn-primary" (click)="updated()">更新</a>
+                      </wizard-step>
+                    </wizard>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="profile-section-main col-9">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

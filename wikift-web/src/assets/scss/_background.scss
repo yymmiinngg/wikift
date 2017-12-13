@@ -1,0 +1,63 @@
+.bg-none {
+    background: none !important;
+  }
+  
+  .bg-eee {
+    background: #eee !important;
+  }
+  
+  .bg-faded {
+    background: $bg-faded !important;
+  }
+  
+  .bg-facebook,
+  .bg-hv-facebook:hover {
+    background-color: $brand-facebook !important;
+    color: #fff !important;
+  }
+  
+  .bg-twitter,
+  .bg-hv-twitter:hover {
+    background-color: $brand-twitter !important;
+    color: #fff !important;
+  }
+  
+  .bg-google-plus,
+  .bg-hv-google-plus:hover {
+    background-color: $brand-google-plus !important;
+    color: #fff !important;
+  }
+  
+  .bg-youtube,
+  .bg-hv-youtube:hover {
+    background-color: $brand-youtube !important;
+    color: #fff !important;
+  }
+  
+  .bg-linkedin,
+  .bg-hv-linkedin:hover {
+    background-color: $brand-linkedin !important;
+    color: #fff !important;
+  }
+  
+  .bg-flickr,
+  .bg-hv-flickr:hover {
+    background-color: $brand-flickr !important;
+    color: #fff !important;
+  }
+  
+  .bg-tumblr,
+  .bg-hv-tumblr:hover {
+    background-color: $brand-tumblr !important;
+    color: #fff !important;
+  }
+  
+  .bg-dribbble,
+  .bg-hv-dribbble:hover {
+    background-color: $brand-dribbble !important;
+    color: #fff !important;
+  }
+  
+  @each $color, $value in $colors {
+    @include bg-variant('.bg-#{$color}', $value);
+  }
