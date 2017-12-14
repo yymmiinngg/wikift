@@ -19,6 +19,8 @@ package com.wikift.support.service.user;
 
 import com.wikift.model.user.UserEntity;
 
+import java.util.List;
+
 public interface UserService {
 
     UserEntity save(UserEntity entity);
@@ -28,5 +30,7 @@ public interface UserService {
     Long delete(Long id);
 
     UserEntity findByUsername(String username);
+
+    List<UserEntity> findTopByArticle();
 
 }

@@ -6,6 +6,28 @@ INSERT INTO users (u_id, u_username, u_password, u_avatar)
 VALUES (1, 'user', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'http://www.ambari.com.cn/assets/logo-5irencws.png');
 INSERT INTO users (u_id, u_username, u_password)
 VALUES (2, 'admin', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
+INSERT INTO users (u_id, u_username, u_password)
+VALUES (3, 'admin1', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
+INSERT INTO users (u_id, u_username, u_password)
+VALUES (4, 'admin2', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
+INSERT INTO users (u_id, u_username, u_password)
+VALUES (5, 'admin3', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
+INSERT INTO users (u_id, u_username, u_password)
+VALUES (6, 'admin4', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
+INSERT INTO users (u_id, u_username, u_password)
+VALUES (7, 'admin5', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
+INSERT INTO users (u_id, u_username, u_password)
+VALUES (8, 'admin6', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
+INSERT INTO users (u_id, u_username, u_password)
+VALUES (9, 'admin7', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
+INSERT INTO users (u_id, u_username, u_password)
+VALUES (10, 'admin8', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
+INSERT INTO users (u_id, u_username, u_password)
+VALUES (11, 'admin9', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
+INSERT INTO users (u_id, u_username, u_password)
+VALUES (12, 'admin10', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
+INSERT INTO users (u_id, u_username, u_password)
+VALUES (13, 'admin11', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
 -- 用户与路由关系初始化数据
 INSERT INTO users_role_relation (urr_user_id, urr_role_id) VALUES (1, 1);
 INSERT INTO users_role_relation (urr_user_id, urr_role_id) VALUES (2, 1);

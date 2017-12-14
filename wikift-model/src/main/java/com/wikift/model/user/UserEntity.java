@@ -17,17 +17,13 @@
  */
 package com.wikift.model.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.wikift.model.article.ArticleEntity;
 import com.wikift.model.role.RoleEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -39,7 +35,7 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties({"password", "userEntity", "articleEntityList"})
+@JsonIgnoreProperties({"password", "userEntity"})
 public class UserEntity {
 
     @Id
@@ -68,12 +64,12 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name = "urr_role_id", referencedColumnName = "r_id"))
     private List<RoleEntity> userRoles;
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinTable(name = "users_article_relation",
-            joinColumns = @JoinColumn(name = "uar_user_id"),
-            inverseJoinColumns = @JoinColumn(name = "uar_article_id"))
-    private List<ArticleEntity> articleEntityList;
+    //    @JsonIgnore
+//    @OneToMany(fetch = FetchType.EAGER)
+//    @Fetch(FetchMode.SUBSELECT)
+//    @JoinTable(name = "users_article_relation",
+//            joinColumns = @JoinColumn(name = "uar_user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "uar_article_id"))
+//    private List<ArticleEntity> articleEntityList;
 
 }

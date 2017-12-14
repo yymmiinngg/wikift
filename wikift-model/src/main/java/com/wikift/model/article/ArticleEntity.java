@@ -37,6 +37,7 @@ import java.util.Date;
 @Entity
 @Table(name = "article")
 @EntityListeners(value = AuditingEntityListener.class)
+@JsonIgnoreProperties({"articleEntityList"})
 public class ArticleEntity {
 
     @Id

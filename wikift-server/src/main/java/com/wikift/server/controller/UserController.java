@@ -27,6 +27,8 @@ import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -48,6 +50,11 @@ public class UserController {
         UserEntity targetUserEntity = userService.findByUsername(entity.getUsername());
         entity.setPassword(targetUserEntity.getPassword());
         return CommonResult.success(userService.update(entity));
+    }
+
+    @RequestMapping(value = "/top", method = RequestMethod.GET)
+    CommonResult<UserEntity> findTopByArticle() {
+        return CommonResult.success(userService.findTopByArticle());
     }
 
 }

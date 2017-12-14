@@ -26,6 +26,7 @@ import { CookieUtils } from '../../shared/utils/cookie.util';
 import { CommonConfig } from '../../../config/common.config';
 
 import { ArticleService } from '../../../services/article.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
     selector: 'wikift-home',
@@ -35,11 +36,15 @@ import { ArticleService } from '../../../services/article.service';
 export class HomeComponent implements OnInit {
 
     articles;
+    // 活跃用户
+    activeUsers;
 
-    constructor(private articleService: ArticleService) { }
+    constructor(private articleService: ArticleService,
+        private userService: UserService) { }
 
     ngOnInit() {
         this.initArticleList();
+        this.initTopUserByActive();
     }
 
     /**
@@ -48,6 +53,12 @@ export class HomeComponent implements OnInit {
     initArticleList() {
         this.articleService.list().subscribe(
             result => { this.articles = result.data; }
+        );
+    }
+
+    initTopUserByActive() {
+        this.userService.topByActive().subscribe(
+            result => { this.activeUsers = result.data; }
         );
     }
 
