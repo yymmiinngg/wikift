@@ -23,6 +23,7 @@ import { HomeComponent } from './home.component';
 
 import { ArticleService } from '../../../services/article.service';
 import { WikiftEditorModule } from '../../shared/directives/wikift-editor/wikift-editor.module';
+import { UserService } from '../../../services/user.service';
 
 const HOME_ROUTES: Routes = [
     { path: '', component: HomeComponent }
@@ -39,7 +40,8 @@ const HOME_ROUTES: Routes = [
         HomeComponent
     ],
     providers: [
-        ArticleService
+        ArticleService,
+        UserService
     ],
 })
 export class HomeModule { }

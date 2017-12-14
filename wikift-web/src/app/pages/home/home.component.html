@@ -18,14 +18,14 @@
 <section class="content--row">
     <div class="row">
         <!-- 文章内容 -->
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div *ngFor="let article of articles" class="card">
                 <!-- 文章用户信息 -->
                 <div class="card-header border-b-1 px-4 py-3">
                     <div class="card-block d-flex py-3">
                         <div class="mr-auto">
                             <h5>
-                                <a [routerLink]="['/article/info', article.id]">{{ article.title }}</a>
+                                <a [routerLink]="['/article/info', article.id]">{{ article?.title }}</a>
                                 <span class="badge badge-pill badge-danger">新</span>
                             </h5>
                         </div>
@@ -37,7 +37,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="media">
+                    <div *ngIf="article.userEntity" class="media">
                         <div class="media-body">
                             <div class="user-sm">
                                 <div class="article__user__info">
@@ -79,11 +79,26 @@
             </div>
         </div>
         <!-- 其他功能 -->
-        <div class="col-md-4">
+        <div class="col-md-3">
+            <!-- 用户排行榜 -->
             <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">其他功能</h2>
-                    <small class="card-subtitle">努力开发中...</small>
+                <div class="card-header border-b-1 mr-center">
+                    <div class="card-block">
+                        <h2 class="card-title">活跃用户</h2>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="messages__sidebar">
+                        <div class="listview listview--hover">
+                            <a *ngFor="let user of activeUsers" class="listview__item" [routerLink]="['/account', user.username, 'info']">
+                                <img src="{{ user.avatar }}" alt="{{ user.username }}" class="listview__img">
+                                <div class="listview__content">
+                                    <div class="listview__heading">{{ user.username }}</div>
+                                    <p>{{ user.signature }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

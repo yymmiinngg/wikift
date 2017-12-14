@@ -109,4 +109,12 @@ export class UserService {
             .map(ResultUtils.extractData);
     }
 
+    /**
+     * 活跃用户
+     */
+    topByActive() {
+        const options = HttpUtils.getDefaultRequestOptions();
+        return this.http.get(ApiConfig.API_TOP_USER_BY_ACTIVE, options).map(ResultUtils.extractData);
+    }
+
 }

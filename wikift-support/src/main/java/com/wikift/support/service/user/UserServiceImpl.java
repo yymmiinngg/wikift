@@ -22,6 +22,8 @@ import com.wikift.support.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service(value = "userService")
 public class UserServiceImpl implements UserService {
 
@@ -47,6 +49,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public List<UserEntity> findTopByArticle() {
+        return userRepository.findTopByArticle();
     }
 
 }
