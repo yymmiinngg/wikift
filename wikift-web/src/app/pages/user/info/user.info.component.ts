@@ -22,7 +22,7 @@ import { CommonConfig } from '../../../../config/common.config';
 import { UserModel } from '../../../shared/model/user/user.model';
 import { UserService } from '../../../../services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ModalDirective } from '_ngx-bootstrap@2.0.0-beta.10@ngx-bootstrap/modal/modal.directive';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ArticleService } from '../../../../services/article.service';
 
 @Component({
