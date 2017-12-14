@@ -45,4 +45,6 @@ public interface ArticleService {
      */
     Long delete(Long id);
 
+    List<ArticleEntity> findTopByUserEntityAndCreateTime(String username);
+
 }

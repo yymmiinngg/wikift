@@ -62,10 +62,17 @@ public class ArticleController {
         return CommonResult.success(articleService.info(id));
     }
 
-//    @PreAuthorize("hasAuthority(('USER'))")
+    //    @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "list", method = RequestMethod.GET)
     CommonResult<ArticleEntity> list() {
         return CommonResult.success(articleService.findAll());
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "top/by/user", method = RequestMethod.GET)
+    CommonResult<ArticleEntity> findTopByUserEntityAndCreateTime(@RequestParam(value = "username") String username) {
+        Assert.notNull(username, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(articleService.findTopByUserEntityAndCreateTime(username));
     }
 
 }

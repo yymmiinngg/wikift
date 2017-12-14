@@ -56,4 +56,9 @@ public class ArticleServiceImpl implements ArticleService {
         return id;
     }
 
+    @Override
+    public List<ArticleEntity> findTopByUserEntityAndCreateTime(String username) {
+        return articleRepository.findTopByUserEntityAndCreateTime(username);
+    }
+
 }

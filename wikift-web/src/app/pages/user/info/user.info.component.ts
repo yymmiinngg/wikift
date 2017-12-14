@@ -23,6 +23,7 @@ import { UserModel } from '../../../shared/model/user/user.model';
 import { UserService } from '../../../../services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalDirective } from '_ngx-bootstrap@2.0.0-beta.10@ngx-bootstrap/modal/modal.directive';
+import { ArticleService } from '../../../../services/article.service';
 
 @Component({
     selector: 'wikift-user-info',
@@ -41,9 +42,12 @@ export class UserInfoComponent implements OnInit {
     username: string;
     @ViewChild('settingsUserProfile')
     public settingsUserProfile: ModalDirective;
+    // 用户一周最新文章
+    userTopArticles;
 
     constructor(private route: ActivatedRoute,
-        private userService: UserService) { }
+        private userService: UserService,
+        private articleService: ArticleService) { }
 
     ngOnInit() {
         if (CookieUtils.getBy(CommonConfig.AUTH_USER_INFO)) {
@@ -51,6 +55,7 @@ export class UserInfoComponent implements OnInit {
         }
         this.route.params.subscribe((params) => this.username = params.username);
         this.initUserInfo();
+        this.initTopByUser();
     }
 
     initUserInfo() {
@@ -60,6 +65,14 @@ export class UserInfoComponent implements OnInit {
             result => {
                 this.user = result.data;
                 Object.assign(this.commitUser, this.user);
+            }
+        );
+    }
+
+    initTopByUser() {
+        this.articleService.findTopByUser(this.username).subscribe(
+            result => {
+                this.userTopArticles = result.data;
             }
         );
     }
