@@ -24,6 +24,7 @@ export class ApiConfig {
     public static API_USER_INFO = '/user/info/';
     public static API_USER_UPDATE = '/user/update';
     public static API_TOP_USER_BY_ACTIVE = '/user/top';
+    public static API_USER_FOLLOW = '/user/follow';
 
     public static API_ARTICLE_LIST = '/article/list';
     public static API_ARTICLE_SAVE = '/article/create';

@@ -57,4 +57,13 @@ public class UserController {
         return CommonResult.success(userService.findTopByArticle());
     }
 
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "/follow", method = RequestMethod.PUT)
+    CommonResult follow(@RequestBody UserEntity entity){
+        Assert.notNull(entity, MessageEnums.PARAMS_NOT_NULL.getValue());
+        UserEntity targetUserEntity = userService.findByUsername(entity.getUsername());
+        entity.setPassword(targetUserEntity.getPassword());
+        return CommonResult.success(userService.save(entity));
+    }
+
 }

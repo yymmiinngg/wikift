@@ -14,6 +14,11 @@
         "secure": false,
         "logLevel": "debug"
     },
+    "/user/follow": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "logLevel": "debug"
+    },
     "/user/top": {
         "target": "http://localhost:8080",
         "secure": false,

@@ -44,6 +44,8 @@ export class UserInfoComponent implements OnInit {
     public settingsUserProfile: ModalDirective;
     // 用户一周最新文章
     userTopArticles;
+    // 关注按钮显示状态
+    showFollow = true;
 
     constructor(private route: ActivatedRoute,
         private userService: UserService,
@@ -58,6 +60,7 @@ export class UserInfoComponent implements OnInit {
         this.initTopByUser();
     }
 
+    // 初始化当前传递过来的用户信息
     initUserInfo() {
         const param = new UserParamModel();
         param.username = this.username;
@@ -65,6 +68,11 @@ export class UserInfoComponent implements OnInit {
             result => {
                 this.user = result.data;
                 Object.assign(this.commitUser, this.user);
+                this.user.follows.forEach(v => {
+                    if (v.id === this.currentUser.id) {
+                        this.showFollow = false;
+                    }
+                });
             }
         );
     }
@@ -87,6 +95,28 @@ export class UserInfoComponent implements OnInit {
                 this.settingsUserProfile.hide();
                 // 刷新页面数据
                 this.initUserInfo();
+            }
+        );
+    }
+
+    follow() {
+        this.commitUser.follows.push(this.currentUser);
+        this.userService.follow(this.commitUser).subscribe(
+            result => {
+                this.showFollow = false;
+            }
+        );
+    }
+
+    unfollow() {
+        this.user.follows.forEach(v => {
+            if (!this.showFollow) {
+                this.user.follows.splice(v, 1);
+            }
+        });
+        this.userService.follow(this.user).subscribe(
+            result => {
+                this.showFollow = true;
             }
         );
     }

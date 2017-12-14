@@ -19,6 +19,7 @@ package com.wikift.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.sun.istack.internal.Nullable;
 import com.wikift.model.role.RoleEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -63,6 +64,12 @@ public class UserEntity {
             joinColumns = @JoinColumn(name = "urr_user_id", referencedColumnName = "u_id"),
             inverseJoinColumns = @JoinColumn(name = "urr_role_id", referencedColumnName = "r_id"))
     private List<RoleEntity> userRoles;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "users_follow_relation",
+            joinColumns = @JoinColumn(name = "ufr_user_id_follw"),
+            inverseJoinColumns = @JoinColumn(name = "ufr_user_id_cover"))
+    private List<UserEntity> follows;
 
     //    @JsonIgnore
 //    @OneToMany(fetch = FetchType.EAGER)

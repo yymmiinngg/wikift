@@ -117,4 +117,10 @@ export class UserService {
         return this.http.get(ApiConfig.API_TOP_USER_BY_ACTIVE, options).map(ResultUtils.extractData);
     }
 
+    follow(param: UserModel) {
+        const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
+        return this.http.put(ApiConfig.API_USER_FOLLOW, JSON.stringify(param), options)
+            .map(ResultUtils.extractData);
+    }
+
 }

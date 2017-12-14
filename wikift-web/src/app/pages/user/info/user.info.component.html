@@ -58,11 +58,18 @@
           </div> -->
           <hr class="m-0">
           <!-- 关注用户按钮 -->
-          <div *ngIf="currentUser?.id !== user?.id" class="d-flex justify-content-center flex-wrap p-2">
-            <button class="btn btn-success btn-sm m-2">
+          <div *ngIf="showFollow; else unfollowUser" class="d-flex justify-content-center flex-wrap p-2">
+            <a class="btn btn-success btn-sm m-2" (click)="follow()">
               <i class="zmdi zmdi-account zmdi-hc-fw mr-1"></i>关注该用户
-            </button>
+            </a>
           </div>
+          <ng-template #unfollowUser>
+            <div class="d-flex justify-content-center flex-wrap p-2">
+              <a class="btn btn-success btn-sm m-2" (click)="unfollow()">
+                <i class="zmdi zmdi-account zmdi-hc-fw mr-1"></i>取消关注该用户
+              </a>
+            </div>
+          </ng-template>
           <!-- 用户属性 -->
           <div bsModal #settingsUserProfile="bs-modal" class="modal fade">
             <ng-container>

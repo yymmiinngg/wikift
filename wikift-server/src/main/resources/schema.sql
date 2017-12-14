@@ -27,6 +27,13 @@ CREATE TABLE users_role_relation (
   CONSTRAINT FK_user_id FOREIGN KEY (urr_user_id) REFERENCES users (u_id),
   CONSTRAINT FK_role_id FOREIGN KEY (urr_role_id) REFERENCES role (r_id)
 );
+-- 用户关注关系表
+DROP TABLE IF EXISTS users_follow_relation;
+CREATE TABLE users_follow_relation (
+  ufr_user_id_follw BIGINT(20) NOT NULL COMMENT '关注者用户id',
+  ufr_user_id_cover BIGINT(20) NOT NULL COMMENT '被关注用户id',
+  ufr_create_time   TIMESTAMP DEFAULT CURRENT_TIME()
+);
 -- 用户组表
 DROP TABLE IF EXISTS groups;
 CREATE TABLE groups (
