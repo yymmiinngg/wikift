@@ -15,30 +15,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Routes, RouterModule } from '@angular/router';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { CustomFormsModule } from 'ng2-validation';
 
-import { SharedModule } from '../shared/shared.module';
+import { UserRegisterComponent } from './user.register.component';
+import { UserService } from '../../../../services/user.service';
 
-import { AuthGuard } from './auth.guard';
-
-import { UserService } from '../../services/user.service';
+const USER_REGISTER_ROUTES: Routes = [
+    { path: '', component: UserRegisterComponent }
+];
 
 @NgModule({
     imports: [
-        SharedModule,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CustomFormsModule,
         TooltipModule.forRoot(),
-        BsDropdownModule.forRoot()
+        RouterModule.forChild(USER_REGISTER_ROUTES)
     ],
-    declarations: [
-    ],
+    exports: [],
+    declarations: [UserRegisterComponent],
     providers: [
-        AuthGuard,
         UserService
     ],
-    exports: [
-    ]
 })
-
-export class AuthModule { }
+export class UserRegisterModule { }

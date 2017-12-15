@@ -17,11 +17,15 @@
  */
 package com.wikift.support.service.user;
 
+import com.wikift.common.enums.RoleEnums;
+import com.wikift.model.role.RoleEntity;
 import com.wikift.model.user.UserEntity;
+import com.wikift.support.repository.role.RoleRepository;
 import com.wikift.support.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service(value = "userService")
@@ -30,8 +34,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     @Override
     public UserEntity save(UserEntity entity) {
+        // 默认设置用户权限为USER
+        List<RoleEntity> roleEntities = new ArrayList<>();
+        roleEntities.add(roleRepository.findByRoleName(RoleEnums.USER.name()));
+        entity.setUserRoles(roleEntities);
         return userRepository.save(entity);
     }
 

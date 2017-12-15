@@ -38,7 +38,10 @@ const LAYOUT_ROUTES: Routes = [
         ]
     },
     {
-        path: 'login', component: LoginComponent
+        path: 'user', children: [
+            { path: 'login', component: LoginComponent },
+            { path: 'register', loadChildren: '../pages/user/register/user.register.module#UserRegisterModule' },
+        ]
     }
 ];
 

@@ -20,9 +20,10 @@ package com.wikift.model.user;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.sun.istack.internal.Nullable;
 import com.wikift.model.role.RoleEntity;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -32,7 +33,6 @@ import java.util.List;
 @NoArgsConstructor
 // 禁用: 防止 Failed to evaluate Jackson deserialization for type
 //@AllArgsConstructor
-@RequiredArgsConstructor
 @Entity
 @Table(name = "users")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -42,7 +42,6 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "u_id")
-    @NonNull
     private Long id;
 
     @Column(name = "u_username")
@@ -60,7 +59,7 @@ public class UserEntity {
     @Column(name = "u_signature")
     private String signature;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(name = "users_role_relation",
             joinColumns = @JoinColumn(name = "urr_user_id", referencedColumnName = "u_id"),
             inverseJoinColumns = @JoinColumn(name = "urr_role_id", referencedColumnName = "r_id"))
