@@ -22,5 +22,6 @@ export class UserModel {
     public avatar: String;
     public aliasName: String;
     public signature: String;
+    public follows: Array<UserModel>;
 
 }

@@ -33,4 +33,12 @@ public interface UserService {
 
     List<UserEntity> findTopByArticle();
 
+    List<UserEntity> findAllFollowersByUserId(Long userId);
+
+    UserEntity findUserEntityByFollowsExists(Long followUserId, Long coverUserId);
+
+    Integer follow(Long followUserId, Long coverUserId);
+
+    Integer unFollow(Long followUserId, Long coverUserId);
+
 }

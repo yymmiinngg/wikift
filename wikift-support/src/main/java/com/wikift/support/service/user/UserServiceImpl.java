@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity update(UserEntity entity) {
+        entity.setPassword(userRepository.findByUsername(entity.getUsername()).getPassword());
         return userRepository.save(entity);
     }
 
@@ -54,6 +55,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserEntity> findTopByArticle() {
         return userRepository.findTopByArticle();
+    }
+
+    @Override
+    public List<UserEntity> findAllFollowersByUserId(Long userId) {
+        return userRepository.findAllFollowersByUserId(userId);
+    }
+
+    @Override
+    public UserEntity findUserEntityByFollowsExists(Long followUserId, Long coverUserId) {
+        return userRepository.findUserEntityByFollowsExists(followUserId, coverUserId);
+    }
+
+    @Override
+    public Integer follow(Long followUserId, Long coverUserId) {
+        return userRepository.follow(followUserId, coverUserId);
+    }
+
+    @Override
+    public Integer unFollow(Long followUserId, Long coverUserId) {
+        return userRepository.unFollow(followUserId, coverUserId);
     }
 
 }

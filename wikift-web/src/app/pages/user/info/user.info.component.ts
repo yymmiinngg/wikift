@@ -22,7 +22,8 @@ import { CommonConfig } from '../../../../config/common.config';
 import { UserModel } from '../../../shared/model/user/user.model';
 import { UserService } from '../../../../services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ModalDirective } from '_ngx-bootstrap@2.0.0-beta.10@ngx-bootstrap/modal/modal.directive';
+import { ModalDirective } from 'ngx-bootstrap/modal';
+import { ArticleService } from '../../../../services/article.service';
 
 @Component({
     selector: 'wikift-user-info',
@@ -41,9 +42,14 @@ export class UserInfoComponent implements OnInit {
     username: string;
     @ViewChild('settingsUserProfile')
     public settingsUserProfile: ModalDirective;
+    // 用户一周最新文章
+    userTopArticles;
+    // 关注按钮显示状态
+    isFollow = true;
 
     constructor(private route: ActivatedRoute,
-        private userService: UserService) { }
+        private userService: UserService,
+        private articleService: ArticleService) { }
 
     ngOnInit() {
         if (CookieUtils.getBy(CommonConfig.AUTH_USER_INFO)) {
@@ -51,8 +57,10 @@ export class UserInfoComponent implements OnInit {
         }
         this.route.params.subscribe((params) => this.username = params.username);
         this.initUserInfo();
+        this.initTopByUser();
     }
 
+    // 初始化当前传递过来的用户信息
     initUserInfo() {
         const param = new UserParamModel();
         param.username = this.username;
@@ -60,6 +68,25 @@ export class UserInfoComponent implements OnInit {
             result => {
                 this.user = result.data;
                 Object.assign(this.commitUser, this.user);
+                this.initUserFollowStatus();
+            }
+        );
+    }
+
+    initUserFollowStatus() {
+        this.userService.followCheck(this.user.id, this.currentUser.id).subscribe(
+            result => {
+                if (result.data) {
+                    this.isFollow = false;
+                }
+            }
+        );
+    }
+
+    initTopByUser() {
+        this.articleService.findTopByUser(this.username).subscribe(
+            result => {
+                this.userTopArticles = result.data;
             }
         );
     }
@@ -74,6 +101,32 @@ export class UserInfoComponent implements OnInit {
                 this.settingsUserProfile.hide();
                 // 刷新页面数据
                 this.initUserInfo();
+            }
+        );
+    }
+
+    follow() {
+        const follows = new Array();
+        follows.push(this.currentUser);
+        this.user.follows = follows;
+        this.userService.follow(this.user).subscribe(
+            result => {
+                if (result.data) {
+                    this.isFollow = false;
+                }
+            }
+        );
+    }
+
+    unfollow() {
+        const follows = new Array();
+        follows.push(this.currentUser);
+        this.user.follows = follows;
+        this.userService.unfollow(this.user).subscribe(
+            result => {
+                if (result.data) {
+                    this.isFollow = true;
+                }
             }
         );
     }

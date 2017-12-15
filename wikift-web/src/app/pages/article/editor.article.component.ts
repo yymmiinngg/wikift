@@ -23,7 +23,7 @@ import { UserModel } from '../../../app/shared/model/user/user.model';
 import { CookieUtils } from '../../shared/utils/cookie.util';
 import { CommonConfig } from '../../../config/common.config';
 import { ArticleService } from '../../../services/article.service';
-import { ModalDirective } from '_ngx-bootstrap@2.0.0-beta.10@ngx-bootstrap/modal/modal.directive';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
     selector: 'wikift-article-editor',

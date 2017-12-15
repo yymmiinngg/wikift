@@ -17,13 +17,12 @@
  */
 package com.wikift.model.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.sun.istack.internal.Nullable;
 import com.wikift.model.role.RoleEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -31,16 +30,19 @@ import java.util.List;
 @Data
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
+// 禁用: 防止 Failed to evaluate Jackson deserialization for type
+//@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Table(name = "users")
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties({"password", "userEntity"})
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonIgnoreProperties(value = {"password", "userEntity"})
 public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "u_id")
+    @NonNull
     private Long id;
 
     @Column(name = "u_username")
@@ -64,12 +66,11 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name = "urr_role_id", referencedColumnName = "r_id"))
     private List<RoleEntity> userRoles;
 
-    //    @JsonIgnore
-//    @OneToMany(fetch = FetchType.EAGER)
-//    @Fetch(FetchMode.SUBSELECT)
-//    @JoinTable(name = "users_article_relation",
-//            joinColumns = @JoinColumn(name = "uar_user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "uar_article_id"))
-//    private List<ArticleEntity> articleEntityList;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "users_follow_relation",
+            joinColumns = @JoinColumn(name = "ufr_user_id_follw"),
+            inverseJoinColumns = @JoinColumn(name = "ufr_user_id_cover"))
+    @JsonBackReference
+    private List<UserEntity> follows;
 
 }

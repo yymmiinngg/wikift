@@ -57,13 +57,22 @@
             </a>
           </div> -->
           <hr class="m-0">
-          <!-- 功能按钮 -->
-          <div *ngIf="currentUser?.id !== user?.id" class="d-flex justify-content-center flex-wrap p-2">
-            <button class="btn btn-success btn-sm m-2">
-              <i class="zmdi zmdi-account zmdi-hc-fw mr-1"></i>关注该用户
-            </button>
-          </div>
-          <!-- 文章属性 -->
+          <!-- 关注用户按钮 -->
+          <ng-container *ngIf="currentUser?.id !== user?.id">
+            <div *ngIf="isFollow; else unfollowUser" class="d-flex justify-content-center flex-wrap p-2">
+              <a class="btn btn-success btn-sm m-2" (click)="follow()">
+                <i class="zmdi zmdi-account zmdi-hc-fw mr-1"></i>关注该用户
+              </a>
+            </div>
+            <ng-template #unfollowUser>
+              <div class="d-flex justify-content-center flex-wrap p-2">
+                <a class="btn btn-success btn-sm m-2" (click)="unfollow()">
+                  <i class="zmdi zmdi-account zmdi-hc-fw mr-1"></i>取消关注该用户
+                </a>
+              </div>
+            </ng-template>
+          </ng-container>
+          <!-- 用户属性 -->
           <div bsModal #settingsUserProfile="bs-modal" class="modal fade">
             <ng-container>
               <div class="modal-dialog">
@@ -99,7 +108,30 @@
             </ng-container>
           </div>
         </div>
+        <!-- 个人相关信息 -->
         <div class="profile-section-main col-9">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- 最新文章 -->
+              <div class="card">
+                <div class="card-header border-b-1 px-4 py-3">
+                  <h2 class="card-title">最新文章</h2>
+                </div>
+                <div class="card-body">
+                  <div class="messages__sidebar">
+                    <div class="listview listview--hover">
+                      <a *ngFor="let article of userTopArticles" class="listview__item" [routerLink]="['/article/info', article.userEntity.id]">
+                        <img src="{{ article.userEntity.avatar }}" class="listview__img">
+                        <div class="listview__content">
+                          <div class="listview__heading">{{ article.title }}</div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

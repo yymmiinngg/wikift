@@ -70,4 +70,12 @@ export class ArticleService {
         return this.http.get(ApiConfig.API_ARTICLE_INFO + param.id, options).map(ResultUtils.extractData);
     }
 
+    findTopByUser(userId): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        const params = HttpUtils.getParams();
+        params.append('username', userId);
+        options.params = params;
+        return this.http.get(ApiConfig.API_ARTICLE_TOP_BY_USER, options).map(ResultUtils.extractData);
+    }
+
 }
