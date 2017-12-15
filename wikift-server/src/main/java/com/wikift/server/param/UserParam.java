@@ -15,29 +15,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Injectable } from '@angular/core';
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+package com.wikift.server.param;
 
-import { CommonConfig } from '../../config/common.config';
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import { Cookie } from 'ng2-cookies';
+@Data
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserParam {
 
-/**
- * 用户授权
- */
-@Injectable()
-export class AuthGuard implements CanActivate {
-
-    constructor(private router: Router) { }
-
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        // 存储appToken到session
-        if (!Cookie.get(CommonConfig.AUTH_TOKEN)) {
-            this.router.navigate(['/user/login']);
-            return false;
-        } else {
-            return true;
-        }
-    }
+    private String username;
+    private String password;
 
 }

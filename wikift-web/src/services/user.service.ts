@@ -89,7 +89,7 @@ export class UserService {
      */
     checkCredentials() {
         if (!CookieUtils.get()) {
-            this.router.navigate(['/login']);
+            this.router.navigate(['/user/login']);
         }
     }
 
@@ -98,9 +98,15 @@ export class UserService {
      * @param param 用户信息
      */
     info(param: UserParamModel): Observable<CommonResultModel> {
-        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
         const path = ApiConfig.API_USER_INFO + param.username;
         return this.http.get(path, options).map(ResultUtils.extractData);
+    }
+
+    register(param: UserParamModel): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptions();
+        return this.http.post(ApiConfig.API_USER_REGISTER, JSON.stringify(param), options)
+            .map(ResultUtils.extractData);
     }
 
     update(param: UserModel): Observable<CommonResultModel> {

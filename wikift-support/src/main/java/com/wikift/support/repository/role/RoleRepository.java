@@ -15,29 +15,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Injectable } from '@angular/core';
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+package com.wikift.support.repository.role;
 
-import { CommonConfig } from '../../config/common.config';
+import com.wikift.model.role.RoleEntity;
+import org.springframework.data.repository.CrudRepository;
 
-import { Cookie } from 'ng2-cookies';
+public interface RoleRepository extends CrudRepository<RoleEntity, Long> {
 
-/**
- * 用户授权
- */
-@Injectable()
-export class AuthGuard implements CanActivate {
-
-    constructor(private router: Router) { }
-
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        // 存储appToken到session
-        if (!Cookie.get(CommonConfig.AUTH_TOKEN)) {
-            this.router.navigate(['/user/login']);
-            return false;
-        } else {
-            return true;
-        }
-    }
+    /**
+     * 根据权限名称查询权限信息
+     *
+     * @param roleName 权限名称
+     * @return 权限信息
+     */
+    RoleEntity findByRoleName(String roleName);
 
 }

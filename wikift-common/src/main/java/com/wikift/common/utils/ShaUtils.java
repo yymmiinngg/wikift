@@ -15,29 +15,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Injectable } from '@angular/core';
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+package com.wikift.common.utils;
 
-import { CommonConfig } from '../../config/common.config';
-
-import { Cookie } from 'ng2-cookies';
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
- * 用户授权
+ * sha加密
  */
-@Injectable()
-export class AuthGuard implements CanActivate {
+public class ShaUtils {
 
-    constructor(private router: Router) { }
-
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        // 存储appToken到session
-        if (!Cookie.get(CommonConfig.AUTH_TOKEN)) {
-            this.router.navigate(['/user/login']);
-            return false;
-        } else {
-            return true;
+    public static String hash256(String data) {
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         }
+        md.update(data.getBytes());
+        return bytesToHex(md.digest());
+    }
+
+    public static String bytesToHex(byte[] bytes) {
+        StringBuffer result = new StringBuffer();
+        for (byte byt : bytes) result.append(Integer.toString((byt & 0xff) + 0x100, 16).substring(1));
+        return result.toString();
     }
 
 }

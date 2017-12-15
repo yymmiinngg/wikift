@@ -72,7 +72,7 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     CookieUtils.clear();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/user/login']);
   }
 
 }

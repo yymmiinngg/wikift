@@ -18,15 +18,15 @@
 package com.wikift.server.controller;
 
 import com.wikift.common.enums.MessageEnums;
+import com.wikift.common.utils.ShaUtils;
 import com.wikift.model.result.CommonResult;
 import com.wikift.model.user.UserEntity;
+import com.wikift.server.param.UserParam;
 import com.wikift.support.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -34,6 +34,17 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    CommonResult<UserEntity> register(@RequestBody UserParam param) {
+        Assert.notNull(param, MessageEnums.PARAMS_NOT_NULL.getValue());
+        // 手动设置id为0, 阻止jpa存储数据出现json绑定错误
+        UserEntity entity = new UserEntity();
+        entity.setId(0l);
+        entity.setUsername(param.getUsername());
+        entity.setPassword(ShaUtils.hash256(param.getPassword()));
+        return CommonResult.success(userService.save(entity));
+    }
 
     @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "/info/{username}", method = RequestMethod.GET)

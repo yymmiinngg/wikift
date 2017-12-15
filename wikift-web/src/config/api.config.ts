@@ -25,6 +25,7 @@ export class ApiConfig {
     public static API_USER_UPDATE = '/user/update';
     public static API_TOP_USER_BY_ACTIVE = '/user/top';
     public static API_USER_FOLLOW = '/user/follow';
+    public static API_USER_REGISTER = '/user/register';
     public static API_USER_UNFOLLOW = '/user/unfollow';
     public static API_USER_FOLLOWS = '/user/follows/';
     public static API_USER_FOLLOW_CHECK = '/user/follows/check';
