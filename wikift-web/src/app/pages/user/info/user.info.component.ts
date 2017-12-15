@@ -45,7 +45,7 @@ export class UserInfoComponent implements OnInit {
     // 用户一周最新文章
     userTopArticles;
     // 关注按钮显示状态
-    showFollow = true;
+    isFollow = true;
 
     constructor(private route: ActivatedRoute,
         private userService: UserService,
@@ -68,11 +68,17 @@ export class UserInfoComponent implements OnInit {
             result => {
                 this.user = result.data;
                 Object.assign(this.commitUser, this.user);
-                this.user.follows.forEach(v => {
-                    if (v.id === this.currentUser.id) {
-                        this.showFollow = false;
-                    }
-                });
+                this.initUserFollowStatus();
+            }
+        );
+    }
+
+    initUserFollowStatus() {
+        this.userService.followCheck(this.user.id, this.currentUser.id).subscribe(
+            result => {
+                if (result.data) {
+                    this.isFollow = false;
+                }
             }
         );
     }
@@ -100,23 +106,27 @@ export class UserInfoComponent implements OnInit {
     }
 
     follow() {
-        this.commitUser.follows.push(this.currentUser);
-        this.userService.follow(this.commitUser).subscribe(
+        const follows = new Array();
+        follows.push(this.currentUser);
+        this.user.follows = follows;
+        this.userService.follow(this.user).subscribe(
             result => {
-                this.showFollow = false;
+                if (result.data) {
+                    this.isFollow = false;
+                }
             }
         );
     }
 
     unfollow() {
-        this.user.follows.forEach(v => {
-            if (!this.showFollow) {
-                this.user.follows.splice(v, 1);
-            }
-        });
-        this.userService.follow(this.user).subscribe(
+        const follows = new Array();
+        follows.push(this.currentUser);
+        this.user.follows = follows;
+        this.userService.unfollow(this.user).subscribe(
             result => {
-                this.showFollow = true;
+                if (result.data) {
+                    this.isFollow = true;
+                }
             }
         );
     }

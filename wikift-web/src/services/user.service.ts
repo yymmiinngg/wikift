@@ -123,4 +123,25 @@ export class UserService {
             .map(ResultUtils.extractData);
     }
 
+    unfollow(param: UserModel) {
+        const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
+        return this.http.put(ApiConfig.API_USER_UNFOLLOW, JSON.stringify(param), options)
+            .map(ResultUtils.extractData);
+    }
+
+    follows(userId) {
+        const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
+        return this.http.put(ApiConfig.API_USER_FOLLOWS + userId, options)
+            .map(ResultUtils.extractData);
+    }
+
+    followCheck(followUserId, coverUserId): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        const params = HttpUtils.getParams();
+        params.append('followUserId', followUserId);
+        params.append('coverUserId', coverUserId);
+        options.params = params;
+        return this.http.get(ApiConfig.API_USER_FOLLOW_CHECK, options).map(ResultUtils.extractData);
+    }
+
 }

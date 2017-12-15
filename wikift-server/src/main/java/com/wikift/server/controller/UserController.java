@@ -24,7 +24,6 @@ import com.wikift.support.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -59,11 +58,32 @@ public class UserController {
 
     @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "/follow", method = RequestMethod.PUT)
-    CommonResult follow(@RequestBody UserEntity entity){
+    CommonResult follow(@RequestBody UserEntity entity) {
         Assert.notNull(entity, MessageEnums.PARAMS_NOT_NULL.getValue());
-        UserEntity targetUserEntity = userService.findByUsername(entity.getUsername());
-        entity.setPassword(targetUserEntity.getPassword());
-        return CommonResult.success(userService.save(entity));
+        return CommonResult.success(userService.follow(entity.getId(), entity.getFollows().get(0).getId()));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "/unfollow", method = RequestMethod.PUT)
+    CommonResult unfollow(@RequestBody UserEntity entity) {
+        Assert.notNull(entity, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(userService.unFollow(entity.getId(), entity.getFollows().get(0).getId()));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "/follows/{userId}", method = RequestMethod.GET)
+    CommonResult<UserEntity> getFollows(@PathVariable(value = "userId") Long userId) {
+        Assert.notNull(userId, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(userService.findAllFollowersByUserId(userId));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "/follows/check", method = RequestMethod.GET)
+    CommonResult<UserEntity> checkFollow(@RequestParam(value = "followUserId") Long followUserId,
+                                         @RequestParam(value = "coverUserId") Long coverUserId) {
+        Assert.notNull(followUserId, MessageEnums.PARAMS_NOT_NULL.getValue());
+        Assert.notNull(coverUserId, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(userService.findUserEntityByFollowsExists(followUserId, coverUserId));
     }
 
 }

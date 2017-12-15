@@ -19,6 +19,21 @@
         "secure": false,
         "logLevel": "debug"
     },
+    "/user/unfollow": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/user/follows": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/user/follows/check": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "logLevel": "debug"
+    },
     "/user/top": {
         "target": "http://localhost:8080",
         "secure": false,

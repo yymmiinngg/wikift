@@ -28,7 +28,7 @@ public interface ArticleRepository extends CrudRepository<ArticleEntity, Long> {
     /**
      * 根据用户和时间查询文章信息
      *
-     * @param username 用户名称
+     * @param username 用户id
      * @return 文章列表
      */
     @Query(value = "SELECT * FROM users_article_relation AS uar, article AS a, users AS u " +
