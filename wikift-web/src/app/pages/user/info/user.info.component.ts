@@ -48,6 +48,8 @@ export class UserInfoComponent implements OnInit {
     // 关注按钮显示状态
     isFollow = true;
     page: CommonPageModel;
+    // 关注/被关注用户总数
+    followCounter;
 
     constructor(private route: ActivatedRoute,
         private userService: UserService,
@@ -71,12 +73,13 @@ export class UserInfoComponent implements OnInit {
                 this.user = result.data;
                 Object.assign(this.commitUser, this.user);
                 this.initUserFollowStatus();
+                this.initFollowCounter();
             }
         );
     }
 
     initUserFollowStatus() {
-        this.userService.followCheck(this.user.id, this.currentUser.id).subscribe(
+        this.userService.followCheck(this.currentUser.id, this.user.id).subscribe(
             result => {
                 if (result.data) {
                     this.isFollow = false;
@@ -89,6 +92,14 @@ export class UserInfoComponent implements OnInit {
         this.articleService.findTopByUser(this.username).subscribe(
             result => {
                 this.userTopArticles = result.data;
+            }
+        );
+    }
+
+    initFollowCounter() {
+        this.userService.followsCount(this.user.id).subscribe(
+            result => {
+                this.followCounter = result.data;
             }
         );
     }
@@ -109,9 +120,9 @@ export class UserInfoComponent implements OnInit {
 
     follow() {
         const follows = new Array();
-        follows.push(this.currentUser);
-        this.user.follows = follows;
-        this.userService.follow(this.user).subscribe(
+        follows.push(this.user);
+        this.currentUser.follows = follows;
+        this.userService.follow(this.currentUser).subscribe(
             result => {
                 if (result.data) {
                     this.isFollow = false;
@@ -122,9 +133,9 @@ export class UserInfoComponent implements OnInit {
 
     unfollow() {
         const follows = new Array();
-        follows.push(this.currentUser);
-        this.user.follows = follows;
-        this.userService.unfollow(this.user).subscribe(
+        follows.push(this.user);
+        this.currentUser.follows = follows;
+        this.userService.unfollow(this.currentUser).subscribe(
             result => {
                 if (result.data) {
                     this.isFollow = true;

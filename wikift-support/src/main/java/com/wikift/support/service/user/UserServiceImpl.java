@@ -88,4 +88,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.unFollow(followUserId, coverUserId);
     }
 
+    @Override
+    public Integer findFollowCount(Long followUserId) {
+        return userRepository.findFollowCount(followUserId);
+    }
+
+    @Override
+    public Integer findFollowCoverCount(Long followUserId) {
+        return userRepository.findFollowCoverCount(followUserId);
+    }
+
 }

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 import { UserParamModel } from '../../../shared/model/param/user.param.model';
@@ -31,7 +32,8 @@ export class UserRegisterComponent implements OnInit {
     form: FormGroup;
     user: UserParamModel;
 
-    constructor(private userService: UserService) {
+    constructor(private router: Router,
+        private userService: UserService) {
         this.form = new FormGroup({
             username: new FormControl('', CustomValidators.range([5, 9])),
             password: new FormControl('', CustomValidators.number)
@@ -45,7 +47,9 @@ export class UserRegisterComponent implements OnInit {
     register() {
         this.userService.register(this.user).subscribe(
             result => {
-                console.log(result.data);
+                if (result.data) {
+                    this.router.navigate(['/user/login']);
+                }
             }
         );
     }

@@ -29,6 +29,7 @@ export class ApiConfig {
     public static API_USER_UNFOLLOW = '/user/unfollow';
     public static API_USER_FOLLOWS = '/user/follows/';
     public static API_USER_FOLLOW_CHECK = '/user/follows/check';
+    public static API_USER_FOLLOW_COUNT = '/user/follows/count';
 
     public static API_ARTICLE_LIST = '/article/list';
     public static API_ARTICLE_SAVE = '/article/create';

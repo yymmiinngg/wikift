@@ -28,6 +28,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -95,6 +98,16 @@ public class UserController {
         Assert.notNull(followUserId, MessageEnums.PARAMS_NOT_NULL.getValue());
         Assert.notNull(coverUserId, MessageEnums.PARAMS_NOT_NULL.getValue());
         return CommonResult.success(userService.findUserEntityByFollowsExists(followUserId, coverUserId));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "/follows/count", method = RequestMethod.GET)
+    CommonResult<UserEntity> findFollowCount(@RequestParam(value = "followUserId") Long followUserId) {
+        Assert.notNull(followUserId, MessageEnums.PARAMS_NOT_NULL.getValue());
+        Map<String, Integer> count = new ConcurrentHashMap<>();
+        count.put("followCount", userService.findFollowCount(followUserId));
+        count.put("coverCount", userService.findFollowCoverCount(followUserId));
+        return CommonResult.success(count);
     }
 
 }
