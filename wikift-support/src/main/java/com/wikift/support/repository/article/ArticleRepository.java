@@ -81,4 +81,65 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             nativeQuery = true)
     Integer findFabulousArticleExists(Integer userId, Integer articleId);
 
+    /**
+     * 用户浏览文章信息
+     *
+     * @param userId     当前浏览文章的用户id
+     * @param articleId  当前浏览的文章id
+     * @param viewCount  浏览文章的总数
+     * @param viewDevice 浏览文章的用户设备(用于区分为做bi准备)
+     * @return 数据状态
+     */
+    @Modifying
+    @Query(value = "INSERT INTO users_article_view_relation(uavr_user_id, uavr_article_id, uavr_view_count, uavr_view_device) " +
+            "VALUES (?1, ?2, ?3, ?4)",
+            nativeQuery = true)
+    Integer viewArticle(Integer userId, Integer articleId, Integer viewCount, String viewDevice);
+
+    /**
+     * 更新文章的访问数据总数
+     *
+     * @param userId     当前浏览文章的用户id
+     * @param articleId  当前浏览的文章id
+     * @param viewCount  浏览文章的总数
+     * @param viewDevice 浏览文章的用户设备(用于区分为做bi准备)
+     * @return
+     */
+    @Modifying
+    @Query(value = "UPDATE users_article_view_relation " +
+            "SET uavr_user_id = ?1, uavr_article_id = ?2, uavr_view_count = ?3, uavr_view_device = ?4 " +
+            "WHERE uavr_user_id = ?1 " +
+            "AND uavr_article_id = ?2 " +
+            "AND uavr_view_device = ?4",
+            nativeQuery = true)
+    Integer updateViewArticle(Integer userId, Integer articleId, Integer viewCount, String viewDevice);
+
+    /**
+     * 根据用户访问的设备进行查询访问数据总数
+     *
+     * @param userId     当前浏览文章的用户id
+     * @param articleId  当前浏览的文章id
+     * @param viewDevice 浏览文章的用户设备(同一用户使用多设备访问, 标识为多设备)
+     * @return 当前用户, 设备对当前文章的访问量总数
+     */
+    @Query(value = "SELECT SUM(uavr_view_count) FROM users_article_view_relation " +
+            "WHERE uavr_user_id = ?1 " +
+            "AND uavr_article_id = ?2 " +
+            "AND uavr_view_device = ?3",
+            nativeQuery = true)
+    Integer findViewArticleByDevice(Integer userId, Integer articleId, String viewDevice);
+
+    /**
+     * 根据用户访问的设备进行查询访问数据总数
+     *
+     * @param userId    当前浏览文章的用户id
+     * @param articleId 当前浏览的文章id
+     * @return 对当前文章的访问量总数
+     */
+    @Query(value = "SELECT SUM(uavr_view_count) FROM users_article_view_relation " +
+            "WHERE uavr_user_id = ?1 " +
+            "AND uavr_article_id = ?2",
+            nativeQuery = true)
+    Integer findViewArticle(Integer userId, Integer articleId);
+
 }

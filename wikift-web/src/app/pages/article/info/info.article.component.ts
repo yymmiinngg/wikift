@@ -17,6 +17,8 @@
  */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Ng2DeviceService } from 'ng2-device-detector';
+import { Md5 } from 'ts-md5/dist/md5';
 
 import { ArticleModel } from '../../../../app/shared/model/article/article.model';
 import { UserModel } from '../../../../app/shared/model/user/user.model';
@@ -25,6 +27,7 @@ import { CommonResultModel } from '../../../shared/model/result/result.model';
 import { CookieUtils } from '../../../shared/utils/cookie.util';
 import { CommonConfig } from '../../../../config/common.config';
 import { ArticleFabulousParamModel } from '../../../shared/model/param/article.fabulous.param.model';
+import { ArticleViewParamModel } from '../../../shared/model/param/article.view.param.model';
 
 @Component({
     selector: 'wikift-article-info',
@@ -41,9 +44,12 @@ export class InfoArticleComponent implements OnInit {
     public article: ArticleModel;
     // 是否可赞状态
     fabulousStatus = true;
+    // 文章访问总数
+    public articleViewCount;
 
     constructor(private route: ActivatedRoute,
-        private articleService: ArticleService) {
+        private articleService: ArticleService,
+        private deviceService: Ng2DeviceService) {
         // 获取页面url传递的id参数
         this.route.params.subscribe((params) => this.id = params.id);
     }
@@ -62,6 +68,7 @@ export class InfoArticleComponent implements OnInit {
             result => {
                 this.article = result.data;
                 this.initFabulousStatus();
+                this.initViewArticle();
             }
         );
     }
@@ -75,6 +82,34 @@ export class InfoArticleComponent implements OnInit {
                 if (result.data > 0) {
                     this.fabulousStatus = false;
                 }
+            }
+        );
+    }
+
+    initViewArticle() {
+        const articleView = new ArticleViewParamModel();
+        articleView.userId = this.article.userEntity.id;
+        articleView.articleId = this.article.id;
+        articleView.viewCount = 1;
+        const hashStr = this.deviceService.userAgent + this.deviceService.browser +
+            + this.deviceService.browser_version + + this.deviceService.os + this.deviceService.os_version
+            + articleView.userId + articleView.articleId;
+        articleView.device = Md5.hashStr(hashStr);
+        this.articleService.viewArticle(articleView).subscribe(
+            result => {
+                // 在这里初始化是为了加载本次访问的数据
+                this.initViewArticleCount();
+            }
+        );
+    }
+
+    initViewArticleCount() {
+        const articleView = new ArticleViewParamModel();
+        articleView.userId = this.article.userEntity.id;
+        articleView.articleId = this.article.id;
+        this.articleService.viewArticleCount(articleView).subscribe(
+            result => {
+                this.articleViewCount = result.data;
             }
         );
     }

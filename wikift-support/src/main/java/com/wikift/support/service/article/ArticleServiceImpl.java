@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -76,6 +77,23 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Integer findFabulousArticleExists(Integer userId, Integer articleId) {
         return articleRepository.findFabulousArticleExists(userId, articleId);
+    }
+
+    @Override
+    public Integer viewArticle(Integer userId, Integer articleId, Integer viewCount, String viewDevice) {
+        // 查询是否当前设备是否存在于数据库中
+        Integer deviceViewCount = articleRepository.findViewArticleByDevice(userId, articleId, viewDevice);
+        if (!ObjectUtils.isEmpty(deviceViewCount) && deviceViewCount > 0) {
+            // 如果该设备的数据存在数据库中, 则将设备原有数据与现有数据增加
+            viewCount = deviceViewCount + viewCount;
+            return articleRepository.updateViewArticle(userId, articleId, viewCount, viewDevice);
+        }
+        return articleRepository.viewArticle(userId, articleId, viewCount, viewDevice);
+    }
+
+    @Override
+    public Integer viewArticleCount(Integer userId, Integer articleId) {
+        return articleRepository.findViewArticle(userId, articleId);
     }
 
 }

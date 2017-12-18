@@ -40,5 +40,7 @@ export class ApiConfig {
     public static API_ARTICLE_FABULOUS = '/article/fabulous';
     public static API_ARTICLE_FABULOUS_CHECK = '/article/fabulous/check';
     public static API_ARTICLE_UNFABULOUS = '/article/unfabulous/';
+    public static API_ARTICLE_VIEW = '/article/view';
+    public static API_ARTICLE_VIEW_COUNT = '/article/view/count';
 
 }
