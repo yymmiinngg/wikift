@@ -20,11 +20,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { InfoArticleComponent } from './info.article.component';
 
-import { ArticleService } from '../../../services/article.service';
-import { WikiftEditorModule } from '../../shared/directives/wikift-editor/wikift-editor.module';
+import { ArticleService } from '../../../../services/article.service';
+import { WikiftEditorModule } from '../../../shared/directives/wikift-editor/wikift-editor.module';
 
 const INFO_ARTICLE_ROUTES: Routes = [
     { path: '', component: InfoArticleComponent }
@@ -35,6 +36,7 @@ const INFO_ARTICLE_ROUTES: Routes = [
         WikiftEditorModule,
         CommonModule,
         FormsModule,
+        TooltipModule.forRoot(),
         BsDropdownModule.forRoot(),
         RouterModule.forChild(INFO_ARTICLE_ROUTES)
     ],

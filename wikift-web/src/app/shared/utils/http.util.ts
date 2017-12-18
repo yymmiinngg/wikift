@@ -51,7 +51,6 @@ export class HttpUtils {
 
     public static getDefaultRequestOptionsByToken() {
         const headers = new Headers({
-            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
             'Authorization': 'Bearer ' + CookieUtils.get()
         });
         const options = new RequestOptions({ headers: headers });

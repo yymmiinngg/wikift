@@ -63,4 +63,19 @@ public class ArticleServiceImpl implements ArticleService {
         return articleRepository.findTopByUserEntityAndCreateTime(username);
     }
 
+    @Override
+    public Integer fabulousArticle(Integer userId, Integer articleId) {
+        return articleRepository.fabulousArticle(userId, articleId);
+    }
+
+    @Override
+    public Integer unFabulousArticle(Integer userId, Integer articleId) {
+        return articleRepository.unFabulousArticle(userId, articleId);
+    }
+
+    @Override
+    public Integer findFabulousArticleExists(Integer userId, Integer articleId) {
+        return articleRepository.findFabulousArticleExists(userId, articleId);
+    }
+
 }

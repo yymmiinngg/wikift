@@ -78,5 +78,20 @@
         "target": "http://localhost:8080",
         "secure": false,
         "logLevel": "debug"
+    },
+    "/article/fabulous": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/article/unfabulous": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/article/fabulous/check": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "logLevel": "debug"
     }
 }

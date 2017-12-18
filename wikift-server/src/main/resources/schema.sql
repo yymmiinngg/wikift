@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS users_follow_relation;
 CREATE TABLE users_follow_relation (
   ufr_user_id_follw BIGINT(20) NOT NULL COMMENT '关注者用户id',
   ufr_user_id_cover BIGINT(20) NOT NULL COMMENT '被关注用户id',
-  ufr_create_time   TIMESTAMP DEFAULT CURRENT_TIME()
+  ufr_create_time   TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
 );
 -- 用户组表
 DROP TABLE IF EXISTS groups;
@@ -67,4 +67,13 @@ CREATE TABLE users_article_relation (
   uar_article_id BIGINT(20) NOT NULL,
   CONSTRAINT FK_users_relation_id FOREIGN KEY (uar_user_id) REFERENCES users (u_id),
   CONSTRAINT FK_article_relation_id FOREIGN KEY (uar_article_id) REFERENCES article (a_id)
+);
+-- 用户赞文章关系表
+DROP TABLE IF EXISTS users_article_fabulous_relation;
+CREATE TABLE users_article_fabulous_relation (
+  uafr_user_id    BIGINT(20) NOT NULL,
+  uafr_article_id BIGINT(20) NOT NULL,
+  uafr_create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+  CONSTRAINT FK_users_fabulous_relation_id FOREIGN KEY (uafr_user_id) REFERENCES users (u_id),
+  CONSTRAINT FK_article_fabulous_relation_id FOREIGN KEY (uafr_article_id) REFERENCES article (a_id)
 );

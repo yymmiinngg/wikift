@@ -27,7 +27,7 @@ const LAYOUT_ROUTES: Routes = [
         path: '', component: LayoutComponent, children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', loadChildren: '../pages/home/home.module#HomeModule' },
-            { path: 'article/info/:id', loadChildren: '../pages/article/info.article.module#InfoArticleModule' },
+            { path: 'article/info/:id', loadChildren: '../pages/article/info/info.article.module#InfoArticleModule' },
         ]
     },
     {

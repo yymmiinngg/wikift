@@ -22,6 +22,7 @@ import com.wikift.common.utils.MessageUtils;
 import com.wikift.common.utils.PageAndSortUtils;
 import com.wikift.model.article.ArticleEntity;
 import com.wikift.model.result.CommonResult;
+import com.wikift.server.param.ArticleFabulousParam;
 import com.wikift.support.service.article.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -78,6 +79,31 @@ public class ArticleController {
     CommonResult<ArticleEntity> findTopByUserEntityAndCreateTime(@RequestParam(value = "username") String username) {
         Assert.notNull(username, MessageEnums.PARAMS_NOT_NULL.getValue());
         return CommonResult.success(articleService.findTopByUserEntityAndCreateTime(username));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "fabulous", method = RequestMethod.POST)
+    CommonResult fabulousArticle(@RequestBody ArticleFabulousParam param) {
+        Assert.notNull(param, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(articleService.fabulousArticle(param.getUserId(), param.getArticleId()));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "unfabulous/{userId}/{articleId}", method = RequestMethod.DELETE)
+    CommonResult unFabulousArticle(@PathVariable Integer userId,
+                                   @PathVariable Integer articleId) {
+        Assert.notNull(userId, MessageEnums.PARAMS_NOT_NULL.getValue());
+        Assert.notNull(articleId, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(articleService.unFabulousArticle(userId, articleId));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "fabulous/check", method = RequestMethod.GET)
+    CommonResult fabulousArticleCheck(@RequestParam(value = "userId") Integer userId,
+                                      @RequestParam(value = "articleId") Integer articleId) {
+        Assert.notNull(userId, MessageEnums.PARAMS_NOT_NULL.getValue());
+        Assert.notNull(articleId, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(articleService.findFabulousArticleExists(userId, articleId));
     }
 
 }

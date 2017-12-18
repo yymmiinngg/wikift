@@ -42,8 +42,10 @@
                             <div class="user-sm">
                                 <div class="article__user__info">
                                     <img class="article__user__img" src="{{ article.userEntity.avatar }}" alt="{{ article.userEntity.username }}">
-                                    <div class="article__user__name">{{ article.userEntity.username }} - {{ article.createTime | date:'yyyy年MM月dd日HH:mm:ss'
-                                        }} 发布</div>
+                                    <div class="article__user__name">
+                                        <a [routerLink]="['/account', article.userEntity.username, 'info']">{{ article.userEntity.username }}</a> - {{ article.createTime | date:'yyyy年MM月dd日HH:mm:ss'
+                                        }} 发布
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -78,8 +80,8 @@
                 </div>
             </div>
             <div class="mr-center">
-                <pagination *ngIf="page" [(ngModel)]="currentPage" totalItems="{{page.totalElements}}" maxSize="{{page.size}}" (pageChanged)="pageChanged($event)"
-                    [boundaryLinks]="true">
+                <pagination *ngIf="articles?.length && page" [(ngModel)]="currentPage" totalItems="{{page.totalElements}}" maxSize="{{page.size}}"
+                    (pageChanged)="pageChanged($event)" [boundaryLinks]="true">
                 </pagination>
             </div>
         </div>
