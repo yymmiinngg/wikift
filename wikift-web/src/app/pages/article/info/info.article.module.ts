@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { Ng2DeviceDetectorModule } from 'ng2-device-detector';
 
 import { InfoArticleComponent } from './info.article.component';
 
@@ -38,6 +39,7 @@ const INFO_ARTICLE_ROUTES: Routes = [
         FormsModule,
         TooltipModule.forRoot(),
         BsDropdownModule.forRoot(),
+        Ng2DeviceDetectorModule.forRoot(),
         RouterModule.forChild(INFO_ARTICLE_ROUTES)
     ],
     exports: [],

@@ -77,3 +77,14 @@ CREATE TABLE users_article_fabulous_relation (
   CONSTRAINT FK_users_fabulous_relation_id FOREIGN KEY (uafr_user_id) REFERENCES users (u_id),
   CONSTRAINT FK_article_fabulous_relation_id FOREIGN KEY (uafr_article_id) REFERENCES article (a_id)
 );
+-- 用户浏览文章关系表
+DROP TABLE IF EXISTS users_article_view_relation;
+CREATE TABLE users_article_view_relation (
+  uavr_user_id    BIGINT(20) NOT NULL,
+  uavr_article_id BIGINT(20) NOT NULL,
+  uavr_view_count BIGINT(200) NOT NULL,
+  uavr_view_device VARCHAR(50) NOT NULL,
+  uavr_create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+  CONSTRAINT FK_users_view_relation_id FOREIGN KEY (uavr_user_id) REFERENCES users (u_id),
+  CONSTRAINT FK_article_view_relation_id FOREIGN KEY (uavr_article_id) REFERENCES article (a_id)
+);

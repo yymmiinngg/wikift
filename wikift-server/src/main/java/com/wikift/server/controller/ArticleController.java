@@ -23,6 +23,7 @@ import com.wikift.common.utils.PageAndSortUtils;
 import com.wikift.model.article.ArticleEntity;
 import com.wikift.model.result.CommonResult;
 import com.wikift.server.param.ArticleFabulousParam;
+import com.wikift.server.param.ArticleViewParam;
 import com.wikift.support.service.article.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -104,6 +105,25 @@ public class ArticleController {
         Assert.notNull(userId, MessageEnums.PARAMS_NOT_NULL.getValue());
         Assert.notNull(articleId, MessageEnums.PARAMS_NOT_NULL.getValue());
         return CommonResult.success(articleService.findFabulousArticleExists(userId, articleId));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "view", method = RequestMethod.POST)
+    CommonResult viewArticle(@RequestBody ArticleViewParam param) {
+        Assert.notNull(param, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(articleService.viewArticle(param.getUserId(),
+                param.getArticleId(),
+                param.getViewCount(),
+                param.getDevice()));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "view/count", method = RequestMethod.GET)
+    CommonResult viewArticleCount(@RequestParam(value = "userId") Integer userId,
+                                  @RequestParam(value = "articleId") Integer articleId) {
+        Assert.notNull(userId, MessageEnums.PARAMS_NOT_NULL.getValue());
+        Assert.notNull(articleId, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(articleService.viewArticleCount(userId, articleId));
     }
 
 }

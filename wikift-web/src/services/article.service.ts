@@ -32,6 +32,7 @@ import { ArticleModel } from '../app/shared/model/article/article.model';
 import { CommonResultModel } from '../app/shared/model/result/result.model';
 import { CommonPageModel } from '../app/shared/model/result/page.model';
 import { ArticleFabulousParamModel } from '../app/shared/model/param/article.fabulous.param.model';
+import { ArticleViewParamModel } from '../app/shared/model/param/article.view.param.model';
 
 
 /**
@@ -103,6 +104,20 @@ export class ArticleService {
         const options = HttpUtils.getDefaultRequestOptionsByToken();
         const path = ApiConfig.API_ARTICLE_UNFABULOUS + param.userId + '/' + param.articleId;
         return this.http.delete(path, options).map(ResultUtils.extractData);
+    }
+
+    viewArticle(param: ArticleViewParamModel): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
+        return this.http.post(ApiConfig.API_ARTICLE_VIEW, param.toJosn(), options).map(ResultUtils.extractData);
+    }
+
+    viewArticleCount(param: ArticleViewParamModel): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        const params = HttpUtils.getParams();
+        params.append('userId', param.userId);
+        params.append('articleId', param.articleId);
+        options.params = params;
+        return this.http.get(ApiConfig.API_ARTICLE_VIEW_COUNT, options).map(ResultUtils.extractData);
     }
 
 }
