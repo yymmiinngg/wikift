@@ -46,6 +46,8 @@ export class InfoArticleComponent implements OnInit {
     fabulousStatus = true;
     // 文章访问总数
     public articleViewCount;
+    // 文章赞总数
+    public articleFabulousCount;
 
     constructor(private route: ActivatedRoute,
         private articleService: ArticleService,
@@ -69,6 +71,7 @@ export class InfoArticleComponent implements OnInit {
                 this.article = result.data;
                 this.initFabulousStatus();
                 this.initViewArticle();
+                this.initFabulousCount();
             }
         );
     }
@@ -114,6 +117,16 @@ export class InfoArticleComponent implements OnInit {
         );
     }
 
+    initFabulousCount() {
+        const articleView = new ArticleViewParamModel();
+        articleView.articleId = this.article.id;
+        this.articleService.fabulousCount(articleView).subscribe(
+            result => {
+                this.articleFabulousCount = result.data;
+            }
+        );
+    }
+
     fabulous() {
         const fabulous = new ArticleFabulousParamModel();
         fabulous.userId = this.article.userEntity.id;
@@ -121,6 +134,7 @@ export class InfoArticleComponent implements OnInit {
         this.articleService.fabulous(fabulous).subscribe(
             result => {
                 this.fabulousStatus = false;
+                this.initFabulousCount();
             }
         );
     }
@@ -132,6 +146,7 @@ export class InfoArticleComponent implements OnInit {
         this.articleService.unfabulous(fabulous).subscribe(
             result => {
                 this.fabulousStatus = true;
+                this.initFabulousCount();
             }
         );
     }

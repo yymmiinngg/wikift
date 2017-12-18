@@ -94,6 +94,11 @@
         "secure": false,
         "logLevel": "debug"
     },
+    "/article/fabulous/count": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "logLevel": "debug"
+    },
     "/article/view": {
         "target": "http://localhost:8080",
         "secure": false,

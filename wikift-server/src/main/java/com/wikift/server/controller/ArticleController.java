@@ -104,7 +104,14 @@ public class ArticleController {
                                       @RequestParam(value = "articleId") Integer articleId) {
         Assert.notNull(userId, MessageEnums.PARAMS_NOT_NULL.getValue());
         Assert.notNull(articleId, MessageEnums.PARAMS_NOT_NULL.getValue());
-        return CommonResult.success(articleService.findFabulousArticleExists(userId, articleId));
+        return CommonResult.success(articleService.fabulousArticleExists(userId, articleId));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "fabulous/count", method = RequestMethod.GET)
+    CommonResult fabulousArticleCount(@RequestParam(value = "articleId") Integer articleId) {
+        Assert.notNull(articleId, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(articleService.fabulousArticleCount(articleId));
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
