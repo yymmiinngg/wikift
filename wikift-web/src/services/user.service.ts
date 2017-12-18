@@ -103,12 +103,20 @@ export class UserService {
         return this.http.get(path, options).map(ResultUtils.extractData);
     }
 
+    /**
+     * 注册用户
+     * @param param 用户信息
+     */
     register(param: UserParamModel): Observable<CommonResultModel> {
         const options = HttpUtils.getDefaultRequestOptions();
         return this.http.post(ApiConfig.API_USER_REGISTER, JSON.stringify(param), options)
             .map(ResultUtils.extractData);
     }
 
+    /**
+     * 更新用户
+     * @param param 用户信息
+     */
     update(param: UserModel): Observable<CommonResultModel> {
         const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
         return this.http.put(ApiConfig.API_USER_UPDATE, JSON.stringify(param), options)
@@ -116,31 +124,48 @@ export class UserService {
     }
 
     /**
-     * 活跃用户
+     * 活跃用户排行榜
      */
     topByActive() {
         const options = HttpUtils.getDefaultRequestOptions();
         return this.http.get(ApiConfig.API_TOP_USER_BY_ACTIVE, options).map(ResultUtils.extractData);
     }
 
+    /**
+     * 关注用户
+     * @param param 用户数据
+     */
     follow(param: UserModel) {
         const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
         return this.http.put(ApiConfig.API_USER_FOLLOW, JSON.stringify(param), options)
             .map(ResultUtils.extractData);
     }
 
+    /**
+     * 取消关注用户
+     * @param param 用户数据
+     */
     unfollow(param: UserModel) {
         const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
         return this.http.put(ApiConfig.API_USER_UNFOLLOW, JSON.stringify(param), options)
             .map(ResultUtils.extractData);
     }
 
+    /**
+     * 关注的用户列表
+     * @param userId 用户id
+     */
     follows(userId) {
         const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
         return this.http.put(ApiConfig.API_USER_FOLLOWS + userId, options)
             .map(ResultUtils.extractData);
     }
 
+    /**
+     * 关注状态
+     * @param followUserId 关注者
+     * @param coverUserId 被关注者
+     */
     followCheck(followUserId, coverUserId): Observable<CommonResultModel> {
         const options = HttpUtils.getDefaultRequestOptionsByToken();
         const params = HttpUtils.getParams();
@@ -148,6 +173,18 @@ export class UserService {
         params.append('coverUserId', coverUserId);
         options.params = params;
         return this.http.get(ApiConfig.API_USER_FOLLOW_CHECK, options).map(ResultUtils.extractData);
+    }
+
+    /**
+     * 关注/被关注用户统计
+     * @param followUserId 用户id
+     */
+    followsCount(followUserId): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        const params = HttpUtils.getParams();
+        params.append('followUserId', followUserId);
+        options.params = params;
+        return this.http.get(ApiConfig.API_USER_FOLLOW_COUNT, options).map(ResultUtils.extractData);
     }
 
 }

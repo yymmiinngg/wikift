@@ -70,7 +70,7 @@ public class ArticleController {
                                      @RequestParam(value = "size", defaultValue = "10") Integer size) {
         Assert.notNull(page, MessageUtils.getParamNotNull("page"));
         Assert.notNull(page, MessageUtils.getParamNotNull("size"));
-        return CommonResult.success(articleService.findAll(PageAndSortUtils.getPage(page, size)));
+        return CommonResult.success(articleService.findAll(PageAndSortUtils.getPageAndSortAndCreateTimeByDESC(page, size)));
     }
 
     @PreAuthorize("hasAuthority(('USER'))")

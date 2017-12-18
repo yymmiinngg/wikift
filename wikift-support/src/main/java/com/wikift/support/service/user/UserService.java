@@ -41,4 +41,8 @@ public interface UserService {
 
     Integer unFollow(Long followUserId, Long coverUserId);
 
+    Integer findFollowCount(Long followUserId);
+
+    Integer findFollowCoverCount(Long followUserId);
+
 }

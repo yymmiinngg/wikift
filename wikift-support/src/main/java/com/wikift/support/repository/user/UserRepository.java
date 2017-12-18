@@ -88,7 +88,7 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
      */
     @Modifying
     @Query(value = "INSERT INTO users_follow_relation(ufr_user_id_follw, ufr_user_id_cover) " +
-            "value(?1, ?2)",
+            "VALUE(?1, ?2)",
             nativeQuery = true)
     Integer follow(Long followUserId, Long coverUserId);
 
@@ -105,5 +105,33 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
             "AND ufr_user_id_cover = ?2",
             nativeQuery = true)
     Integer unFollow(Long followUserId, Long coverUserId);
+
+    /**
+     * 关注者关注用户总数
+     *
+     * @param followUserId 关注者用户id
+     * @return 关注总数
+     */
+    @Query(value = "SELECT count(u.u_id)AS count " +
+            "FROM users_follow_relation AS ufr " +
+            "LEFT JOIN users AS u " +
+            "ON ufr.ufr_user_id_follw = u.u_id " +
+            "WHERE ufr.ufr_user_id_follw = ?1",
+            nativeQuery = true)
+    Integer findFollowCount(Long followUserId);
+
+    /**
+     * 关注者被关注用户总数
+     *
+     * @param followUserId 关注者用户id
+     * @return 关注总数
+     */
+    @Query(value = "SELECT count(u.u_id)AS count " +
+            "FROM users_follow_relation AS ufr " +
+            "LEFT JOIN users AS u " +
+            "ON ufr.ufr_user_id_cover = u.u_id " +
+            "WHERE ufr.ufr_user_id_cover = ?1",
+            nativeQuery = true)
+    Integer findFollowCoverCount(Long followUserId);
 
 }
