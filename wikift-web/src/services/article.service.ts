@@ -31,6 +31,7 @@ import { ApiConfig } from '../config/api.config';
 import { ArticleModel } from '../app/shared/model/article/article.model';
 import { CommonResultModel } from '../app/shared/model/result/result.model';
 import { CommonPageModel } from '../app/shared/model/result/page.model';
+import { ArticleFabulousParamModel } from '../app/shared/model/param/article.fabulous.param.model';
 
 
 /**
@@ -82,6 +83,26 @@ export class ArticleService {
         params.append('username', userId);
         options.params = params;
         return this.http.get(ApiConfig.API_ARTICLE_TOP_BY_USER, options).map(ResultUtils.extractData);
+    }
+
+    fabulous(param: ArticleFabulousParamModel): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
+        return this.http.post(ApiConfig.API_ARTICLE_FABULOUS, param.toJosn(), options).map(ResultUtils.extractData);
+    }
+
+    fabulousCheck(param: ArticleFabulousParamModel): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        const params = HttpUtils.getParams();
+        params.append('userId', param.userId);
+        params.append('articleId', param.articleId);
+        options.params = params;
+        return this.http.get(ApiConfig.API_ARTICLE_FABULOUS_CHECK, options).map(ResultUtils.extractData);
+    }
+
+    unfabulous(param: ArticleFabulousParamModel): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        const path = ApiConfig.API_ARTICLE_UNFABULOUS + param.userId + '/' + param.articleId;
+        return this.http.delete(path, options).map(ResultUtils.extractData);
     }
 
 }

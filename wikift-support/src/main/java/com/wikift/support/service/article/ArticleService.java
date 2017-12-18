@@ -49,4 +49,24 @@ public interface ArticleService {
 
     List<ArticleEntity> findTopByUserEntityAndCreateTime(String username);
 
+    /**
+     * 赞文章
+     *
+     * @param userId    当前赞用户id
+     * @param articleId 当前被赞文章id
+     * @return 状态
+     */
+    Integer fabulousArticle(Integer userId, Integer articleId);
+
+    /**
+     * 解除赞文章
+     *
+     * @param userId    当前解除赞用户id
+     * @param articleId 当前解除赞文章id
+     * @return 状态
+     */
+    Integer unFabulousArticle(Integer userId, Integer articleId);
+
+    Integer findFabulousArticleExists(Integer userId, Integer articleId);
+
 }

@@ -37,5 +37,8 @@ export class ApiConfig {
     public static API_ARTICLE_UPDATE = '/article/update';
     public static API_ARTICLE_DELETE = '/article/delete/';
     public static API_ARTICLE_TOP_BY_USER = '/article/top/by/user';
+    public static API_ARTICLE_FABULOUS = '/article/fabulous';
+    public static API_ARTICLE_FABULOUS_CHECK = '/article/fabulous/check';
+    public static API_ARTICLE_UNFABULOUS = '/article/unfabulous/';
 
 }
