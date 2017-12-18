@@ -27,6 +27,7 @@ import { CommonConfig } from '../../../config/common.config';
 
 import { ArticleService } from '../../../services/article.service';
 import { UserService } from '../../../services/user.service';
+import { CommonPageModel } from '../../shared/model/result/page.model';
 
 @Component({
     selector: 'wikift-home',
@@ -38,21 +39,44 @@ export class HomeComponent implements OnInit {
     articles;
     // 活跃用户
     activeUsers;
+    // 分页数据
+    page: CommonPageModel;
+    // 当前页数
+    currentPage: number;
 
     constructor(private articleService: ArticleService,
-        private userService: UserService) { }
+        private userService: UserService) {
+        this.page = new CommonPageModel();
+    }
 
     ngOnInit() {
-        this.initArticleList();
+        this.initArticleList(this.page);
         this.initTopUserByActive();
     }
 
     /**
      * 文章列表
      */
-    initArticleList() {
-        this.articleService.list().subscribe(
-            result => { this.articles = result.data; }
+    initArticleList(page: CommonPageModel) {
+        page.number = 0;
+        page.size = 10;
+        this.articleService.list(page).subscribe(
+            result => {
+                this.articles = result.data.content;
+                this.page = CommonPageModel.getPage(result.data);
+                this.currentPage = this.page.number;
+            }
+        );
+    }
+
+    pageChanged(event: any) {
+        this.page.number = event.page - 1;
+        this.page.size = event.itemsPerPage;
+        this.articleService.list(this.page).subscribe(
+            result => {
+                this.articles = result.data.content;
+                this.page = CommonPageModel.getPage(result.data);
+            }
         );
     }
 
