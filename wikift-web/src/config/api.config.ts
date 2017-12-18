@@ -39,6 +39,7 @@ export class ApiConfig {
     public static API_ARTICLE_TOP_BY_USER = '/article/top/by/user';
     public static API_ARTICLE_FABULOUS = '/article/fabulous';
     public static API_ARTICLE_FABULOUS_CHECK = '/article/fabulous/check';
+    public static API_ARTICLE_FABULOUS_COUNT = '/article/fabulous/count';
     public static API_ARTICLE_UNFABULOUS = '/article/unfabulous/';
     public static API_ARTICLE_VIEW = '/article/view';
     public static API_ARTICLE_VIEW_COUNT = '/article/view/count';

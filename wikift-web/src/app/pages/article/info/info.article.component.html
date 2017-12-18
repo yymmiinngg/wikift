@@ -32,10 +32,20 @@
                         <!-- 赞功能 -->
                         <div *ngIf="currentUser?.id !== article?.userEntity.id">
                             <ng-container *ngIf="fabulousStatus; else showfabulous">
-                                <button type="button" class="btn btn-success btn-sm" tooltip="对该文章点赞" placement="bottom" (click)="fabulous()">赞</button>
+                                <button type="button" class="btn btn-success btn-sm" tooltip="对该文章点赞" placement="bottom" (click)="fabulous()">
+                                    <span>
+                                        <i class="zmdi zmdi-thumb-up zmdi-hc-fw"></i>
+                                        <span>{{articleFabulousCount}}</span>
+                                    </span>
+                                </button>
                             </ng-container>
                             <ng-template #showfabulous>
-                                <button type="button" class="btn btn-success btn-sm" tooltip="取消对该文章的赞" placement="bottom" (click)="unFabulous()">取消赞</button>
+                                <button type="button" class="btn btn-success btn-sm" tooltip="取消对该文章的赞" placement="bottom" (click)="unFabulous()">
+                                    <span>
+                                        <i class="zmdi zmdi-thumb-up-down zmdi-hc-fw"></i>
+                                        <span>{{articleFabulousCount}}</span>
+                                    </span>
+                                </button>
                             </ng-template>
                         </div>
                         <!-- 收藏功能 -->

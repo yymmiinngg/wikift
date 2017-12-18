@@ -67,7 +67,9 @@ public interface ArticleService {
      */
     Integer unFabulousArticle(Integer userId, Integer articleId);
 
-    Integer findFabulousArticleExists(Integer userId, Integer articleId);
+    Integer fabulousArticleExists(Integer userId, Integer articleId);
+
+    Integer fabulousArticleCount(Integer articleId);
 
     Integer viewArticle(Integer userId, Integer articleId, Integer viewCount, String viewDevice);
 

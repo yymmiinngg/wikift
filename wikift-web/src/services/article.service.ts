@@ -106,6 +106,14 @@ export class ArticleService {
         return this.http.delete(path, options).map(ResultUtils.extractData);
     }
 
+    fabulousCount(param: ArticleFabulousParamModel): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        const params = HttpUtils.getParams();
+        params.append('articleId', param.articleId);
+        options.params = params;
+        return this.http.get(ApiConfig.API_ARTICLE_FABULOUS_COUNT, options).map(ResultUtils.extractData);
+    }
+
     viewArticle(param: ArticleViewParamModel): Observable<CommonResultModel> {
         const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
         return this.http.post(ApiConfig.API_ARTICLE_VIEW, param.toJosn(), options).map(ResultUtils.extractData);

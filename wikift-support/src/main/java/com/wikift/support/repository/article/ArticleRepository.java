@@ -82,6 +82,17 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
     Integer findFabulousArticleExists(Integer userId, Integer articleId);
 
     /**
+     * 当前文章被赞用户总数
+     *
+     * @param articleId 当前被赞文章id
+     * @return 数据总数
+     */
+    @Query(value = "SELECT count(1) AS count FROM users_article_fabulous_relation " +
+            "WHERE uafr_article_id = ?1",
+            nativeQuery = true)
+    Integer findFabulousArticleCount(Integer articleId);
+
+    /**
      * 用户浏览文章信息
      *
      * @param userId     当前浏览文章的用户id

@@ -75,8 +75,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Integer findFabulousArticleExists(Integer userId, Integer articleId) {
+    public Integer fabulousArticleExists(Integer userId, Integer articleId) {
         return articleRepository.findFabulousArticleExists(userId, articleId);
+    }
+
+    @Override
+    public Integer fabulousArticleCount(Integer articleId) {
+        return articleRepository.findFabulousArticleCount(articleId);
     }
 
     @Override
