@@ -18,6 +18,8 @@
 package com.wikift.server.controller;
 
 import com.wikift.common.enums.MessageEnums;
+import com.wikift.common.utils.MessageUtils;
+import com.wikift.common.utils.PageAndSortUtils;
 import com.wikift.model.article.ArticleEntity;
 import com.wikift.model.result.CommonResult;
 import com.wikift.support.service.article.ArticleService;
@@ -64,8 +66,11 @@ public class ArticleController {
 
     //    @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "list", method = RequestMethod.GET)
-    CommonResult<ArticleEntity> list() {
-        return CommonResult.success(articleService.findAll());
+    CommonResult<ArticleEntity> list(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                     @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        Assert.notNull(page, MessageUtils.getParamNotNull("page"));
+        Assert.notNull(page, MessageUtils.getParamNotNull("size"));
+        return CommonResult.success(articleService.findAll(PageAndSortUtils.getPage(page, size)));
     }
 
     @PreAuthorize("hasAuthority(('USER'))")

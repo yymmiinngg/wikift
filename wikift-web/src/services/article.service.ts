@@ -30,6 +30,8 @@ import { ApiConfig } from '../config/api.config';
 
 import { ArticleModel } from '../app/shared/model/article/article.model';
 import { CommonResultModel } from '../app/shared/model/result/result.model';
+import { CommonPageModel } from '../app/shared/model/result/page.model';
+
 
 /**
  * 文章服务
@@ -60,8 +62,12 @@ export class ArticleService {
             .map(ResultUtils.extractData);
     }
 
-    list(): Observable<CommonResultModel> {
+    list(page: CommonPageModel): Observable<CommonResultModel> {
         const options = HttpUtils.getDefaultRequestOptions();
+        const params = HttpUtils.getParams();
+        params.append('page', page.number.toString());
+        params.append('size', page.size.toString());
+        options.params = params;
         return this.http.get(ApiConfig.API_ARTICLE_LIST, options).map(ResultUtils.extractData);
     }
 

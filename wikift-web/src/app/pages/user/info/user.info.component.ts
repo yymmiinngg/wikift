@@ -24,6 +24,7 @@ import { UserService } from '../../../../services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ArticleService } from '../../../../services/article.service';
+import { CommonPageModel } from '../../../shared/model/result/page.model';
 
 @Component({
     selector: 'wikift-user-info',
@@ -46,6 +47,7 @@ export class UserInfoComponent implements OnInit {
     userTopArticles;
     // 关注按钮显示状态
     isFollow = true;
+    page: CommonPageModel;
 
     constructor(private route: ActivatedRoute,
         private userService: UserService,

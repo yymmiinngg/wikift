@@ -120,7 +120,7 @@
                 <div class="card-body">
                   <div class="messages__sidebar">
                     <div class="listview listview--hover">
-                      <a *ngFor="let article of userTopArticles" class="listview__item" [routerLink]="['/article/info', article.userEntity.id]">
+                      <a *ngFor="let article of userTopArticles" class="listview__item" [routerLink]="['/article/info', article.id]">
                         <img src="{{ article.userEntity.avatar }}" class="listview__img">
                         <div class="listview__content">
                           <div class="listview__heading">{{ article.title }}</div>

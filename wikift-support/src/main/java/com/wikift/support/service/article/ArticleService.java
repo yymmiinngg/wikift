@@ -1,6 +1,8 @@
 package com.wikift.support.service.article;
 
 import com.wikift.model.article.ArticleEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -27,7 +29,7 @@ public interface ArticleService {
      *
      * @return 文章列表
      */
-    List<ArticleEntity> findAll();
+    Page<ArticleEntity> findAll(Pageable pageable);
 
     /**
      * 根据文章ID查询文章信息

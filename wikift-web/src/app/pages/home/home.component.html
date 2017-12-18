@@ -77,6 +77,11 @@
                     </div>
                 </div>
             </div>
+            <div class="mr-center">
+                <pagination *ngIf="page" [(ngModel)]="currentPage" totalItems="{{page.totalElements}}" maxSize="{{page.size}}" (pageChanged)="pageChanged($event)"
+                    [boundaryLinks]="true">
+                </pagination>
+            </div>
         </div>
         <!-- 其他功能 -->
         <div class="col-md-3">

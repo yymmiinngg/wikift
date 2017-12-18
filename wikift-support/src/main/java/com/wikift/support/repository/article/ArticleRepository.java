@@ -20,10 +20,11 @@ package com.wikift.support.repository.article;
 import com.wikift.model.article.ArticleEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 
-public interface ArticleRepository extends CrudRepository<ArticleEntity, Long> {
+public interface ArticleRepository extends PagingAndSortingRepository<ArticleEntity, Long> {
 
     /**
      * 根据用户和时间查询文章信息
