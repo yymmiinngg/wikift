@@ -21,11 +21,13 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ArchwizardModule } from 'ng2-archwizard';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 import { EditorArticleComponent } from './editor.article.component';
 
 import { ArticleService } from '../../../services/article.service';
 import { WikiftEditorModule } from '../../shared/directives/wikift-editor/wikift-editor.module';
+import { ArticleTypeService } from '../../../services/article.type.service';
 
 const EDITOR_ARTICLE_ROUTES: Routes = [
     { path: '', component: EditorArticleComponent }
@@ -38,6 +40,7 @@ const EDITOR_ARTICLE_ROUTES: Routes = [
         ArchwizardModule,
         FormsModule,
         ModalModule.forRoot(),
+        AlertModule.forRoot(),
         RouterModule.forChild(EDITOR_ARTICLE_ROUTES)
     ],
     exports: [],
@@ -45,7 +48,8 @@ const EDITOR_ARTICLE_ROUTES: Routes = [
         EditorArticleComponent
     ],
     providers: [
-        ArticleService
+        ArticleService,
+        ArticleTypeService
     ],
 })
 export class EditorArticleModule { }

@@ -18,12 +18,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ArticleModel } from '../../../app/shared/model/article/article.model';
-import { UserModel } from '../../../app/shared/model/user/user.model';
-import { CookieUtils } from '../../shared/utils/cookie.util';
-import { CommonConfig } from '../../../config/common.config';
-import { ArticleService } from '../../../services/article.service';
+import { ArticleModel } from '../../../../app/shared/model/article/article.model';
+import { UserModel } from '../../../../app/shared/model/user/user.model';
+import { CookieUtils } from '../../../shared/utils/cookie.util';
+import { CommonConfig } from '../../../../config/common.config';
+import { ArticleService } from '../../../../services/article.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { ArticleTypeService } from '../../../../services/article.type.service';
 
 @Component({
     selector: 'wikift-article-create',
@@ -33,16 +34,28 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 export class CreateArticleComponent implements OnInit {
 
     articleModel: ArticleModel;
+    // 文章类型
+    public articleType;
 
     // 文章属性框
     @ViewChild('settingAritcleModel')
     public settingAritcleModel: ModalDirective;
 
     constructor(private router: Router,
-        private articleService: ArticleService) { }
+        private articleService: ArticleService,
+        private articleTypeService: ArticleTypeService) { }
 
     ngOnInit() {
         this.articleModel = new ArticleModel();
+        this.initArticelType();
+    }
+
+    initArticelType() {
+        this.articleTypeService.list().subscribe(
+            result => {
+                this.articleType = result.data;
+            }
+        );
     }
 
     // 获取编辑器内容

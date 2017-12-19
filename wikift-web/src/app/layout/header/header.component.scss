@@ -18,6 +18,24 @@
 @import "../../../assets/scss/inner-imports";
 
 .header {
+  width: 100%;
+  height: $header-height;
+  box-shadow: $header-shadow;
+  color: $white;
+  padding: 0 2rem;
+  z-index: $header-z-index;
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+
+  @include clearfix();
+
+  .ma-backdrop {
+    position: absolute;
+  }
+}
+.header-fixed {
   position: fixed;
   width: 100%;
   height: $header-height;

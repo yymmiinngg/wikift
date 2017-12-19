@@ -30,8 +30,10 @@ CREATE TABLE users_role_relation (
 -- 用户关注关系表
 DROP TABLE IF EXISTS users_follow_relation;
 CREATE TABLE users_follow_relation (
-  ufr_user_id_follw BIGINT(20) NOT NULL COMMENT '关注者用户id',
-  ufr_user_id_cover BIGINT(20) NOT NULL COMMENT '被关注用户id',
+  ufr_user_id_follw BIGINT(20) NOT NULL
+  COMMENT '关注者用户id',
+  ufr_user_id_cover BIGINT(20) NOT NULL
+  COMMENT '被关注用户id',
   ufr_create_time   TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
 );
 -- 用户组表
@@ -60,31 +62,48 @@ CREATE TABLE article (
   a_create_time TIMESTAMP,
   PRIMARY KEY (a_id)
 );
+-- 文章类型表
+DROP TABLE IF EXISTS article_type;
+CREATE TABLE article_type (
+  at_id          BIGINT(20)   NOT NULL AUTO_INCREMENT,
+  at_code        VARCHAR(255) NOT NULL,
+  at_title       VARCHAR(255) NOT NULL,
+  at_create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+  PRIMARY KEY (at_id)
+);
+-- 文章与文章类型关系表
+DROP TABLE IF EXISTS article_type_relation;
+CREATE TABLE article_type_relation(
+  atr_article_id BIGINT(20) NOT NULL,
+  atr_article_type_id BIGINT(20) NOT NULL,
+  CONSTRAINT FK_atr_article_relation_id FOREIGN KEY (atr_article_id) REFERENCES article (a_id),
+  CONSTRAINT FK_atr_article_type_relation_id FOREIGN KEY (atr_article_type_id) REFERENCES article_type (at_id)
+);
 -- 用户与文章关系表
 DROP TABLE IF EXISTS users_article_relation;
 CREATE TABLE users_article_relation (
   uar_user_id    BIGINT(20) NOT NULL,
   uar_article_id BIGINT(20) NOT NULL,
-  CONSTRAINT FK_users_relation_id FOREIGN KEY (uar_user_id) REFERENCES users (u_id),
-  CONSTRAINT FK_article_relation_id FOREIGN KEY (uar_article_id) REFERENCES article (a_id)
+  CONSTRAINT FK_uar_users_relation_id FOREIGN KEY (uar_user_id) REFERENCES users (u_id),
+  CONSTRAINT FK_uar_article_relation_id FOREIGN KEY (uar_article_id) REFERENCES article (a_id)
 );
 -- 用户赞文章关系表
 DROP TABLE IF EXISTS users_article_fabulous_relation;
 CREATE TABLE users_article_fabulous_relation (
-  uafr_user_id    BIGINT(20) NOT NULL,
-  uafr_article_id BIGINT(20) NOT NULL,
+  uafr_user_id     BIGINT(20) NOT NULL,
+  uafr_article_id  BIGINT(20) NOT NULL,
   uafr_create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
-  CONSTRAINT FK_users_fabulous_relation_id FOREIGN KEY (uafr_user_id) REFERENCES users (u_id),
-  CONSTRAINT FK_article_fabulous_relation_id FOREIGN KEY (uafr_article_id) REFERENCES article (a_id)
+  CONSTRAINT FK_uafr_users_fabulous_relation_id FOREIGN KEY (uafr_user_id) REFERENCES users (u_id),
+  CONSTRAINT FK_uafr_article_fabulous_relation_id FOREIGN KEY (uafr_article_id) REFERENCES article (a_id)
 );
 -- 用户浏览文章关系表
 DROP TABLE IF EXISTS users_article_view_relation;
 CREATE TABLE users_article_view_relation (
-  uavr_user_id    BIGINT(20) NOT NULL,
-  uavr_article_id BIGINT(20) NOT NULL,
-  uavr_view_count BIGINT(200) NOT NULL,
+  uavr_user_id     BIGINT(20)  NOT NULL,
+  uavr_article_id  BIGINT(20)  NOT NULL,
+  uavr_view_count  BIGINT(200) NOT NULL,
   uavr_view_device VARCHAR(50) NOT NULL,
   uavr_create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
-  CONSTRAINT FK_users_view_relation_id FOREIGN KEY (uavr_user_id) REFERENCES users (u_id),
-  CONSTRAINT FK_article_view_relation_id FOREIGN KEY (uavr_article_id) REFERENCES article (a_id)
+  CONSTRAINT FK_uavr_users_view_relation_id FOREIGN KEY (uavr_user_id) REFERENCES users (u_id),
+  CONSTRAINT FK_uavr_article_view_relation_id FOREIGN KEY (uavr_article_id) REFERENCES article (a_id)
 );

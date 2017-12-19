@@ -48,16 +48,59 @@
                                     <i class="form-group__bar"></i>
                                 </div>
                             </div>
-                            <a class="btn btn-info" [ngClass]="{'disabled': article.title == ''}" nextStep>下一步</a>
+                            <div class="card-footer d-flex px-4 py-3">
+                                <div class="mr-auto"></div>
+                                <div class="ml-4">
+                                    <a class="btn btn-info" [ngClass]="{'disabled': article.title == ''}" nextStep>下一步</a>
+                                </div>
+                            </div>
+                        </wizard-step>
+                        <wizard-step stepTitle="文章类型" navigationSymbol="&#xf085;" navigationSymbolFontFamily="FontAwesome">
+                            <div class="card-block mr-center" style="margin-top: 10px;">
+                                <div class="clearfix mt-2">
+                                    <alert type="danger">
+                                        文章类型不支持修改
+                                    </alert>
+                                </div>
+                                <label *ngFor="let type of articleType" class="custom-control custom-radio">
+                                    <input type="radio" [checked]="type.id === article.articleTypeEntity.id" disabled [(ngModel)]="article.articleTypeEntity"
+                                        [value]="type" name="article.articleTypeEntity" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">{{type.title}}</span>
+                                </label>
+                            </div>
+                            <div class="card-footer d-flex px-4 py-3">
+                                <div class="mr-auto">
+                                    <a class="btn btn-secondary" previousStep>上一步</a>
+                                </div>
+                                <div class="ml-4">
+                                    <a class="btn btn-info" [ngClass]="{'disabled': !article.articleTypeEntity?.id}" nextStep>下一步</a>
+                                </div>
+                            </div>
                         </wizard-step>
                         <wizard-step stepTitle="发布详情" navigationSymbol="&#xf00c;" navigationSymbolFontFamily="FontAwesome">
                             <div class="card-block" style="margin-top: 10px;">
-                                <p>文章标题:
-                                    <mark>{{ article.title }}</mark>
-                                </p>
+                                <table class="table mb-0">
+                                    <tbody>
+                                        <tr *ngIf="article">
+                                            <th scope="row">文章标题:</th>
+                                            <td>{{article.title}}</td>
+                                        </tr>
+                                        <tr *ngIf="article.articleTypeEntity">
+                                            <th scope="row">文章类型</th>
+                                            <td>{{article.articleTypeEntity.title}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <a class="btn btn-secondary" previousStep>上一步</a>
-                            <a class="btn btn-primary" (click)="updated()">更新</a>
+                            <div class="card-footer d-flex px-4 py-3">
+                                <div class="mr-auto">
+                                    <a class="btn btn-secondary" previousStep>上一步</a>
+                                </div>
+                                <div class="ml-4">
+                                    <a class="btn btn-primary" (click)="updated()">更新</a>
+                                </div>
+                            </div>
                         </wizard-step>
                     </wizard>
                 </div>

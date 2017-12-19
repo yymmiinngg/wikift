@@ -1,0 +1,104 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+  <p>
+  http://www.apache.org/licenses/LICENSE-2.0
+  <p>
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<section class="content content--full">
+  <wikift-editor [id]="'editor'" (getEditorValue)="getData($event)" [markdown]="''"></wikift-editor>
+</section>
+<footer class="footer hidden-xs-down">
+  <div class="mr-auto"></div>
+  <div>
+    <ul class="nav footer__nav">
+      <a class="btn btn-primary waves-effect" [ngClass]="{'disabled': articleModel.content == ''}" (click)="showSettingModel()">发布文章</a>
+    </ul>
+  </div>
+</footer>
+<!-- 文章属性 -->
+<div bsModal #settingAritcleModel="bs-modal" class="modal fade">
+  <ng-container>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header border-b-1">
+          <h5 class="modal-title pull-left">设置文章相关属性</h5>
+        </div>
+        <div class="modal-body">
+          <wizard navBarLayout="large-empty-symbols" style="width: 300px;">
+            <wizard-step stepTitle="文章标题" navigationSymbol="&#xf0b1;" navigationSymbolFontFamily="FontAwesome">
+              <div style="margin-top: 10px;">
+                <div class="form-group form-group--centered">
+                  <input type="text" [(ngModel)]="articleModel.title" name="articleModel.title" class="form-control" placeholder="请输入文章标题">
+                  <i class="form-group__bar"></i>
+                </div>
+              </div>
+              <div class="card-footer d-flex px-4 py-3">
+                <div class="mr-auto"></div>
+                <div class="ml-4">
+                  <a class="btn btn-info" [ngClass]="{'disabled': articleModel.title == ''}" nextStep>下一步</a>
+                </div>
+              </div>
+            </wizard-step>
+            <wizard-step stepTitle="文章类型" navigationSymbol="&#xf085;" navigationSymbolFontFamily="FontAwesome">
+              <div class="card-block mr-center" style="margin-top: 10px;">
+                <div class="clearfix mt-2">
+                  <alert type="danger">
+                    请谨慎选择文章类型, 不支持修改
+                  </alert>
+                </div>
+                <label *ngFor="let type of articleType" class="custom-control custom-radio">
+                  <input type="radio" [(ngModel)]="articleModel.articleTypeEntity" [value]="type" name="articleModel.articleTypeEntity" class="custom-control-input">
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">{{type.title}}</span>
+                </label>
+              </div>
+              <div class="card-footer d-flex px-4 py-3">
+                <div class="mr-auto">
+                  <a class="btn btn-secondary" previousStep>上一步</a>
+                </div>
+                <div class="ml-4">
+                  <a class="btn btn-info" [ngClass]="{'disabled': !articleModel.articleTypeEntity?.id}" nextStep>下一步</a>
+                </div>
+              </div>
+            </wizard-step>
+            <wizard-step stepTitle="发布详情" navigationSymbol="&#xf00c;" navigationSymbolFontFamily="FontAwesome">
+              <div class="card-block" style="margin-top: 10px;">
+                <table class="table mb-0">
+                  <tbody>
+                    <tr *ngIf="articleModel">
+                      <th scope="row">文章标题:</th>
+                      <td>{{articleModel.title}}</td>
+                    </tr>
+                    <tr *ngIf="articleModel.articleTypeEntity">
+                      <th scope="row">文章类型</th>
+                      <td>{{articleModel.articleTypeEntity.title}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer d-flex px-4 py-3">
+                <div class="mr-auto">
+                  <a class="btn btn-secondary" previousStep>上一步</a>
+                </div>
+                <div class="ml-4">
+                  <a class="btn btn-primary" (click)="published()">发布</a>
+                </div>
+              </div>
+            </wizard-step>
+          </wizard>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

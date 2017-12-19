@@ -24,6 +24,7 @@ import { CookieUtils } from '../../shared/utils/cookie.util';
 import { CommonConfig } from '../../../config/common.config';
 import { ArticleService } from '../../../services/article.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { ArticleTypeService } from '../../../services/article.type.service';
 
 @Component({
     selector: 'wikift-article-editor',
@@ -35,12 +36,15 @@ export class EditorArticleComponent implements OnInit {
     // 文章id
     id: number;
     article: ArticleModel;
+    // 文章类型
+    public articleType;
     @ViewChild('settingAritcleModel')
     public settingAritcleModel: ModalDirective;
 
     constructor(private route: ActivatedRoute,
         private router: Router,
-        private articleService: ArticleService) {
+        private articleService: ArticleService,
+        private articleTypeService: ArticleTypeService) {
         this.route.params.subscribe((params) => this.id = params.id);
     }
 
@@ -59,6 +63,15 @@ export class EditorArticleComponent implements OnInit {
         params.id = this.id;
         this.articleService.info(params).subscribe(
             result => { this.article = result.data; }
+        );
+        this.initArticelType();
+    }
+
+    initArticelType() {
+        this.articleTypeService.list().subscribe(
+            result => {
+                this.articleType = result.data;
+            }
         );
     }
 
