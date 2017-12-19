@@ -17,58 +17,38 @@
  */
 package com.wikift.model.article;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.wikift.model.user.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "article")
+@Table(name = "article_type")
 @EntityListeners(value = AuditingEntityListener.class)
-@JsonIgnoreProperties({"articleEntityList"})
-public class ArticleEntity {
+public class ArticleTypeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "a_id")
+    @Column(name = "at_id")
     private Long id;
 
-    @Column(name = "a_title")
+    @Column(name = "at_code")
+    private String code;
+
+    @Column(name = "at_title")
     private String title;
 
-    @Column(name = "a_content")
-    private String content;
-
-    @Column(name = "a_create_time")
+    @Column(name = "at_create_time")
     @CreatedDate
     private Date createTime;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE})
-    @JoinTable(name = "users_article_relation",
-            joinColumns = @JoinColumn(name = "uar_article_id"),
-            inverseJoinColumns = @JoinColumn(name = "uar_user_id"))
-    private UserEntity userEntity;
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinTable(name = "article_type_relation",
-            joinColumns = @JoinColumn(name = "atr_article_id"),
-            inverseJoinColumns = @JoinColumn(name = "atr_article_type_id"))
-    private ArticleTypeEntity articleTypeEntity;
 
 }

@@ -28,6 +28,7 @@ import { CookieUtils } from '../../../shared/utils/cookie.util';
 import { CommonConfig } from '../../../../config/common.config';
 import { ArticleFabulousParamModel } from '../../../shared/model/param/article.fabulous.param.model';
 import { ArticleViewParamModel } from '../../../shared/model/param/article.view.param.model';
+import { ArticleTypeService } from '../../../../services/article.type.service';
 
 @Component({
     selector: 'wikift-article-info',
@@ -37,17 +38,19 @@ import { ArticleViewParamModel } from '../../../shared/model/param/article.view.
 export class InfoArticleComponent implements OnInit {
 
     // 当前登录的用户
-    currentUser;
+    public currentUser;
     // 文章id
-    id: number;
+    public id: number;
     // 文章内容
     public article: ArticleModel;
     // 是否可赞状态
-    fabulousStatus = true;
+    public fabulousStatus = true;
     // 文章访问总数
     public articleViewCount;
     // 文章赞总数
     public articleFabulousCount;
+    // 当前时间
+    public currentDay = new Date().getTime();
 
     constructor(private route: ActivatedRoute,
         private articleService: ArticleService,

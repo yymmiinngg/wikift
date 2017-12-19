@@ -15,15 +15,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { UserModel } from '../user/user.model';
-import { ArticleTypeModel } from './article.type.model';
+package com.wikift.support.service.article;
 
-export class ArticleModel {
+import com.wikift.model.article.ArticleTypeEntity;
+import com.wikift.support.repository.article.ArticleTypeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-    public id: Number;
-    public title: String = '';
-    public content: String = '';
-    public userEntity: UserModel;
-    public articleTypeEntity: ArticleTypeModel;
+import java.util.List;
+
+@Service(value = "articleTypeService")
+public class ArticleTypeServiceImpl implements ArticleTypeService {
+
+    @Autowired
+    private ArticleTypeRepository articleTypeRepository;
+
+    @Override
+    public List<ArticleTypeEntity> findAll() {
+        return (List<ArticleTypeEntity>) articleTypeRepository.findAll();
+    }
 
 }

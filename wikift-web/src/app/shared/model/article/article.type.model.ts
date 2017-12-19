@@ -16,14 +16,12 @@
  * limitations under the License.
  */
 import { UserModel } from '../user/user.model';
-import { ArticleTypeModel } from './article.type.model';
 
-export class ArticleModel {
+export class ArticleTypeModel {
 
     public id: Number;
-    public title: String = '';
-    public content: String = '';
-    public userEntity: UserModel;
-    public articleTypeEntity: ArticleTypeModel;
+    public code;
+    public title;
+    public createTime;
 
 }

@@ -43,6 +43,8 @@ export class HomeComponent implements OnInit {
     page: CommonPageModel;
     // 当前页数
     currentPage: number;
+    // 当前时间
+    public currentDay = new Date().getTime();
 
     constructor(private articleService: ArticleService,
         private userService: UserService) {

@@ -26,36 +26,40 @@
                         <div class="mr-auto">
                             <h5>
                                 {{ article?.title }}
-                                <span class="badge badge-pill badge-danger">新</span>
+                                <span *ngIf="(currentDay| date:'yyyyMMdd') === (article.createTime | date:'yyyyMMdd')" class="badge badge-pill badge-danger">新</span>
+                                <span *ngIf="article.articleTypeEntity.id === 1" class="badge badge-pill badge-success">原</span>
+                                <span *ngIf="article.articleTypeEntity.id === 2" class="badge badge-pill badge-info">转</span>
                             </h5>
                         </div>
                         <!-- 赞功能 -->
-                        <div *ngIf="currentUser?.id !== article?.userEntity.id; else showfabulousNotCLick">
-                            <ng-container *ngIf="fabulousStatus; else showfabulous">
-                                <button type="button" class="btn btn-success btn-sm" tooltip="对该文章点赞" placement="bottom" (click)="fabulous()">
+                        <div class="ml-4">
+                            <div *ngIf="currentUser?.id !== article?.userEntity.id; else showfabulousNotCLick">
+                                <ng-container *ngIf="fabulousStatus; else showfabulous">
+                                    <button type="button" class="btn btn-success btn-sm" tooltip="对该文章点赞" placement="bottom" (click)="fabulous()">
+                                        <span>
+                                            <i class="zmdi zmdi-thumb-up zmdi-hc-fw"></i>
+                                            <span>{{articleFabulousCount}}</span>
+                                        </span>
+                                    </button>
+                                </ng-container>
+                                <ng-template #showfabulous>
+                                    <button type="button" class="btn btn-success btn-sm" tooltip="取消对该文章的赞" placement="bottom" (click)="unFabulous()">
+                                        <span>
+                                            <i class="zmdi zmdi-thumb-up-down zmdi-hc-fw"></i>
+                                            <span>{{articleFabulousCount}}</span>
+                                        </span>
+                                    </button>
+                                </ng-template>
+                            </div>
+                            <ng-template #showfabulousNotCLick>
+                                <button type="button" class="btn btn-success btn-sm disabled" tooltip="用户对该文章赞的总数据" placement="bottom">
                                     <span>
                                         <i class="zmdi zmdi-thumb-up zmdi-hc-fw"></i>
                                         <span>{{articleFabulousCount}}</span>
                                     </span>
                                 </button>
-                            </ng-container>
-                            <ng-template #showfabulous>
-                                <button type="button" class="btn btn-success btn-sm" tooltip="取消对该文章的赞" placement="bottom" (click)="unFabulous()">
-                                    <span>
-                                        <i class="zmdi zmdi-thumb-up-down zmdi-hc-fw"></i>
-                                        <span>{{articleFabulousCount}}</span>
-                                    </span>
-                                </button>
                             </ng-template>
                         </div>
-                        <ng-template #showfabulousNotCLick>
-                            <button type="button" class="btn btn-success btn-sm disabled" tooltip="用户对该文章赞的总数据" placement="bottom">
-                                <span>
-                                    <i class="zmdi zmdi-thumb-up zmdi-hc-fw"></i>
-                                    <span>{{articleFabulousCount}}</span>
-                                </span>
-                            </button>
-                        </ng-template>
                         <!-- 收藏功能 -->
                         <!-- <div class="ml-4">
                             <div class="btn btn-outline-info btn-icon btn-sm disabled">
