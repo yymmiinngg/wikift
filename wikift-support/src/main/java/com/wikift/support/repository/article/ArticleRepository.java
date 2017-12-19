@@ -34,8 +34,10 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
      * @param username 用户id
      * @return 文章列表
      */
-    @Query(value = "SELECT * FROM users_article_relation AS uar, article AS a, users AS u " +
+    @Query(value = "SELECT * FROM users_article_relation AS uar, article AS a, users AS u, article_type AS at, article_type_relation AS atr " +
             "WHERE uar.uar_user_id = u.u_id " +
+            "AND atr.atr_article_id = a.a_id " +
+            "AND atr.atr_article_type_id = at.at_id "+
             "AND uar.uar_article_id = a.a_id " +
             "AND DATE_SUB(CURDATE() , INTERVAL 7 DAY) <= date(a.a_create_time) " +
             "AND u.u_username = ?1", nativeQuery = true)
