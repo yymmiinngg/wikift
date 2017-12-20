@@ -46,4 +46,6 @@ export class ApiConfig {
 
     public static API_ARTICLE_TYPE_LIST = '/article/type/list';
 
+    public static API_REMIND_LIST_BY_USER = '/remind/list/user';
+
 }

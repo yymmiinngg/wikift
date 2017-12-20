@@ -34,13 +34,26 @@
     </li>
     <ng-container *ngIf="token; else noAuth">
       <!-- 个人消息 -->
-      <li dropdown>
-        <a dropdownToggle>
+      <li dropdown [autoClose]="false">
+        <a dropdownToggle [ngClass]="{'top-nav__notify': reminds?.length}">
           <i class="zmdi zmdi-email"></i>
         </a>
         <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown-menu--block" role="menu">
           <div class="listview listview--hover">
-            <div class="listview__header"></div>
+            <div style="padding: 0rem 1rem 1rem;">
+              <tabset>
+                <tab heading="未读消息">
+                  <a *ngFor="let remind of reminds" href="" class="listview__item">
+                    <div class="listview__content">
+                      <div class="listview__heading">
+                        {{remind.title}}
+                      </div>
+                      <p>{{remind.content}}</p>
+                    </div>
+                  </a>
+                </tab>
+              </tabset>
+            </div>
           </div>
         </div>
       </li>

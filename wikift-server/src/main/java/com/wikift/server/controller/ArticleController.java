@@ -20,6 +20,7 @@ package com.wikift.server.controller;
 import com.wikift.common.enums.MessageEnums;
 import com.wikift.common.utils.MessageUtils;
 import com.wikift.common.utils.PageAndSortUtils;
+import com.wikift.job.async.RamindAsyncJob;
 import com.wikift.model.article.ArticleEntity;
 import com.wikift.model.result.CommonResult;
 import com.wikift.server.param.ArticleFabulousParam;
@@ -37,12 +38,18 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
+    @Autowired
+    private RamindAsyncJob ramindAsyncJob;
+
     @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "create", method = RequestMethod.POST)
     CommonResult<ArticleEntity> save(@RequestBody ArticleEntity entity) {
         Assert.notNull(entity, MessageEnums.PARAMS_NOT_NULL.getValue());
         entity.setId(0l);
-        return CommonResult.success(articleService.save(entity));
+        ArticleEntity article = articleService.save(entity);
+        // 通知发送消息
+        ramindAsyncJob.sendRamindToUserFollows(article);
+        return CommonResult.success(article);
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
@@ -60,13 +67,11 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "info/{id}", method = RequestMethod.GET)
-//    @PreAuthorize("hasAuthority(('USER'))")
     CommonResult<ArticleEntity> info(@PathVariable(value = "id") Long id) {
         Assert.notNull(id, MessageEnums.PARAMS_NOT_NULL.getValue());
         return CommonResult.success(articleService.info(id));
     }
 
-    //    @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "list", method = RequestMethod.GET)
     CommonResult<ArticleEntity> list(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                      @RequestParam(value = "size", defaultValue = "10") Integer size) {

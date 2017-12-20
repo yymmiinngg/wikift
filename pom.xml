@@ -41,6 +41,7 @@
         <module>wikift-server</module>
         <module>wikift-web</module>
         <module>wikift-center</module>
+        <module>wikift-job</module>
     </modules>
 
     <!-- url -->
@@ -118,6 +119,11 @@
             <dependency>
                 <groupId>com.wikift</groupId>
                 <artifactId>wikift-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wikift</groupId>
+                <artifactId>wikift-job</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- spring boot -->
