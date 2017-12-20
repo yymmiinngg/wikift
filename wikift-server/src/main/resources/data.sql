@@ -17,3 +17,6 @@ INSERT INTO users_groups_relation (ugr_user_id, ugr_group_id) VALUES (2, 2);
 -- 初始化文章类型
 INSERT INTO article_type (at_code, at_title) values ( 'original', '原创作品');
 INSERT INTO article_type (at_code, at_title) values ( 'reprint', '转载作品');
+-- 初始化通告类型
+INSERT INTO remind_type (rt_id, rt_code, rt_title) VALUES (1, 'WEBSITE_REMIND', '网站通告');
+INSERT INTO remind_type (rt_id, rt_code, rt_title) VALUES (2, 'ARTICLE_REMIND', '文章通告');

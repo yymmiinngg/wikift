@@ -1,5 +1,7 @@
--- CREATE DATABASE wikift;
--- USE wikift;
+CREATE DATABASE wikift
+  DEFAULT CHARACTER SET utf8
+  COLLATE utf8_general_ci;
+USE wikift;
 -- 路由表
 DROP TABLE IF EXISTS role;
 CREATE TABLE role (
@@ -50,8 +52,8 @@ DROP TABLE IF EXISTS users_groups_relation;
 CREATE TABLE users_groups_relation (
   ugr_user_id  BIGINT(20) NOT NULL,
   ugr_group_id BIGINT(20) NOT NULL,
-  CONSTRAINT FK_user_relation_id FOREIGN KEY (ugr_user_id) REFERENCES users (u_id),
-  CONSTRAINT FK_group_relation_id FOREIGN KEY (ugr_group_id) REFERENCES groups (g_id)
+  CONSTRAINT FK_ugr_user_relation_id FOREIGN KEY (ugr_user_id) REFERENCES users (u_id),
+  CONSTRAINT FK_ugr_group_relation_id FOREIGN KEY (ugr_group_id) REFERENCES groups (g_id)
 );
 -- 文章表
 DROP TABLE IF EXISTS article;
@@ -68,13 +70,13 @@ CREATE TABLE article_type (
   at_id          BIGINT(20)   NOT NULL AUTO_INCREMENT,
   at_code        VARCHAR(255) NOT NULL,
   at_title       VARCHAR(255) NOT NULL,
-  at_create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+  at_create_time TIMESTAMP             DEFAULT CURRENT_TIMESTAMP(),
   PRIMARY KEY (at_id)
 );
 -- 文章与文章类型关系表
 DROP TABLE IF EXISTS article_type_relation;
-CREATE TABLE article_type_relation(
-  atr_article_id BIGINT(20) NOT NULL,
+CREATE TABLE article_type_relation (
+  atr_article_id      BIGINT(20) NOT NULL,
   atr_article_type_id BIGINT(20) NOT NULL,
   CONSTRAINT FK_atr_article_relation_id FOREIGN KEY (atr_article_id) REFERENCES article (a_id),
   CONSTRAINT FK_atr_article_type_relation_id FOREIGN KEY (atr_article_type_id) REFERENCES article_type (at_id)
@@ -106,4 +108,64 @@ CREATE TABLE users_article_view_relation (
   uavr_create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
   CONSTRAINT FK_uavr_users_view_relation_id FOREIGN KEY (uavr_user_id) REFERENCES users (u_id),
   CONSTRAINT FK_uavr_article_view_relation_id FOREIGN KEY (uavr_article_id) REFERENCES article (a_id)
+);
+-- 提醒表
+DROP TABLE IF EXISTS remind;
+CREATE TABLE remind (
+  r_id          BIGINT(20)   NOT NULL
+  COMMENT '提醒信息id',
+  r_title       VARCHAR(200) NOT NULL
+  COMMENT '提醒信息标题',
+  r_content     TEXT         NOT NULL
+  COMMENT '提醒信息内容',
+  r_create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
+  COMMENT '提醒信息创建时间',
+  r_deleted     BOOLEAN   DEFAULT FALSE
+  COMMENT '是否删除',
+  r_read        BOOLEAN   DEFAULT FALSE
+  COMMENT '是否阅读',
+  r_read_time   TIMESTAMP COMMENT '阅读时间',
+  PRIMARY KEY (r_id)
+);
+-- 提醒表类型
+DROP TABLE IF EXISTS remind_type;
+CREATE TABLE remind_type (
+  rt_id          BIGINT(20)  NOT NULL
+  COMMENT '信息类型',
+  rt_code        VARCHAR(20) NOT NULL
+  COMMENT '类型code,唯一标识',
+  rt_title       VARCHAR(20) NOT NULL
+  COMMENT '类型名称',
+  rt_create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
+  COMMENT '类型创建时间',
+  rt_disabled    BOOLEAN   DEFAULT TRUE
+  COMMENT '是否启用该类型',
+  rt_deleted     BOOLEAN   DEFAULT FALSE
+  COMMENT '是否删除',
+  PRIMARY KEY (rt_id)
+);
+-- 提醒与提醒类型关系表
+DROP TABLE IF EXISTS remind_type_relation;
+CREATE TABLE remind_type_relation (
+  rtr_remind_id      BIGINT(20) NOT NULL,
+  rtr_remind_type_id BIGINT(20) NOT NULL,
+  rtr_create_time    TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+  CONSTRAINT FK_rtr_remind_relation_id FOREIGN KEY (rtr_remind_id) REFERENCES remind (r_id),
+  CONSTRAINT FK_rtr_remind_type_relation_id FOREIGN KEY (rtr_remind_type_id) REFERENCES remind_type (rt_id)
+);
+-- 提醒与用户文章关系表
+DROP TABLE remind_article_relation;
+CREATE TABLE remind_article_relation (
+  rar_remind_id  BIGINT(20) NOT NULL,
+  rar_article_id BIGINT(20) NOT NULL,
+  CONSTRAINT FK_rar_remind_relation_id FOREIGN KEY (rar_remind_id) REFERENCES remind (r_id),
+  CONSTRAINT FK_rar_article_relation_id FOREIGN KEY (rar_article_id) REFERENCES article (a_id)
+);
+-- 提醒与用户关系表
+DROP TABLE remind_users_relation;
+CREATE TABLE remind_users_relation (
+  rur_remind_id BIGINT(20) NOT NULL,
+  rur_user_id   BIGINT(20) NOT NULL,
+  CONSTRAINT FK_rur_remind_relation_id FOREIGN KEY (rur_remind_id) REFERENCES remind (r_id),
+  CONSTRAINT FK_rur_user_relation_id FOREIGN KEY (rur_user_id) REFERENCES users (u_id)
 );

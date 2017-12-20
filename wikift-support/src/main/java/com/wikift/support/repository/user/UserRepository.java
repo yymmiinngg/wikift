@@ -59,10 +59,24 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
     @Query(value = "SELECT u.u_id, u.u_username, u.u_password, u.u_avatar, u.u_alias_name, u.u_signature " +
             "FROM users_follow_relation AS ufr " +
             "LEFT JOIN users AS u " +
-            "ON ufr.ufr_user_id_follw = u.u_id " +
-            "WHERE u.u_id = ?1",
+            "ON ufr.ufr_user_id_cover = u.u_id " +
+            "WHERE ufr.ufr_user_id_follw = ?1",
             nativeQuery = true)
     List<UserEntity> findAllFollowersByUserId(Long userId);
+
+    /**
+     * 查询关注该用户的所有用户
+     *
+     * @param userId 需要查询的用户
+     * @return 关注者该用户列表
+     */
+    @Query(value = "SELECT u.u_id, u.u_username, u.u_password, u.u_avatar, u.u_alias_name, u.u_signature " +
+            "FROM users_follow_relation AS ufr " +
+            "LEFT JOIN users AS u " +
+            "ON ufr.ufr_user_id_follw = u.u_id " +
+            "WHERE ufr.ufr_user_id_cover = ?1",
+            nativeQuery = true)
+    List<UserEntity> findAllCoversByUserId(Long userId);
 
     /**
      * 查询当前用户是否被关注过

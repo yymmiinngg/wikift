@@ -74,6 +74,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserEntity> findAllCoversByUserId(Long userId) {
+        return userRepository.findAllCoversByUserId(userId);
+    }
+
+    @Override
     public UserEntity findUserEntityByFollowsExists(Long followUserId, Long coverUserId) {
         return userRepository.findUserEntityByFollowsExists(followUserId, coverUserId);
     }

@@ -25,6 +25,7 @@ import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { ButtonsModule } from 'ngx-bootstrap';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { LayoutComponent } from './layout.component';
 import { HeaderComponent } from './header/header.component';
@@ -34,6 +35,7 @@ import { NavigationTriggerComponent } from './header/navigation-trigger/navigati
 import { LoginComponent } from '../pages/user/login/login.component';
 
 import { UserService } from '../../services/user.service';
+import { RemindService } from '../../services/remind.service';
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -54,10 +56,12 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     BsDropdownModule.forRoot(),
     ProgressbarModule.forRoot(),
     ButtonsModule.forRoot(),
+    TabsModule.forRoot(),
     PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG)
   ],
   providers: [
-    UserService
+    UserService,
+    RemindService
   ]
 })
 
