@@ -34,7 +34,7 @@
     </li>
     <ng-container *ngIf="token; else noAuth">
       <!-- 个人消息 -->
-      <li dropdown [autoClose]="true">
+      <li dropdown [autoClose]="false">
         <a dropdownToggle [ngClass]="{'top-nav__notify': reminds?.length}">
           <i class="zmdi zmdi-email"></i>
         </a>
@@ -42,8 +42,20 @@
           <div class="listview listview--hover">
             <div style="padding: 0rem 1rem 1rem;">
               <tabset>
-                <tab heading="未读消息">
-                  <a *ngFor="let remind of reminds" (click)="showRemindDetail(remind)" class="listview__item">
+                <tab heading="未读消息" (select)="unReadRemind()">
+                  <div [ngBusy]="unreadRemindsBusy"></div>
+                  <a *ngFor="let remind of unreadReminds" (click)="showRemindDetail(remind)" class="listview__item">
+                    <div class="listview__content">
+                      <div class="listview__heading">
+                        {{remind.title}}
+                      </div>
+                      <p>{{remind.content}}</p>
+                    </div>
+                  </a>
+                </tab>
+                <tab heading="已读消息" (select)="readRemind()">
+                  <div [ngBusy]="readRemindsBusy"></div>
+                  <a *ngFor="let remind of readReminds" (click)="showRemindDetail(remind)" class="listview__item">
                     <div class="listview__content">
                       <div class="listview__heading">
                         {{remind.title}}

@@ -35,7 +35,7 @@
                         <div class="ml-4">
                             <div *ngIf="currentUser?.id !== article?.userEntity.id; else showfabulousNotCLick">
                                 <ng-container *ngIf="fabulousStatus; else showfabulous">
-                                    <button type="button" class="btn btn-success btn-sm" tooltip="对该文章点赞" placement="bottom" (click)="fabulous()">
+                                    <button type="button" class="btn btn-success btn-sm" tooltip="对该文章点赞" placement="bottom" container="body" (click)="fabulous()">
                                         <span>
                                             <i class="zmdi zmdi-thumb-up zmdi-hc-fw"></i>
                                             <span>{{articleFabulousCount}}</span>
@@ -43,7 +43,7 @@
                                     </button>
                                 </ng-container>
                                 <ng-template #showfabulous>
-                                    <button type="button" class="btn btn-success btn-sm" tooltip="取消对该文章的赞" placement="bottom" (click)="unFabulous()">
+                                    <button type="button" class="btn btn-success btn-sm" tooltip="取消对该文章的赞" placement="bottom" container="body" (click)="unFabulous()">
                                         <span>
                                             <i class="zmdi zmdi-thumb-up-down zmdi-hc-fw"></i>
                                             <span>{{articleFabulousCount}}</span>
@@ -52,7 +52,7 @@
                                 </ng-template>
                             </div>
                             <ng-template #showfabulousNotCLick>
-                                <button type="button" class="btn btn-success btn-sm disabled" tooltip="用户对该文章赞的总数据" placement="bottom">
+                                <button type="button" class="btn btn-success btn-sm disabled" tooltip="用户对该文章赞的总数据" container="body" placement="bottom">
                                     <span>
                                         <i class="zmdi zmdi-thumb-up zmdi-hc-fw"></i>
                                         <span>{{articleFabulousCount}}</span>
@@ -73,7 +73,7 @@
                         </div> -->
                         <!-- 访问量 -->
                         <div class="ml-4">
-                            <button type="button" class="btn btn-success btn-sm" tooltip="该文章访问总数据" placement="bottom">
+                            <button type="button" class="btn btn-success btn-sm" tooltip="该文章访问总数据" container="body" placement="bottom">
                                 <span>
                                     <i class="zmdi zmdi-eye zmdi-hc-fw"></i>
                                     <span>{{articleViewCount}}</span>

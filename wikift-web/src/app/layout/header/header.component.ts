@@ -18,6 +18,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { Subscription } from 'rxjs/Subscription';
 import { CookieUtils } from '../../shared/utils/cookie.util';
 
 import { SharedService } from '../../shared/services/shared.service';
@@ -39,8 +40,12 @@ export class HeaderComponent implements OnInit {
   token: String;
   userInfo;
   maThemeModel = 'green';
-  // 用户未读消息
-  public reminds;
+  // 用户未读消息, 提示框
+  public unreadReminds;
+  public unreadRemindsBusy: Subscription;
+  // 用户已读消息, 提示框
+  public readReminds;
+  public readRemindsBusy: Subscription;
   // 文章属性框
   @ViewChild('remindDetial')
   public remindDetial: ModalDirective;
@@ -82,9 +87,17 @@ export class HeaderComponent implements OnInit {
   }
 
   initUnreadRemindByUser() {
-    this.remindService.listByUsers(this.userInfo.id, 'unread').subscribe(
+    this.unreadRemindsBusy = this.remindService.listByUsers(this.userInfo.id, 'unread').subscribe(
       result => {
-        this.reminds = result.data;
+        this.unreadReminds = result.data;
+      }
+    );
+  }
+
+  initReadRemindByUser() {
+    this.readRemindsBusy = this.remindService.listByUsers(this.userInfo.id, 'read').subscribe(
+      result => {
+        this.readReminds = result.data;
       }
     );
   }
@@ -99,9 +112,19 @@ export class HeaderComponent implements OnInit {
     this.remind = value;
     this.remindService.readRemind(this.remind.id).subscribe(
       result => {
-        console.log(result.data);
+        this.initUnreadRemindByUser();
       }
     );
+  }
+
+  unReadRemind() {
+    this.unreadReminds = new Array();
+    this.initUnreadRemindByUser();
+  }
+
+  readRemind() {
+    this.readReminds = new Array();
+    this.initReadRemindByUser();
   }
 
 }

@@ -39,7 +39,8 @@
     "ng2-archwizard": "^2.1.0",
     "ng2-validation": "^4.2.0",
     "ng2-device-detector": "^1.0.0",
-    "ts-md5": "^1.2.2"
+    "ts-md5": "^1.2.2",
+    "angular2-busy": "^2.0.4"
   },
   "devDependencies": {
     "@angular/cli": "1.4.3",

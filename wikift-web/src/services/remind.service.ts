@@ -61,11 +61,8 @@ export class RemindService {
     }
 
     readRemind(id) {
-        const headers = new Headers({
-            'Authorization': 'Bearer ' + CookieUtils.get()
-        });
-        const options = new RequestOptions({ headers: headers });
-        return this.http.put(ApiConfig.API_REMIND_READ + id, options).map(ResultUtils.extractData);
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        return this.http.put(ApiConfig.API_REMIND_READ + id, null, options).map(ResultUtils.extractData);
     }
 
 }
