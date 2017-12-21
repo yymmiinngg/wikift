@@ -69,11 +69,17 @@ public class RemindController {
         List<RemindEntity> remindEntities = new ArrayList<>();
         switch (type) {
             case "read":
+                remindEntities = remindService.getAllReadRemindByUsers(e);
                 break;
             case "unread":
             default:
                 remindEntities = remindService.getAllUnreadRemindByUsers(e);
                 break;
+        }
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
         }
         return CommonResult.success(remindEntities);
     }

@@ -52,6 +52,11 @@ public class RemindServiceImpl implements RemindService {
     }
 
     @Override
+    public List<RemindEntity> getAllReadRemindByUsers(List<UserEntity> users) {
+        return remindRepository.findAllByUsersAndReadTimeNotNull(users);
+    }
+
+    @Override
     public RemindEntity getById(Long id) {
         return remindRepository.findOne(id);
     }

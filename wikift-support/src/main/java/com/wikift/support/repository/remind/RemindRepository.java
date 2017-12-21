@@ -15,7 +15,7 @@ public interface RemindRepository extends PagingAndSortingRepository<RemindEntit
     /**
      * 根据用户查询该用户所有的提示消息
      *
-     * @param users
+     * @param users 当前用户
      * @return 提示信息列表
      */
     List<RemindEntity> findAllByUsers(List<UserEntity> users);
@@ -23,10 +23,18 @@ public interface RemindRepository extends PagingAndSortingRepository<RemindEntit
     /**
      * 根据用户查询该用户所有的未读提示消息
      *
-     * @param users
-     * @return 提示信息列表
+     * @param users 当前用户
+     * @return 未读提示信息
      */
     List<RemindEntity> findAllByUsersAndReadTimeIsNull(List<UserEntity> users);
+
+    /**
+     * 根据用户查询该用户所有已读提示信息
+     *
+     * @param users 当前用户
+     * @return 已读提示信息
+     */
+    List<RemindEntity> findAllByUsersAndReadTimeNotNull(List<UserEntity> users);
 
     /**
      * 阅读消息

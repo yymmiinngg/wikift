@@ -20,6 +20,8 @@ public interface RemindService {
 
     List<RemindEntity> getAllUnreadRemindByUsers(List<UserEntity> users);
 
+    List<RemindEntity> getAllReadRemindByUsers(List<UserEntity> users);
+
     RemindEntity getById(Long id);
 
     Integer read(Long id);

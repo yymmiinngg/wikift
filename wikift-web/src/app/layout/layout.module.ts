@@ -27,6 +27,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { BusyModule, BusyConfig } from 'angular2-busy';
 
 import { LayoutComponent } from './layout.component';
 import { HeaderComponent } from './header/header.component';
@@ -54,6 +55,9 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CommonModule,
     LayoutRouting,
     FormsModule,
+    BusyModule.forRoot(new BusyConfig({
+      message: '数据加载中, 请稍候...'
+    })),
     BsDropdownModule.forRoot(),
     ProgressbarModule.forRoot(),
     ButtonsModule.forRoot(),
