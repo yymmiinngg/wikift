@@ -26,6 +26,7 @@ import { ButtonsModule } from 'ngx-bootstrap';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { LayoutComponent } from './layout.component';
 import { HeaderComponent } from './header/header.component';
@@ -57,6 +58,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ProgressbarModule.forRoot(),
     ButtonsModule.forRoot(),
     TabsModule.forRoot(),
+    ModalModule.forRoot(),
     PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG)
   ],
   providers: [

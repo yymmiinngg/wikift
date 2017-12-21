@@ -15,9 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { CookieUtils } from '../../shared/utils/cookie.util';
 
 import { SharedService } from '../../shared/services/shared.service';
@@ -41,6 +41,11 @@ export class HeaderComponent implements OnInit {
   maThemeModel = 'green';
   // 用户未读消息
   public reminds;
+  // 文章属性框
+  @ViewChild('remindDetial')
+  public remindDetial: ModalDirective;
+  // 提示消息详情
+  public remind;
 
   setTheme() {
     this.sharedService.setTheme(this.maThemeModel);
@@ -87,6 +92,16 @@ export class HeaderComponent implements OnInit {
   logout() {
     CookieUtils.clear();
     this.router.navigate(['/user/login']);
+  }
+
+  showRemindDetail(value) {
+    this.remindDetial.show();
+    this.remind = value;
+    this.remindService.readRemind(this.remind.id).subscribe(
+      result => {
+        console.log(result.data);
+      }
+    );
   }
 
 }
