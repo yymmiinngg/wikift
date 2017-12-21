@@ -34,7 +34,7 @@
     </li>
     <ng-container *ngIf="token; else noAuth">
       <!-- 个人消息 -->
-      <li dropdown [autoClose]="false">
+      <li dropdown [autoClose]="true">
         <a dropdownToggle [ngClass]="{'top-nav__notify': reminds?.length}">
           <i class="zmdi zmdi-email"></i>
         </a>
@@ -43,7 +43,7 @@
             <div style="padding: 0rem 1rem 1rem;">
               <tabset>
                 <tab heading="未读消息">
-                  <a *ngFor="let remind of reminds" href="" class="listview__item">
+                  <a *ngFor="let remind of reminds" (click)="showRemindDetail(remind)" class="listview__item">
                     <div class="listview__content">
                       <div class="listview__heading">
                         {{remind.title}}
@@ -127,3 +127,33 @@
     </ng-template>
   </ul>
 </header>
+<!-- 消息详情 -->
+<div bsModal #remindDetial="bs-modal" class="modal fade">
+  <ng-container>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header border-b-1">
+          <h5 class="modal-title pull-left">通知消息详情</h5>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th scope="row">消息标题:</th>
+                <td>{{remind?.title}}</td>
+              </tr>
+              <tr>
+                <th scope="row">消息内容:</th>
+                <td>{{remind?.content}}</td>
+              </tr>
+              <tr>
+                <th scope="row">提醒时间:</th>
+                <td>{{remind?.createTime | date:'yyyy年MM月dd日HH:mm:ss'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

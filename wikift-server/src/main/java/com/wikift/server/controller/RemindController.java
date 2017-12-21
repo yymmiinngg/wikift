@@ -25,10 +25,7 @@ import com.wikift.support.service.remind.RemindService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +44,20 @@ public class RemindController {
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "info/{id}", method = RequestMethod.GET)
+    CommonResult<RemindEntity> info(@PathVariable(value = "id") Long id) {
+        Assert.notNull(id, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(remindService.getById(id));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "read/{id}", method = RequestMethod.PUT)
+    CommonResult<RemindEntity> read(@PathVariable(value = "id") Long id) {
+        Assert.notNull(id, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(remindService.read(id));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "list/user", method = RequestMethod.GET)
     CommonResult<RemindEntity> getAllRemindByUsers(@RequestParam(value = "userId") Long userId,
                                                    @RequestParam(value = "type", defaultValue = "unread") String type) {
@@ -61,7 +72,7 @@ public class RemindController {
                 break;
             case "unread":
             default:
-                remindEntities = remindService.getAllRemindByUsers(e);
+                remindEntities = remindService.getAllUnreadRemindByUsers(e);
                 break;
         }
         return CommonResult.success(remindEntities);

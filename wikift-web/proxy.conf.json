@@ -118,5 +118,15 @@
         "target": "http://localhost:8080",
         "secure": false,
         "logLevel": "debug"
+    },
+    "/remind/info": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/remind/read": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "logLevel": "debug"
     }
 }
