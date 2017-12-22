@@ -15,17 +15,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { UserModel } from '../user/user.model';
-import { ArticleTypeModel } from './article.type.model';
-import { ArticleTagModel } from './article.tag.model';
+package com.wikift.model.article;
 
-export class ArticleModel {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-    public id: Number;
-    public title: String = '';
-    public content: String = '';
-    public userEntity: UserModel;
-    public articleTypeEntity: ArticleTypeModel;
-    public articleTags: Array<ArticleTagModel>;
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "article_tag")
+@EntityListeners(value = AuditingEntityListener.class)
+public class ArticleTagEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "at_id")
+    private Long id;
+
+    @Column(name = "at_title")
+    private String title;
+
+    @Column(name = "at_create_time")
+    @CreatedDate
+    private Date createTime;
 
 }

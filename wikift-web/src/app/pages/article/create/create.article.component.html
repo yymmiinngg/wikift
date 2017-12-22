@@ -72,6 +72,21 @@
                 </div>
               </div>
             </wizard-step>
+            <wizard-step stepTitle="文章标签" (stepEnter)="showArticleTagsStep($event)" navigationSymbol="&#xf085;" navigationSymbolFontFamily="FontAwesome">
+              <div [ngBusy]="articleTagsBusy"></div>
+              <div class="card-block mr-center" style="margin-top: 10px;">
+                <div class="clearfix mt-2"></div>
+                <select2 #articleTagFields [data]="articleTags" [options]="multipleOptions" [value]="tagsValue" (valueChanged)="tagChanged($event)"></select2>
+              </div>
+              <div class="card-footer d-flex px-4 py-3">
+                <div class="mr-auto">
+                  <a class="btn btn-secondary" previousStep>上一步</a>
+                </div>
+                <div class="ml-4">
+                  <a class="btn btn-info" [ngClass]="{'disabled': !articleModel.articleTypeEntity?.id}" nextStep>下一步</a>
+                </div>
+              </div>
+            </wizard-step>
             <wizard-step stepTitle="发布详情" navigationSymbol="&#xf00c;" navigationSymbolFontFamily="FontAwesome">
               <div class="card-block" style="margin-top: 10px;">
                 <table class="table mb-0">

@@ -15,17 +15,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { UserModel } from '../user/user.model';
-import { ArticleTypeModel } from './article.type.model';
-import { ArticleTagModel } from './article.tag.model';
+package com.wikift.support.repository.article;
 
-export class ArticleModel {
+import com.wikift.model.article.ArticleTagEntity;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-    public id: Number;
-    public title: String = '';
-    public content: String = '';
-    public userEntity: UserModel;
-    public articleTypeEntity: ArticleTypeModel;
-    public articleTags: Array<ArticleTagModel>;
+import javax.transaction.Transactional;
+
+@Transactional
+public interface ArticleTagRepository extends PagingAndSortingRepository<ArticleTagEntity, Long> {
 
 }

@@ -76,11 +76,6 @@ public class RemindController {
                 remindEntities = remindService.getAllUnreadRemindByUsers(e);
                 break;
         }
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        }
         return CommonResult.success(remindEntities);
     }
 

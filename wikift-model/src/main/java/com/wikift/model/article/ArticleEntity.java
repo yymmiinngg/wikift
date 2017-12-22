@@ -71,4 +71,11 @@ public class ArticleEntity {
             inverseJoinColumns = @JoinColumn(name = "atr_article_type_id"))
     private ArticleTypeEntity articleTypeEntity;
 
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "article_tag_relation",
+            joinColumns = @JoinColumn(name = "atr_article_id"),
+            inverseJoinColumns = @JoinColumn(name = "atr_article_tag_id"))
+    @Fetch(FetchMode.SUBSELECT)
+    private List<ArticleTagEntity> articleTags;
+
 }

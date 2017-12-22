@@ -43,6 +43,14 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
 
+export function busyConfigFactory() {
+  return new BusyConfig({
+    message: '数据加载中, 请稍候...',
+    minDuration: 1000,
+    backdrop: true,
+  });
+}
+
 @NgModule({
   declarations: [
     LoginComponent,
@@ -55,9 +63,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CommonModule,
     LayoutRouting,
     FormsModule,
-    BusyModule.forRoot(new BusyConfig({
-      message: '数据加载中, 请稍候...'
-    })),
+    BusyModule,
     BsDropdownModule.forRoot(),
     ProgressbarModule.forRoot(),
     ButtonsModule.forRoot(),
@@ -67,7 +73,11 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   ],
   providers: [
     UserService,
-    RemindService
+    RemindService,
+    {
+      provide: BusyConfig,
+      useFactory: busyConfigFactory
+    }
   ]
 })
 

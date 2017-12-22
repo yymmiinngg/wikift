@@ -17,6 +17,8 @@
  */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+import { Select2OptionData, Select2Component } from 'ng2-select2';
 
 import { ArticleModel } from '../../../../app/shared/model/article/article.model';
 import { UserModel } from '../../../../app/shared/model/user/user.model';
@@ -25,6 +27,8 @@ import { CommonConfig } from '../../../../config/common.config';
 import { ArticleService } from '../../../../services/article.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ArticleTypeService } from '../../../../services/article.type.service';
+import { ArticleTagService } from '../../../../services/article.tag.service';
+import { ArticleTagModel } from '../../../shared/model/article/article.tag.model';
 
 @Component({
     selector: 'wikift-article-create',
@@ -32,10 +36,25 @@ import { ArticleTypeService } from '../../../../services/article.type.service';
 })
 
 export class CreateArticleComponent implements OnInit {
-
+    // 选择标签配置
+    multipleOptions: any = {
+        multiple: true,
+        dropdownAutoWidth: true,
+        placeholder: '请选择文章标签',
+        width: '100%',
+        containerCssClass: 'select2-selection--alt',
+        dropdownCssClass: 'select2-dropdown--alt'
+    };
     articleModel: ArticleModel;
     // 文章类型
     public articleType;
+    // 文章标签, 加载框
+    public articleTags: Array<Select2OptionData>;
+    public articleTagsBusy: Subscription;
+    @ViewChild('articleTagFields')
+    public articleTagFields: Select2Component;
+    public tagsValue: any = [];
+    public articleTagsValue: any = [];
 
     // 文章属性框
     @ViewChild('settingAritcleModel')
@@ -43,7 +62,8 @@ export class CreateArticleComponent implements OnInit {
 
     constructor(private router: Router,
         private articleService: ArticleService,
-        private articleTypeService: ArticleTypeService) { }
+        private articleTypeService: ArticleTypeService,
+        private articleTagService: ArticleTagService) { }
 
     ngOnInit() {
         this.articleModel = new ArticleModel();
@@ -54,6 +74,24 @@ export class CreateArticleComponent implements OnInit {
         this.articleTypeService.list().subscribe(
             result => {
                 this.articleType = result.data;
+            }
+        );
+    }
+
+    initArticleTag() {
+        this.articleTagsBusy = this.articleTagService.list().subscribe(
+            result => {
+                if (result.data) {
+                    const tags = [];
+                    result.data.content.forEach(element => {
+                        const tag = {
+                            'id': element.id,
+                            'text': element.title
+                        };
+                        tags.push(tag);
+                    });
+                    this.articleTags = tags;
+                }
             }
         );
     }
@@ -72,6 +110,12 @@ export class CreateArticleComponent implements OnInit {
         const user = JSON.parse(CookieUtils.getBy(CommonConfig.AUTH_USER_INFO));
         userModel.id = user.id;
         this.articleModel.userEntity = userModel;
+        this.articleModel.articleTags = new Array();
+        this.articleTagsValue.value.forEach(e => {
+            const articleTag = new ArticleTagModel();
+            articleTag.id = e;
+            this.articleModel.articleTags.push(articleTag);
+        });
         this.articleService.save(this.articleModel).subscribe(
             result => {
                 this.settingAritcleModel.hide();
@@ -79,6 +123,14 @@ export class CreateArticleComponent implements OnInit {
                 this.router.navigate(['/']);
             }
         );
+    }
+
+    showArticleTagsStep(event) {
+        this.initArticleTag();
+    }
+
+    tagChanged(data: { value: string[] }) {
+        this.articleTagsValue = data;
     }
 
 }
