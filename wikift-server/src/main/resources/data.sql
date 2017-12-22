@@ -20,3 +20,27 @@ INSERT INTO article_type (at_code, at_title) values ( 'reprint', '转载作品')
 -- 初始化通告类型
 INSERT INTO remind_type (rt_id, rt_code, rt_title) VALUES (1, 'WEBSITE_REMIND', '网站通告');
 INSERT INTO remind_type (rt_id, rt_code, rt_title) VALUES (2, 'ARTICLE_REMIND', '文章通告');
+-- 初始化标签类型
+INSERT INTO article_tag(at_title) VALUES ('java');
+INSERT INTO article_tag(at_title) VALUES ('javascript');
+INSERT INTO article_tag(at_title) VALUES ('angularjs');
+INSERT INTO article_tag(at_title) VALUES ('jquery');
+INSERT INTO article_tag(at_title) VALUES ('php');
+INSERT INTO article_tag(at_title) VALUES ('nodeJS');
+INSERT INTO article_tag(at_title) VALUES ('hadoop');
+INSERT INTO article_tag(at_title) VALUES ('storm');
+INSERT INTO article_tag(at_title) VALUES ('spark');
+INSERT INTO article_tag(at_title) VALUES ('html5');
+INSERT INTO article_tag(at_title) VALUES ('ios');
+INSERT INTO article_tag(at_title) VALUES ('android');
+INSERT INTO article_tag(at_title) VALUES ('vue.js');
+INSERT INTO article_tag(at_title) VALUES ('react.js');
+INSERT INTO article_tag(at_title) VALUES ('css');
+INSERT INTO article_tag(at_title) VALUES ('mysql');
+INSERT INTO article_tag(at_title) VALUES ('hbase');
+INSERT INTO article_tag(at_title) VALUES ('linux');
+INSERT INTO article_tag(at_title) VALUES ('大数据');
+INSERT INTO article_tag(at_title) VALUES ('云计算');
+INSERT INTO article_tag(at_title) VALUES ('kvm');
+INSERT INTO article_tag(at_title) VALUES ('apache');
+INSERT INTO article_tag(at_title) VALUES ('spring');

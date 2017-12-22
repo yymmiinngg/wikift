@@ -22,16 +22,27 @@ import { Routes, RouterModule } from '@angular/router';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ArchwizardModule } from 'ng2-archwizard';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import { BusyModule, BusyConfig } from 'angular2-busy';
+import { Select2Module } from 'ng2-select2';
 
 import { CreateArticleComponent } from './create.article.component';
 
 import { ArticleService } from '../../../../services/article.service';
 import { WikiftEditorModule } from '../../../shared/directives/wikift-editor/wikift-editor.module';
 import { ArticleTypeService } from '../../../../services/article.type.service';
+import { ArticleTagService } from '../../../../services/article.tag.service';
 
 const CREATE_ARTICLE_ROUTES: Routes = [
     { path: '', component: CreateArticleComponent }
 ];
+
+export function busyConfigFactory() {
+    return new BusyConfig({
+        message: '数据加载中, 请稍候...',
+        minDuration: 1000,
+        backdrop: true,
+    });
+}
 
 @NgModule({
     imports: [
@@ -39,6 +50,8 @@ const CREATE_ARTICLE_ROUTES: Routes = [
         CommonModule,
         ArchwizardModule,
         FormsModule,
+        BusyModule,
+        Select2Module,
         ModalModule.forRoot(),
         AlertModule.forRoot(),
         RouterModule.forChild(CREATE_ARTICLE_ROUTES)
@@ -49,7 +62,12 @@ const CREATE_ARTICLE_ROUTES: Routes = [
     ],
     providers: [
         ArticleService,
-        ArticleTypeService
+        ArticleTypeService,
+        ArticleTagService,
+        {
+            provide: BusyConfig,
+            useFactory: busyConfigFactory
+        }
     ],
 })
 export class CreateArticleModule { }

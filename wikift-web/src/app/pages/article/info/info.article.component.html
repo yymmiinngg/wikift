@@ -89,6 +89,10 @@
                                     <div class="article__user__name">
                                         <a [routerLink]="['/account', article.userEntity.username, 'info']">{{ article.userEntity.username }}</a> - {{ article.createTime | date:'yyyy年MM月dd日HH:mm:ss'
                                         }} 发布</div>
+                                    <!-- 文章标签 -->
+                                    <div class="card-block ml-10">
+                                        <span *ngFor="let articleTag of article.articleTags" class="badge badge-success ml-2">{{articleTag.title}}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -169,3 +169,19 @@ CREATE TABLE remind_users_relation (
   CONSTRAINT FK_rur_remind_relation_id FOREIGN KEY (rur_remind_id) REFERENCES remind (r_id),
   CONSTRAINT FK_rur_user_relation_id FOREIGN KEY (rur_user_id) REFERENCES users (u_id)
 );
+-- 文章标签表
+DROP TABLE IF EXISTS article_tag;
+CREATE TABLE article_tag (
+  at_id          BIGINT(20)   NOT NULL AUTO_INCREMENT,
+  at_title       VARCHAR(255) NOT NULL,
+  at_create_time TIMESTAMP             DEFAULT CURRENT_TIMESTAMP(),
+  PRIMARY KEY (at_id)
+);
+-- 文章与文章文章标签关系表
+DROP TABLE IF EXISTS article_tag_relation;
+CREATE TABLE article_tag_relation (
+  atr_article_id      BIGINT(20) NOT NULL,
+  atr_article_tag_id BIGINT(20) NOT NULL,
+  CONSTRAINT FK_atr_article_1_relation_id FOREIGN KEY (atr_article_id) REFERENCES article (a_id),
+  CONSTRAINT FK_atr_article_tag_relation_id FOREIGN KEY (atr_article_tag_id) REFERENCES article_tag (at_id)
+);
