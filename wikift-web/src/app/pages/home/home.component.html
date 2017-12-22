@@ -32,11 +32,13 @@
                             </h5>
                         </div>
                         <!-- 文章PV -->
-                        <div>
-                            <div class="btn btn-outline-success btn-icon btn-sm disabled">
-                                <i class="zmdi zmdi-eye"></i> |
-                                <span>0</span>
-                            </div>
+                        <div class="ml-4">
+                            <button type="button" class="btn btn-success btn-sm" tooltip="该文章访问总数据" container="body" placement="bottom">
+                                <span>
+                                    <i class="zmdi zmdi-eye zmdi-hc-fw"></i>
+                                    <span>{{article.viewCount}}</span>
+                                </span>
+                            </button>
                         </div>
                     </div>
                     <div *ngIf="article.userEntity" class="media">

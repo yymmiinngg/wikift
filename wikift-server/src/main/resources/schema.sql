@@ -62,6 +62,7 @@ CREATE TABLE article (
   a_title       VARCHAR(255) NOT NULL,
   a_content     TEXT         NOT NULL,
   a_create_time TIMESTAMP,
+  view_count    BIGINT(20) COMMENT '该字段只用于映射数据',
   PRIMARY KEY (a_id)
 );
 -- 文章类型表
@@ -180,7 +181,7 @@ CREATE TABLE article_tag (
 -- 文章与文章文章标签关系表
 DROP TABLE IF EXISTS article_tag_relation;
 CREATE TABLE article_tag_relation (
-  atr_article_id      BIGINT(20) NOT NULL,
+  atr_article_id     BIGINT(20) NOT NULL,
   atr_article_tag_id BIGINT(20) NOT NULL,
   CONSTRAINT FK_atr_article_1_relation_id FOREIGN KEY (atr_article_id) REFERENCES article (a_id),
   CONSTRAINT FK_atr_article_tag_relation_id FOREIGN KEY (atr_article_tag_id) REFERENCES article_tag (at_id)

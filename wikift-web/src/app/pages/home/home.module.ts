@@ -20,6 +20,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { HomeComponent } from './home.component';
 
@@ -36,6 +37,7 @@ const HOME_ROUTES: Routes = [
         WikiftEditorModule,
         CommonModule,
         FormsModule,
+        TooltipModule.forRoot(),
         PaginationModule.forRoot(),
         RouterModule.forChild(HOME_ROUTES)
     ],

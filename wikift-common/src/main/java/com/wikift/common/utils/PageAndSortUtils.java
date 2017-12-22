@@ -34,4 +34,8 @@ public class PageAndSortUtils {
         return new PageRequest(page, size, new Sort(Sort.Direction.DESC, "createTime"));
     }
 
+    public static Pageable getPageAndSortAndCreateTimeByDESCAndNativeQuery(Integer page, Integer size) {
+        return new PageRequest(page, size, new Sort(Sort.Direction.DESC, "a_create_time"));
+    }
+
 }

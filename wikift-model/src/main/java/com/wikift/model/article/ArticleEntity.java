@@ -78,4 +78,8 @@ public class ArticleEntity {
     @Fetch(FetchMode.SUBSELECT)
     private List<ArticleTagEntity> articleTags;
 
+    // 该字段为统计字段不与数据库字段映射
+    @Column(name = "view_count", insertable = false)
+    private Integer viewCount;
+
 }
