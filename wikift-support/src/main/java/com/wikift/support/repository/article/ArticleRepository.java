@@ -18,6 +18,8 @@
 package com.wikift.support.repository.article;
 
 import com.wikift.model.article.ArticleEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -28,6 +30,17 @@ import java.util.List;
 @Transactional
 public interface ArticleRepository extends PagingAndSortingRepository<ArticleEntity, Long> {
 
+    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(a.view_count, IFNULL(SUM(uavr.uavr_view_count) , 0)) AS view_count, uar.uar_user_id, atr.atr_article_type_id " +
+            "FROM article AS a " +
+            "LEFT OUTER JOIN users_article_relation AS uar ON a.a_id = uar.uar_article_id " +
+            "LEFT OUTER JOIN article_type_relation AS atr ON a.a_id = atr.atr_article_id " +
+            "LEFT OUTER JOIN users_article_view_relation AS uavr ON a.a_id = uavr.uavr_article_id " +
+            "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id " +
+            "ORDER BY ?#{#pageable}",
+            countQuery = "SELECT COUNT(a.a_id) FROM article AS a",
+            nativeQuery = true)
+    Page<ArticleEntity> findAll(Pageable pageable);
+
     /**
      * 根据用户和时间查询文章信息
      *
@@ -37,7 +50,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
     @Query(value = "SELECT * FROM users_article_relation AS uar, article AS a, users AS u, article_type AS at, article_type_relation AS atr " +
             "WHERE uar.uar_user_id = u.u_id " +
             "AND atr.atr_article_id = a.a_id " +
-            "AND atr.atr_article_type_id = at.at_id "+
+            "AND atr.atr_article_type_id = at.at_id " +
             "AND uar.uar_article_id = a.a_id " +
             "AND DATE_SUB(CURDATE() , INTERVAL 7 DAY) <= date(a.a_create_time) " +
             "AND u.u_username = ?1", nativeQuery = true)
