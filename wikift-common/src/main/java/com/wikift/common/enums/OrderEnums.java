@@ -17,16 +17,26 @@
  */
 package com.wikift.common.enums;
 
-public enum RoleEnums {
+/**
+ * 排序枚举
+ *
+ * @author qianmoQ
+ */
+public enum OrderEnums {
 
-    GUEST,
-    USER,
-    GROUP,
-    WRITE,
-    READER,
-    ADMIN,
-    USER_ADMIN,
-    GROUP_ADMIN,
-    SPACE_ADMIN
+    FABULOU("COUNT(uafr.uafr_user_id)"),
+    VIEW("SUM(uavr.uavr_view_count)"),
+
+    NATIVE_CREATE_TIME("a_create_time");
+
+    private String value;
+
+    OrderEnums(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return this.value;
+    }
 
 }

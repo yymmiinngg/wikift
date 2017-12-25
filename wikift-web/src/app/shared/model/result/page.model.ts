@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 import { Serializable } from '../../model/serialization/serialization.model';
+import { OrderEnumModel } from '../enum/order.enum.model';
 
 /**
  * 数据分页
@@ -31,6 +32,7 @@ export class CommonPageModel implements Serializable<CommonPageModel> {
     public number;
     public first: number;
     public numberOfElements: number;
+    public order: OrderEnumModel;
 
     public deserialize(input) {
         return this;

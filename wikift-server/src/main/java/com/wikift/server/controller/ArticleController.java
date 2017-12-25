@@ -18,6 +18,7 @@
 package com.wikift.server.controller;
 
 import com.wikift.common.enums.MessageEnums;
+import com.wikift.common.enums.OrderEnums;
 import com.wikift.common.utils.MessageUtils;
 import com.wikift.common.utils.PageAndSortUtils;
 import com.wikift.job.async.RamindAsyncJob;
@@ -74,10 +75,11 @@ public class ArticleController {
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     CommonResult<ArticleEntity> list(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                     @RequestParam(value = "size", defaultValue = "10") Integer size) {
+                                     @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                     @RequestParam(value = "orderBy", defaultValue = "NATIVE_CREATE_TIME") OrderEnums order) {
         Assert.notNull(page, MessageUtils.getParamNotNull("page"));
         Assert.notNull(page, MessageUtils.getParamNotNull("size"));
-        return CommonResult.success(articleService.findAll(PageAndSortUtils.getPageAndSortAndCreateTimeByDESCAndNativeQuery(page, size)));
+        return CommonResult.success(articleService.findAll(order, PageAndSortUtils.getPage(page, size)));
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
