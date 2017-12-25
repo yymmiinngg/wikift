@@ -17,6 +17,7 @@
  */
 package com.wikift.common.utils;
 
+import com.wikift.common.enums.OrderEnums;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -34,8 +35,8 @@ public class PageAndSortUtils {
         return new PageRequest(page, size, new Sort(Sort.Direction.DESC, "createTime"));
     }
 
-    public static Pageable getPageAndSortAndCreateTimeByDESCAndNativeQuery(Integer page, Integer size) {
-        return new PageRequest(page, size, new Sort(Sort.Direction.DESC, "a_create_time"));
+    public static Pageable getPageAndSortAndCreateTimeByDESCAndNativeQuery(Integer page, Integer size, OrderEnums order) {
+        return new PageRequest(page, size, new Sort(Sort.Direction.DESC, order.getValue()));
     }
 
 }

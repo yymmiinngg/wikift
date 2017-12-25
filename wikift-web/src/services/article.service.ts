@@ -33,6 +33,7 @@ import { CommonResultModel } from '../app/shared/model/result/result.model';
 import { CommonPageModel } from '../app/shared/model/result/page.model';
 import { ArticleFabulousParamModel } from '../app/shared/model/param/article.fabulous.param.model';
 import { ArticleViewParamModel } from '../app/shared/model/param/article.view.param.model';
+import { OrderEnumModel } from '../app/shared/model/enum/order.enum.model';
 
 
 /**
@@ -69,6 +70,7 @@ export class ArticleService {
         const params = HttpUtils.getParams();
         params.append('page', page.number.toString());
         params.append('size', page.size.toString());
+        params.append('orderBy', OrderEnumModel[page.order]);
         options.params = params;
         return this.http.get(ApiConfig.API_ARTICLE_LIST, options).map(ResultUtils.extractData);
     }

@@ -19,6 +19,15 @@
     <div class="row">
         <!-- 文章内容 -->
         <div class="col-md-9">
+            <tabset>
+                <div [ngBusy]="loadArticleBusy"></div>
+                <tab heading="最新文章" (select)="loadArticleOrderByCreateTime()">
+                </tab>
+                <tab heading="最热文章" (select)="loadArticleOrderByView()">
+                </tab>
+                <tab heading="推荐文章" (select)="loadArticleOrderByFabulou()">
+                </tab>
+            </tabset>
             <div *ngFor="let article of articles" class="card">
                 <!-- 文章用户信息 -->
                 <div class="card-header border-b-1 px-4 py-3">

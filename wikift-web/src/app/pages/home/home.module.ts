@@ -21,12 +21,22 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { BusyModule, BusyConfig } from 'angular2-busy';
 
 import { HomeComponent } from './home.component';
 
 import { ArticleService } from '../../../services/article.service';
 import { WikiftEditorModule } from '../../shared/directives/wikift-editor/wikift-editor.module';
 import { UserService } from '../../../services/user.service';
+
+export function busyConfigFactory() {
+    return new BusyConfig({
+        message: '数据加载中, 请稍候...',
+        backdrop: true,
+    });
+}
 
 const HOME_ROUTES: Routes = [
     { path: '', component: HomeComponent }
@@ -37,7 +47,9 @@ const HOME_ROUTES: Routes = [
         WikiftEditorModule,
         CommonModule,
         FormsModule,
+        BusyModule,
         TooltipModule.forRoot(),
+        TabsModule.forRoot(),
         PaginationModule.forRoot(),
         RouterModule.forChild(HOME_ROUTES)
     ],
@@ -47,7 +59,11 @@ const HOME_ROUTES: Routes = [
     ],
     providers: [
         ArticleService,
-        UserService
+        UserService,
+        {
+            provide: BusyConfig,
+            useFactory: busyConfigFactory
+        }
     ],
 })
 export class HomeModule { }

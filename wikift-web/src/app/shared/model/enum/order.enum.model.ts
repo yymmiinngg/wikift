@@ -15,18 +15,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wikift.common.enums;
+/**
+ * 排序使用
+ * @author qianmoQ
+ */
+export enum OrderEnumModel {
 
-public enum RoleEnums {
-
-    GUEST,
-    USER,
-    GROUP,
-    WRITE,
-    READER,
-    ADMIN,
-    USER_ADMIN,
-    GROUP_ADMIN,
-    SPACE_ADMIN
+    FABULOU = 'FABULOU',
+    VIEW = 'VIEW',
+    NATIVE_CREATE_TIME = 'NATIVE_CREATE_TIME'
 
 }

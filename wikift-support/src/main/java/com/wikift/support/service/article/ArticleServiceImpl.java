@@ -17,6 +17,7 @@
  */
 package com.wikift.support.service.article;
 
+import com.wikift.common.enums.OrderEnums;
 import com.wikift.model.article.ArticleEntity;
 import com.wikift.support.repository.article.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +45,16 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Page<ArticleEntity> findAll(Pageable pageable) {
-        return articleRepository.findAll(pageable);
+    public Page<ArticleEntity> findAll(OrderEnums order, Pageable pageable) {
+        switch (order) {
+            case VIEW:
+                return articleRepository.findAllOrderByViewCount(pageable);
+            case FABULOU:
+                return articleRepository.findAllOrderByFabulouCount(pageable);
+            case NATIVE_CREATE_TIME:
+            default:
+                return articleRepository.findAllOrderByCreateTime(pageable);
+        }
     }
 
     @Override

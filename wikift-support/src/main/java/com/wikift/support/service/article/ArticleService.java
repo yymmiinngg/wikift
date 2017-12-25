@@ -1,5 +1,6 @@
 package com.wikift.support.service.article;
 
+import com.wikift.common.enums.OrderEnums;
 import com.wikift.model.article.ArticleEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +30,7 @@ public interface ArticleService {
      *
      * @return 文章列表
      */
-    Page<ArticleEntity> findAll(Pageable pageable);
+    Page<ArticleEntity> findAll(OrderEnums order, Pageable pageable);
 
     /**
      * 根据文章ID查询文章信息
