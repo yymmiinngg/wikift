@@ -24,6 +24,8 @@ import com.wikift.model.role.RoleEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -59,17 +61,18 @@ public class UserEntity {
     @Column(name = "u_signature")
     private String signature;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_role_relation",
             joinColumns = @JoinColumn(name = "urr_user_id", referencedColumnName = "u_id"),
             inverseJoinColumns = @JoinColumn(name = "urr_role_id", referencedColumnName = "r_id"))
     private List<RoleEntity> userRoles;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_follow_relation",
             joinColumns = @JoinColumn(name = "ufr_user_id_follw"),
             inverseJoinColumns = @JoinColumn(name = "ufr_user_id_cover"))
     @JsonBackReference
+    @Fetch(FetchMode.SUBSELECT)
     private List<UserEntity> follows;
 
 }

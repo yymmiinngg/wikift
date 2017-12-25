@@ -46,7 +46,7 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
             "LEFT JOIN users AS u " +
             "ON uar.uar_user_id = u.u_id " +
             "GROUP BY uar.uar_user_id " +
-            "ORDER BY u_count DESC LIMIT 10",
+            "ORDER BY u_count DESC LIMIT 5",
             nativeQuery = true)
     List<UserEntity> findTopByArticle();
 

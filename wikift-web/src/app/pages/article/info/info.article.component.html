@@ -118,6 +118,7 @@
                             <a dropdownToggle class="top-nav__notify">
                                 <i class="zmdi zmdi-more"></i>
                             </a>
+                            <!-- 文章操作工具 -->
                             <div *dropdownMenu class="dropdown-menu dropdown-menu-left">
                                 <a [routerLink]="['/article/', article.id, 'editor']" class="dropdown-item">
                                     <i class="zmdi zmdi-edit"></i>
@@ -136,7 +137,7 @@
         <!-- 文章目录 -->
         <div class="col-md-3">
             <div>
-                <div class="card" style="position: fixed;">
+                <div class="card">
                     <div class="card-header border-b-1 px-4 py-3 mr-center">
                         <div class="card-block">
                             <h2 class="card-title">文章目录</h2>

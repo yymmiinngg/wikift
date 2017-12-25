@@ -30,11 +30,12 @@ import java.util.List;
 @Transactional
 public interface ArticleRepository extends PagingAndSortingRepository<ArticleEntity, Long> {
 
-    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(a.view_count, IFNULL(SUM(uavr.uavr_view_count) , 0)) AS view_count, uar.uar_user_id, atr.atr_article_type_id " +
+    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(a.view_count, IFNULL(SUM(uavr.uavr_view_count) , 0)) AS view_count, IFNULL(a.fabulou_count, IFNULL(COUNT(uafr.uafr_user_id), 0)) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id " +
             "FROM article AS a " +
             "LEFT OUTER JOIN users_article_relation AS uar ON a.a_id = uar.uar_article_id " +
             "LEFT OUTER JOIN article_type_relation AS atr ON a.a_id = atr.atr_article_id " +
             "LEFT OUTER JOIN users_article_view_relation AS uavr ON a.a_id = uavr.uavr_article_id " +
+            "LEFT OUTER JOIN users_article_fabulous_relation AS uafr ON a.a_id = uafr.uafr_article_id " +
             "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id " +
             "ORDER BY ?#{#pageable}",
             countQuery = "SELECT COUNT(a.a_id) FROM article AS a",

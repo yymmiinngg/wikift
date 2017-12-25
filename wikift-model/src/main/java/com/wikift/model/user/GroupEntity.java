@@ -47,7 +47,7 @@ public class GroupEntity {
     @Column(name = "g_enabled")
     private String enabled;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_groups_relation",
             joinColumns = @JoinColumn(name = "ugr_user_id"),
             inverseJoinColumns = @JoinColumn(name = "ugr_group_id"))
