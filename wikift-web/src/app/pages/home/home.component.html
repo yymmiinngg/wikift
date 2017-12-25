@@ -68,22 +68,12 @@
                 <!-- 文章附属信息 -->
                 <div class="card-footer d-flex px-4 py-3">
                     <div class="mr-auto">
-                        <button class="btn btn-secondary btn--icon waves-effect">
-                            <i class="zmdi zmdi-thumb-up zmdi-hc-fw"></i>
+                        <button type="button" class="btn btn-secondary btn-sm disabled" tooltip="该文章用户赞总数据" container="body" placement="bottom">
+                            <span>
+                                <i class="zmdi zmdi-thumb-up zmdi-hc-fw"></i>
+                                <span>{{article.fabulouCount}}</span>
+                            </span>
                         </button>
-                        <span>0</span>
-                    </div>
-                    <div>
-                        <button class="btn btn-secondary btn--icon waves-effect">
-                            <i class="fa fa-comments"></i>
-                        </button>
-                        <span>0</span>
-                    </div>
-                    <div class="ml-4">
-                        <button class="btn btn-secondary btn--icon waves-effect">
-                            <i class="fa fa-share-alt"></i>
-                        </button>
-                        <span>0</span>
                     </div>
                 </div>
             </div>

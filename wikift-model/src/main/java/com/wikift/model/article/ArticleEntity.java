@@ -59,13 +59,13 @@ public class ArticleEntity {
     private Date createTime;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE})
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "users_article_relation",
             joinColumns = @JoinColumn(name = "uar_article_id"),
             inverseJoinColumns = @JoinColumn(name = "uar_user_id"))
     private UserEntity userEntity;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "article_type_relation",
             joinColumns = @JoinColumn(name = "atr_article_id"),
             inverseJoinColumns = @JoinColumn(name = "atr_article_type_id"))
@@ -81,5 +81,9 @@ public class ArticleEntity {
     // 该字段为统计字段不与数据库字段映射
     @Column(name = "view_count", insertable = false)
     private Integer viewCount;
+
+    // 该字段为统计字段不与数据库字段映射
+    @Column(name = "fabulou_count", insertable = false)
+    private Integer fabulouCount;
 
 }

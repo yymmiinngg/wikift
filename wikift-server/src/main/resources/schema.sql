@@ -63,6 +63,7 @@ CREATE TABLE article (
   a_content     TEXT         NOT NULL,
   a_create_time TIMESTAMP,
   view_count    BIGINT(20) COMMENT '该字段只用于映射数据',
+  fabulou_count BIGINT(20) COMMENT '该字段只用于映射数据',
   PRIMARY KEY (a_id)
 );
 -- 文章类型表
@@ -79,16 +80,20 @@ DROP TABLE IF EXISTS article_type_relation;
 CREATE TABLE article_type_relation (
   atr_article_id      BIGINT(20) NOT NULL,
   atr_article_type_id BIGINT(20) NOT NULL,
-  CONSTRAINT FK_atr_article_relation_id FOREIGN KEY (atr_article_id) REFERENCES article (a_id),
+  CONSTRAINT FK_atr_article_relation_id FOREIGN KEY (atr_article_id) REFERENCES article (a_id)
+    ON DELETE CASCADE,
   CONSTRAINT FK_atr_article_type_relation_id FOREIGN KEY (atr_article_type_id) REFERENCES article_type (at_id)
+    ON DELETE CASCADE
 );
 -- 用户与文章关系表
 DROP TABLE IF EXISTS users_article_relation;
 CREATE TABLE users_article_relation (
   uar_user_id    BIGINT(20) NOT NULL,
   uar_article_id BIGINT(20) NOT NULL,
-  CONSTRAINT FK_uar_users_relation_id FOREIGN KEY (uar_user_id) REFERENCES users (u_id),
+  CONSTRAINT FK_uar_users_relation_id FOREIGN KEY (uar_user_id) REFERENCES users (u_id)
+    ON DELETE CASCADE,
   CONSTRAINT FK_uar_article_relation_id FOREIGN KEY (uar_article_id) REFERENCES article (a_id)
+    ON DELETE CASCADE
 );
 -- 用户赞文章关系表
 DROP TABLE IF EXISTS users_article_fabulous_relation;
@@ -96,8 +101,10 @@ CREATE TABLE users_article_fabulous_relation (
   uafr_user_id     BIGINT(20) NOT NULL,
   uafr_article_id  BIGINT(20) NOT NULL,
   uafr_create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
-  CONSTRAINT FK_uafr_users_fabulous_relation_id FOREIGN KEY (uafr_user_id) REFERENCES users (u_id),
+  CONSTRAINT FK_uafr_users_fabulous_relation_id FOREIGN KEY (uafr_user_id) REFERENCES users (u_id)
+    ON DELETE CASCADE,
   CONSTRAINT FK_uafr_article_fabulous_relation_id FOREIGN KEY (uafr_article_id) REFERENCES article (a_id)
+    ON DELETE CASCADE
 );
 -- 用户浏览文章关系表
 DROP TABLE IF EXISTS users_article_view_relation;
@@ -107,41 +114,43 @@ CREATE TABLE users_article_view_relation (
   uavr_view_count  BIGINT(200) NOT NULL,
   uavr_view_device VARCHAR(50) NOT NULL,
   uavr_create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
-  CONSTRAINT FK_uavr_users_view_relation_id FOREIGN KEY (uavr_user_id) REFERENCES users (u_id),
+  CONSTRAINT FK_uavr_users_view_relation_id FOREIGN KEY (uavr_user_id) REFERENCES users (u_id)
+    ON DELETE CASCADE,
   CONSTRAINT FK_uavr_article_view_relation_id FOREIGN KEY (uavr_article_id) REFERENCES article (a_id)
+    ON DELETE CASCADE
 );
 -- 提醒表
 DROP TABLE IF EXISTS remind;
 CREATE TABLE remind (
-  r_id          BIGINT(20)   NOT NULL
+  r_id          BIGINT(20)   NOT NULL AUTO_INCREMENT
   COMMENT '提醒信息id',
   r_title       VARCHAR(200) NOT NULL
   COMMENT '提醒信息标题',
   r_content     TEXT         NOT NULL
   COMMENT '提醒信息内容',
-  r_create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
+  r_create_time TIMESTAMP             DEFAULT CURRENT_TIMESTAMP()
   COMMENT '提醒信息创建时间',
-  r_deleted     BOOLEAN   DEFAULT FALSE
+  r_deleted     BOOLEAN               DEFAULT FALSE
   COMMENT '是否删除',
-  r_read        BOOLEAN   DEFAULT FALSE
+  r_read        BOOLEAN               DEFAULT FALSE
   COMMENT '是否阅读',
-  r_read_time   TIMESTAMP COMMENT '阅读时间',
+  r_read_time   DATETIME COMMENT '阅读时间',
   PRIMARY KEY (r_id)
 );
 -- 提醒表类型
 DROP TABLE IF EXISTS remind_type;
 CREATE TABLE remind_type (
-  rt_id          BIGINT(20)  NOT NULL
+  rt_id          BIGINT(20)  NOT NULL AUTO_INCREMENT
   COMMENT '信息类型',
   rt_code        VARCHAR(20) NOT NULL
   COMMENT '类型code,唯一标识',
   rt_title       VARCHAR(20) NOT NULL
   COMMENT '类型名称',
-  rt_create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
+  rt_create_time TIMESTAMP            DEFAULT CURRENT_TIMESTAMP()
   COMMENT '类型创建时间',
-  rt_disabled    BOOLEAN   DEFAULT TRUE
+  rt_disabled    BOOLEAN              DEFAULT TRUE
   COMMENT '是否启用该类型',
-  rt_deleted     BOOLEAN   DEFAULT FALSE
+  rt_deleted     BOOLEAN              DEFAULT FALSE
   COMMENT '是否删除',
   PRIMARY KEY (rt_id)
 );
@@ -159,16 +168,20 @@ DROP TABLE remind_article_relation;
 CREATE TABLE remind_article_relation (
   rar_remind_id  BIGINT(20) NOT NULL,
   rar_article_id BIGINT(20) NOT NULL,
-  CONSTRAINT FK_rar_remind_relation_id FOREIGN KEY (rar_remind_id) REFERENCES remind (r_id),
+  CONSTRAINT FK_rar_remind_relation_id FOREIGN KEY (rar_remind_id) REFERENCES remind (r_id)
+    ON DELETE CASCADE,
   CONSTRAINT FK_rar_article_relation_id FOREIGN KEY (rar_article_id) REFERENCES article (a_id)
+    ON DELETE CASCADE
 );
 -- 提醒与用户关系表
 DROP TABLE remind_users_relation;
 CREATE TABLE remind_users_relation (
   rur_remind_id BIGINT(20) NOT NULL,
   rur_user_id   BIGINT(20) NOT NULL,
-  CONSTRAINT FK_rur_remind_relation_id FOREIGN KEY (rur_remind_id) REFERENCES remind (r_id),
+  CONSTRAINT FK_rur_remind_relation_id FOREIGN KEY (rur_remind_id) REFERENCES remind (r_id)
+    ON DELETE CASCADE,
   CONSTRAINT FK_rur_user_relation_id FOREIGN KEY (rur_user_id) REFERENCES users (u_id)
+    ON DELETE CASCADE
 );
 -- 文章标签表
 DROP TABLE IF EXISTS article_tag;
