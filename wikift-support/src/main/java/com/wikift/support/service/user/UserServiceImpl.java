@@ -38,6 +38,11 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
 
     @Override
+    public UserEntity getUserById(Long id) {
+        return userRepository.findOne(id);
+    }
+
+    @Override
     public UserEntity save(UserEntity entity) {
         // 默认设置用户权限为USER
         List<RoleEntity> roleEntities = new ArrayList<>();

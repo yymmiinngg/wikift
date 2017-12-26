@@ -15,38 +15,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wikift.support.service.user;
+package com.wikift.support.repository.space;
 
-import com.wikift.model.user.UserEntity;
+import com.wikift.model.space.SpaceEntity;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+@Transactional
+public interface SpaceRepository extends PagingAndSortingRepository<SpaceEntity, Long> {
 
-public interface UserService {
-
-    UserEntity getUserById(Long id);
-
-    UserEntity save(UserEntity entity);
-
-    UserEntity update(UserEntity entity);
-
-    Long delete(Long id);
-
-    UserEntity findByUsername(String username);
-
-    List<UserEntity> findTopByArticle();
-
-    List<UserEntity> findAllFollowersByUserId(Long userId);
-
-    List<UserEntity> findAllCoversByUserId(Long userId);
-
-    UserEntity findUserEntityByFollowsExists(Long followUserId, Long coverUserId);
-
-    Integer follow(Long followUserId, Long coverUserId);
-
-    Integer unFollow(Long followUserId, Long coverUserId);
-
-    Integer findFollowCount(Long followUserId);
-
-    Integer findFollowCoverCount(Long followUserId);
+    /**
+     * 根据空间编码获取空间信息
+     *
+     * @param code 空间编码
+     * @return 空间信息
+     */
+    SpaceEntity findByCode(String code);
 
 }

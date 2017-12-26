@@ -66,7 +66,6 @@ $blue-grey: #607D8B;
 $black: #000000;
 $white: #FFFFFF;
 
-
 // Theme Colors
 $theme-colors: (
   primary: $blue,
@@ -304,7 +303,6 @@ $nav-link-padding-x: 1.2rem;
 $nav-link-padding: 1rem 1.2rem;
 $nav-tabs-link-active-bg: $white;
 
-
 // Tooltips
 $tooltip-padding-y: 0.7rem;
 $tooltip-padding-x:  1.1rem;
@@ -312,10 +310,8 @@ $tooltip-bg: $gray-700;
 $tooltip-arrow-color: $tooltip-bg;
 $tooltip-opacity: 1;
 
-
 // Backdrop
 $backdrop-z-index: 100;
-
 
 // Listview
 $listview-item-active-bg: $gray-100;
@@ -326,10 +322,26 @@ $listview-invert-item-hover-bg: rgba($white, 0.025);
 $listview-invert-item-striped-bg: rgba($white, 0.1);
 $listview-border-color: $gray-100;
 
-
 // HR
 $hr-border-color: darken($gray-100, 2%);
-
 $bg-faded: #fbfbfb;
 $border-color-default: #e3e2e2;
 $brand-success:   #60c84c;
+
+// Grid columns
+$grid-columns:               12 !default;
+$grid-gutter-width-base:     30px !default;
+$grid-gutter-widths: (
+  xs: $grid-gutter-width-base,
+  sm: $grid-gutter-width-base,
+  md: $grid-gutter-width-base,
+  lg: $grid-gutter-width-base,
+  xl: $grid-gutter-width-base
+) !default;
+
+// Create grayscale
+$gray-dark:                 #292b2c !default;
+$gray:                      #464a4c !default;
+$gray-light:                #636c72 !default;
+$gray-lighter:              #eceeef !default;
+$gray-lightest:             #f7f7f9 !default;

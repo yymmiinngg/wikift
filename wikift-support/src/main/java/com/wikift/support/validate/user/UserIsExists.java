@@ -15,38 +15,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wikift.support.service.user;
+package com.wikift.support.validate.user;
 
-import com.wikift.model.user.UserEntity;
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.*;
 
-import java.util.List;
+@Documented
+@Constraint(validatedBy = UserIsExistsValidator.class)
+@Target({ElementType.METHOD, ElementType.FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface UserIsExists {
 
-public interface UserService {
+    String message() default "该用户不存在";
 
-    UserEntity getUserById(Long id);
+    Class<?>[] groups() default {};
 
-    UserEntity save(UserEntity entity);
-
-    UserEntity update(UserEntity entity);
-
-    Long delete(Long id);
-
-    UserEntity findByUsername(String username);
-
-    List<UserEntity> findTopByArticle();
-
-    List<UserEntity> findAllFollowersByUserId(Long userId);
-
-    List<UserEntity> findAllCoversByUserId(Long userId);
-
-    UserEntity findUserEntityByFollowsExists(Long followUserId, Long coverUserId);
-
-    Integer follow(Long followUserId, Long coverUserId);
-
-    Integer unFollow(Long followUserId, Long coverUserId);
-
-    Integer findFollowCount(Long followUserId);
-
-    Integer findFollowCoverCount(Long followUserId);
+    Class<? extends Payload>[] payload() default {};
 
 }

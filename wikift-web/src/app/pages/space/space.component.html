@@ -1,0 +1,47 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+  <p>
+  http://www.apache.org/licenses/LICENSE-2.0
+  <p>
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<section class="content--row">
+    <div class="content__inner">
+        <!-- 工具栏 -->
+        <div class="toolbar">
+            <div class="actions">
+                <a href="" class="actions__item zmdi zmdi-info-outline hidden-xs-down"></a>
+            </div>
+            <div class="toolbar__search" style="display: none;">
+                <input type="text" placeholder="Search...">
+
+                <i class="toolbar__search__close zmdi zmdi-long-arrow-left" data-ma-action="toolbar-search-close"></i>
+            </div>
+        </div>
+        <!-- 专栏/空间列表 -->
+        <div class="contacts row">
+            <div *ngFor="let space of spaces" class="col-xl-2 col-lg-3 col-sm-4 col-6">
+                <div class="contacts__item">
+                    <a href="" class="contacts__img">
+                        <img src="{{space.avatar}}" alt="{{space.name}}">
+                    </a>
+                    <div class="contacts__info">
+                        <strong>{{space.name}}</strong>
+                        <small>{{space.description}}</small>
+                    </div>
+                    <button class="contacts__btn">进入空间</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

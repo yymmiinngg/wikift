@@ -22,7 +22,10 @@ public enum MessageEnums {
     // 系统提示信息
     SUCCESS(0000, "成功"),
 
-    PARAMS_NOT_NULL(1000, "params is not null");
+    PARAMS_NOT_NULL(4000, "参数不能为空"),
+    PARAMS_VALIDATE_ERROR(4001, "参数输入错误"),
+
+    UNSUPPORT_MEDIA_TYPE(4415, "不支持的数据类型");
 
 
     private Integer code;

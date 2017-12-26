@@ -199,3 +199,28 @@ CREATE TABLE article_tag_relation (
   CONSTRAINT FK_atr_article_1_relation_id FOREIGN KEY (atr_article_id) REFERENCES article (a_id),
   CONSTRAINT FK_atr_article_tag_relation_id FOREIGN KEY (atr_article_tag_id) REFERENCES article_tag (at_id)
 );
+-- 专栏/空间表
+DROP TABLE IF EXISTS space;
+CREATE TABLE space (
+  s_id          BIGINT(20)  NOT NULL AUTO_INCREMENT
+  COMMENT '空间id',
+  s_avatar      VARCHAR(220) COMMENT '空间图像',
+  s_name        VARCHAR(20) NOT NULL
+  COMMENT '空间名称',
+  s_code        VARCHAR(20) NOT NULL
+  COMMENT '空间标识',
+  s_private     BOOLEAN              DEFAULT TRUE
+  COMMENT '空间是否私有, 默认是',
+  s_description VARCHAR(200) COMMENT '空间描述',
+  create_time   TIMESTAMP            DEFAULT CURRENT_TIMESTAMP()
+  COMMENT '空间创建时间',
+  PRIMARY KEY (s_id)
+);
+-- 专栏/空间用户表
+DROP TABLE IF EXISTS space_users_relation;
+CREATE TABLE space_users_relation (
+  sur_space_id BIGINT(20) NOT NULL,
+  sur_users_id BIGINT(20) NOT NULL,
+  CONSTRAINT FK_sur_space_relation_id FOREIGN KEY (sur_space_id) REFERENCES article (a_id),
+  CONSTRAINT FK_sur_users_relation_id FOREIGN KEY (sur_users_id) REFERENCES users (u_id)
+);

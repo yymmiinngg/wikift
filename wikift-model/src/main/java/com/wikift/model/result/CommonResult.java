@@ -49,4 +49,26 @@ public class CommonResult<T> {
         return success(null);
     }
 
+    public static CommonResult validateError() {
+        return validateError(null);
+    }
+
+    public static <T> CommonResult validateError(T data) {
+        CommonResult result = new CommonResult();
+        result.setCodeMessage(MessageEnums.PARAMS_VALIDATE_ERROR);
+        result.setData(data);
+        return result;
+    }
+
+    public static <T> CommonResult error(MessageEnums message, T data) {
+        CommonResult result = new CommonResult();
+        result.setCodeMessage(message);
+        result.setData(data);
+        return result;
+    }
+
+    public static <T> CommonResult error(MessageEnums message) {
+        return error(message, null);
+    }
+
 }
