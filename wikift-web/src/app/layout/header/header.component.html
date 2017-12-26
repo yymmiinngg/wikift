@@ -34,7 +34,7 @@
     </li>
     <ng-container *ngIf="token; else noAuth">
       <!-- 个人消息 -->
-      <li dropdown [autoClose]="false">
+      <li dropdown [autoClose]="false" triggers="mouseover">
         <a dropdownToggle [ngClass]="{'top-nav__notify': reminds?.length}">
           <i class="zmdi zmdi-email"></i>
         </a>
@@ -81,7 +81,7 @@
         </div>
       </li>
       <!-- 个人工具 -->
-      <li dropdown class="d-none d-sm-inline-block">
+      <li dropdown triggers="mouseover" class="d-none d-sm-inline-block">
         <a dropdownToggle class="top-nav__notify">
           <i class="zmdi zmdi-apps"></i>
         </a>
@@ -90,6 +90,10 @@
             <a class="col-4 app-shortcuts__item" [routerLink]="['/article/create']">
               <i class="zmdi zmdi-file-text bg-blue"></i>
               <small class="">写文章</small>
+            </a>
+            <a class="col-4 app-shortcuts__item" [routerLink]="['/space']">
+              <i class="zmdi zmdi-assignment bg-teal"></i>
+              <small class="">专栏/空间</small>
             </a>
           </div>
         </div>

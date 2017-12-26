@@ -52,4 +52,7 @@ export class ApiConfig {
     public static API_REMIND_INFO = '/remind/info/';
     public static API_REMIND_READ = '/remind/read/';
 
+    public static API_SPACE_LIST = '/space/list';
+    public static API_SPACE_CREATE = '/space/create';
+
 }
