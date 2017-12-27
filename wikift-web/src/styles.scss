@@ -95,3 +95,47 @@
 @import "./assets/scss/misc";
 
 @import "../node_modules/material-design-iconic-font/dist/css/material-design-iconic-font.min.css";
+
+input[type="file"] {
+    width: 10px;
+    height: 20px;
+    position: absolute;
+    float: left;
+}
+input[type="file"]:after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: #03A9F4;
+    content: "请选择需要上传的图像文件";
+    color: #FFFFFF;
+    display: block;
+    width: 200px;
+    height: 28px;
+    padding: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+}
+canvas {
+    display: block;
+    width: 100%;
+}
+.result {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+}
+.result > img {
+    border-radius: 50%;
+}
+
+.cropper > img {
+    border-radius: 100px;
+    border: 1px dashed;
+}
+
+.cropper {
+    width: 100%;
+    background-color: rgba(0,0,0,0.05);
+}

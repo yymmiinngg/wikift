@@ -20,7 +20,7 @@
         <!-- 工具栏 -->
         <div class="toolbar">
             <div class="actions">
-                <a href="" class="actions__item zmdi zmdi-info-outline hidden-xs-down"></a>
+                <a [routerLink]="['/space/create']" class="actions__item zmdi zmdi-info-outline hidden-xs-down"></a>
             </div>
             <div class="toolbar__search" style="display: none;">
                 <input type="text" placeholder="Search...">
@@ -37,7 +37,7 @@
                     </a>
                     <div class="contacts__info">
                         <strong>{{space.name}}</strong>
-                        <small>{{space.description}}</small>
+                        <small>{{space.description? space.description: '该空间还没有任何描述'}}</small>
                     </div>
                     <button class="contacts__btn">进入空间</button>
                 </div>

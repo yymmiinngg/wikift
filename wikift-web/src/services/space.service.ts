@@ -29,9 +29,11 @@ import { ResultUtils } from '../app/shared/utils/result.util';
 import { ApiConfig } from '../config/api.config';
 
 import { CommonResultModel } from '../app/shared/model/result/result.model';
+import { SpaceModel } from '../app/shared/model/space/space.model';
 
 /**
  * 空间服务
+ * @author qianmoQ
  */
 @Injectable()
 export class SpaceService {
@@ -47,6 +49,15 @@ export class SpaceService {
     getAllSpaces(): Observable<CommonResultModel> {
         const options = HttpUtils.getDefaultRequestOptionsByToken();
         return this.http.get(ApiConfig.API_SPACE_LIST, options).map(ResultUtils.extractData);
+    }
+
+    /**
+     * 创建空间
+     */
+    createSpace(param: SpaceModel): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
+        return this.http.post(ApiConfig.API_SPACE_CREATE, JSON.stringify(param), options)
+            .map(ResultUtils.extractData);
     }
 
 }
