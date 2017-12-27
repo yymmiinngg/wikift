@@ -204,14 +204,14 @@ DROP TABLE IF EXISTS space;
 CREATE TABLE space (
   s_id          BIGINT(20)  NOT NULL AUTO_INCREMENT
   COMMENT '空间id',
-  s_avatar      VARCHAR(220) COMMENT '空间图像',
+  s_avatar      LONGTEXT COMMENT '空间图像',
   s_name        VARCHAR(20) NOT NULL
   COMMENT '空间名称',
   s_code        VARCHAR(20) NOT NULL
   COMMENT '空间标识',
   s_private     BOOLEAN              DEFAULT TRUE
   COMMENT '空间是否私有, 默认是',
-  s_description VARCHAR(200) COMMENT '空间描述',
+  s_description TEXT COMMENT '空间描述',
   create_time   TIMESTAMP            DEFAULT CURRENT_TIMESTAMP()
   COMMENT '空间创建时间',
   PRIMARY KEY (s_id)

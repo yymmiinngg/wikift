@@ -1,0 +1,283 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+  <p>
+  http://www.apache.org/licenses/LICENSE-2.0
+  <p>
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<section class="content--row" style="margin-bottom: 50px;">
+    <div class="content__inner row">
+        <!-- 空间信息表单 -->
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header border-b-1 mr-center">
+                    <div class="card-block">
+                        <h2 class="card-title">创建新空间</h2>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <wizard navBarLayout="large-empty-symbols">
+                        <!-- 协议 -->
+                        <wizard-step stepTitle="空间协议" navigationSymbol="&#xf042;" navigationSymbolFontFamily="FontAwesome">
+                            <div class="col-10 mt-10 ma border-b-1">
+                                <article class="RequestIndex-explainArticle" data-reactid="51">
+                                    <p data-reactid="52">专栏/空间旨在为特定主题下有持续创作及合作写作需求的用户提供写作工具，专栏/空间需要用户自行创建即可使用。</p>
+                                    <h5 data-reactid="53">申请人需满足以下要求：</h5>
+                                    <ul data-reactid="54">
+                                        <li data-reactid="55">专栏须由本人申请，不可代为申请；</li>
+                                        <li data-reactid="56">
+                                            申请帐号的用户信息需符合
+                                            <a href="/" target="_blank" rel="noopener noreferrer" data-reactid="58">《用户信息管理规范》</a>
+                                        </li>
+                                        <li data-reactid="60">
+                                            90 天内在该站无
+                                            <a href="/" target="_blank" rel="noopener noreferrer" data-reactid="62">《社区管理规定》</a>
+                                            中规定的违规行为。
+                                        </li>
+                                    </ul>
+                                    <h5>申请专栏的内容方向：</h5>
+                                    <p data-reactid="65">专栏需要有明确的写作方向，我们更欢迎专业方向的分享，部分方向暂时不接受申请。</p>
+                                    <p class="nm" data-reactid="66">专栏绑定的话题即代表专栏的写作方向，请不要绑定过于宽泛的话题。</p>
+                                    <ul data-reactid="67">
+                                        <li data-reactid="68">接受申请的方向：包括但不限于经济学、金融、互联网、科技、科学、心理学、饮食、旅游、家居、汽车等专业方向的内容；</li>
+                                        <li data-reactid="69">不接受申请的方向： 包括但不限于涉及情感、两性、娱乐八卦、随笔、个人成长记录或成长心得、泛时政类（包括「军事」、「政治」、「热点事件」等话题）、 与主流科学观点相悖（如养生、风水、星座、易经、八卦、命理、起名等内容）、可能影响他人利益（如寻医问药建议、心理咨询建议、P2P
+                                            金融、 投资行情分析及投资操作建议等）或绑定过于宽泛的话题（如「生活」、「趣味」、「脑洞」等）。</li>
+                                    </ul>
+                                    <h5 data-reactid="70">申请专栏的相关背景：</h5>
+                                    <ul data-reactid="71">
+                                        <li data-reactid="72">专栏申请人需具备与写作方向相关的专业背景并在申请中注明；</li>
+                                        <li data-reactid="73">相关背景描述可以是相关教育经历（就读院校、专业）、从业经历（就职单位、岗位）、取得的成就及荣誉，或者有相关的作品等等；</li>
+                                        <li data-reactid="74">详细的背景资料说明将有助于通过专栏申请的审核；</li>
+                                        <li data-reactid="75">注：除法律或有法律赋予权限的政府部门要求或事先得到用户明确授权等原因外，知乎保证不对外公开或向第三方透露用户申请专栏时提供的背景资料。</li>
+                                    </ul>
+                                </article>
+                            </div>
+                            <div class="mt-10 mr-center">
+                                <label class="custom-control custom-checkbox">
+                                    <input [(ngModel)]="spaceModel.agreement" type="checkbox" selected class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">我同意以上协议内容</span>
+                                </label>
+                            </div>
+                            <div class="card-footer col-10 mt-10 ma d-flex px-4 py-3">
+                                <div class="mr-auto"></div>
+                                <div class="ml-4">
+                                    <a class="btn btn-info" [ngClass]="{'disabled': !spaceModel.agreement}" nextStep>下一步</a>
+                                </div>
+                            </div>
+                        </wizard-step>
+                        <!-- 名称 -->
+                        <wizard-step stepTitle="空间名称" navigationSymbol="&#xf1fa;" navigationSymbolFontFamily="FontAwesome">
+                            <div class="col-10 mt-10 ma  border-b-1">
+                                <div class="card-group mt-10">
+                                    <div class="card">
+                                        <alert type="danger">
+                                            请认真填写当前需要申请空间的名称, 该名称将用于以下用途:
+                                        </alert>
+                                        <ol>
+                                            <li>用于自定义命名显示空间的名称</li>
+                                            <li>用于标识该空间在当前页面的显示信息</li>
+                                            <li>请确认您当前输入的空间名称是:
+                                                <code>{{spaceModel.name}}</code>
+                                            </li>
+                                        </ol>
+                                        <div class="row">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-8">
+                                                <div class="form-group">
+                                                    <input type="text" [(ngModel)]="spaceModel.name" class="form-control" placeholder="请输入空间名称">
+                                                    <i class="form-group__bar"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer col-10 mt-10 ma d-flex px-4 py-3">
+                                <div class="mr-auto">
+                                    <a class="btn btn-secondary" previousStep>上一步</a>
+                                </div>
+                                <div class="ml-4">
+                                    <a class="btn btn-info" [ngClass]="{'disabled': !spaceModel.name}" nextStep>下一步</a>
+                                </div>
+                            </div>
+                        </wizard-step>
+                        <!-- 头像 -->
+                        <wizard-step stepTitle="空间头像" navigationSymbol="&#xf03e;" navigationSymbolFontFamily="FontAwesome">
+                            <div class="col-10 mt-10 ma  border-b-1">
+                                <alert type="danger">
+                                    您正在为
+                                    <code>{{spaceModel.name}}</code> 空间添加空间头像
+                                </alert>
+                                <div class="card-group mt-10">
+                                    <div class="card">
+                                        <div class="cropper">
+                                            <img-cropper [image]="cropperImage" [settings]="cropperSettings" (onCrop)="cropped($event)"></img-cropper>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="result rounded" *ngIf="cropperImage.image">
+                                            <img [src]="cropperImage.image" class="img-responsive center-block">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer col-10 mt-10 ma d-flex px-4 py-3">
+                                <div class="mr-auto">
+                                    <a class="btn btn-secondary" previousStep>上一步</a>
+                                </div>
+                                <div class="ml-4">
+                                    <a class="btn btn-info" [ngClass]="{'disabled': !spaceModel.avatar}" nextStep>下一步</a>
+                                </div>
+                            </div>
+                        </wizard-step>
+                        <!-- 描述 -->
+                        <wizard-step stepTitle="空间描述" navigationSymbol="&#xf06d;" navigationSymbolFontFamily="FontAwesome">
+                            <div class="col-10 mt-10 ma  border-b-1">
+                                <div class="card-group mt-10">
+                                    <div class="card">
+                                        <alert type="danger">
+                                            请认真填写当前
+                                            <code>{{spaceModel.name}}</code> 空间的描述信息, 通过该描述信息用户可以很快了解该空间
+                                        </alert>
+                                        <div class="row">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-8">
+                                                <div class="form-group">
+                                                    <textarea [(ngModel)]="spaceModel.description" class="form-control textarea-autosize" placeholder="请输入空间的描述信息"></textarea>
+                                                    <i class="form-group__bar"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer col-10 mt-10 ma d-flex px-4 py-3">
+                                <div class="mr-auto">
+                                    <a class="btn btn-secondary" previousStep>上一步</a>
+                                </div>
+                                <div class="ml-4">
+                                    <a class="btn btn-info" nextStep>下一步</a>
+                                </div>
+                            </div>
+                        </wizard-step>
+                        <!-- 设置 -->
+                        <wizard-step stepTitle="空间设置" navigationSymbol="&#xf185;" navigationSymbolFontFamily="FontAwesome">
+                            <div class="col-10 mt-10 ma  border-b-1">
+                                <div class="card-group mt-10">
+                                    <div class="card">
+                                        <alert type="danger">
+                                            请认真填写
+                                            <code>{{spaceModel.name}}</code> 空间的以下配置信息
+                                        </alert>
+                                        <div class="row">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-8">
+                                                <div class="form-group">
+                                                    <input type="text" [(ngModel)]="spaceModel.code" class="form-control" placeholder="请输入空间编码, 用于标识空间的访问路径">
+                                                    <i class="form-group__bar"></i>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="custom-control custom-radio">
+                                                        <input type="radio" [(ngModel)]="spaceModel.privated" [value]="true" name="radio-inline" class="custom-control-input">
+                                                        <span class="custom-control-indicator"></span>
+                                                        <span class="custom-control-description">私有</span>
+                                                    </label>
+                                                    <label class="custom-control custom-radio">
+                                                        <input type="radio" [(ngModel)]="spaceModel.privated" name="radio-inline" [value]="false" class="custom-control-input">
+                                                        <span class="custom-control-indicator"></span>
+                                                        <span class="custom-control-description">公开</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer col-10 mt-10 ma d-flex px-4 py-3">
+                                <div class="mr-auto">
+                                    <a class="btn btn-secondary" previousStep>上一步</a>
+                                </div>
+                                <div class="ml-4">
+                                    <a class="btn btn-info" (click)="createSpace()">创建空间</a>
+                                </div>
+                            </div>
+                        </wizard-step>
+                    </wizard>
+                </div>
+            </div>
+        </div>
+        <!-- 空间信息预览 -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header border-b-1 mr-center">
+                    <div class="card-block">
+                        <h2 class="card-title">空间信息</h2>
+                    </div>
+                </div>
+                <div class="card-body mr-center">
+                    <table class="table table-hover mb-0">
+                        <tbody>
+                            <tr *ngIf="spaceModel.agreement">
+                                <th scope="row">同意协议:</th>
+                                <td>
+                                    <span style="color: #60c84c;">
+                                        <i class="zmdi zmdi-check-circle zmdi-hc-fw"></i>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr *ngIf="spaceModel.name">
+                                <th scope="row">空间名称:</th>
+                                <td>
+                                    {{spaceModel.name}}
+                                </td>
+                            </tr>
+                            <tr *ngIf="spaceModel.avatar">
+                                <th scope="row">空间头像:</th>
+                                <td>
+                                    <div class="groups__item">
+                                        <div class="groups__img">
+                                            <img class="avatar-img" [src]="spaceModel.avatar">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="spaceModel.description">
+                                <th scope="row">空间描述:</th>
+                                <td>
+                                    {{spaceModel.description}}
+                                </td>
+                            </tr>
+                            <tr *ngIf="spaceModel.code">
+                                <th scope="row">空间编码:</th>
+                                <td>
+                                    {{spaceModel.code}}
+                                </td>
+                            </tr>
+                            <tr *ngIf="spaceModel.privated">
+                                <th scope="row">空间权限:</th>
+                                <td>
+                                    <span *ngIf="spaceModel.privated">私有</span>
+                                    <span *ngIf="spaceModel.privated === false">公开</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
