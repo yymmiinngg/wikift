@@ -15,6 +15,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
+<ng2-toasty [position]="'top-center'"></ng2-toasty>
 <section class="content content--full">
   <wikift-editor [id]="'editor'" (getEditorValue)="getData($event)" [markdown]="''"></wikift-editor>
 </section>
@@ -29,13 +30,14 @@
 <!-- 文章属性 -->
 <div bsModal #settingAritcleModel="bs-modal" class="modal fade">
   <ng-container>
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg" style="width: 650px;">
       <div class="modal-content">
         <div class="modal-header border-b-1">
           <h5 class="modal-title pull-left">设置文章相关属性</h5>
         </div>
         <div class="modal-body">
-          <wizard navBarLayout="large-empty-symbols" style="width: 300px;">
+          <wizard navBarLayout="large-empty-symbols">
+            <div [ngBusy]="articleTagsBusy"></div>
             <wizard-step stepTitle="文章标题" navigationSymbol="&#xf0b1;" navigationSymbolFontFamily="FontAwesome">
               <div style="margin-top: 10px;">
                 <div class="form-group form-group--centered">
@@ -73,7 +75,6 @@
               </div>
             </wizard-step>
             <wizard-step stepTitle="文章标签" (stepEnter)="showArticleTagsStep($event)" navigationSymbol="&#xf085;" navigationSymbolFontFamily="FontAwesome">
-              <div [ngBusy]="articleTagsBusy"></div>
               <div class="card-block mr-center" style="margin-top: 10px;">
                 <div class="clearfix mt-2"></div>
                 <select2 #articleTagFields [data]="articleTags" [options]="multipleOptions" [value]="tagsValue" (valueChanged)="tagChanged($event)"></select2>
@@ -84,6 +85,36 @@
                 </div>
                 <div class="ml-4">
                   <a class="btn btn-info" [ngClass]="{'disabled': !articleModel.articleTypeEntity?.id}" nextStep>下一步</a>
+                </div>
+              </div>
+            </wizard-step>
+            <wizard-step stepTitle="文章空间" (stepEnter)="showSpaceStep($event)" navigationSymbol="&#xf085;" navigationSymbolFontFamily="FontAwesome">
+              <div class="card-block mr-center" style="margin-top: 10px;">
+                <div class="contacts row">
+                  <div *ngFor="let space of spaces" class="col-xl-4 col-lg-3 col-sm-4 col-6">
+                    <div class="contacts__item">
+                      <a href="" class="contacts__img">
+                        <img src="{{space.avatar}}" alt="{{space.name}}">
+                      </a>
+                      <div class="contacts__info">
+                        <strong>{{space.name}}</strong>
+                        <small>{{space.description? space.description: '该空间还没有任何描述'}}</small>
+                      </div>
+                      <label class="custom-control custom-radio">
+                        <input type="radio" [(ngModel)]="articleModel.space" [value]="space" name="articleModel.space" class="custom-control-input">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">选择该空间</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer d-flex px-4 py-3">
+                <div class="mr-auto">
+                  <a class="btn btn-secondary" previousStep>上一步</a>
+                </div>
+                <div class="ml-4">
+                  <a class="btn btn-info" [ngClass]="{'disabled': !articleModel.space?.id}" nextStep>下一步</a>
                 </div>
               </div>
             </wizard-step>

@@ -25,6 +25,7 @@ import { CookieUtils } from '../../../shared/utils/cookie.util';
 import { CommonConfig } from '../../../../config/common.config';
 import { UserModel } from '../../../shared/model/user/user.model';
 import { SpaceService } from '../../../../services/space.service';
+import { CodeConfig } from '../../../../config/code.config';
 
 @Component({
     selector: 'wikift-space-create',
@@ -69,7 +70,7 @@ export class SpaceCreateComponent implements OnInit {
         this.spaceModel.user = user;
         this.spaceService.createSpace(this.spaceModel).subscribe(
             result => {
-                if (result.data === '0000') {
+                if (result.data === CodeConfig.SUCCESS) {
                     this.router.navigate(['/space']);
                 }
             }

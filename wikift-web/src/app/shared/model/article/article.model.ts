@@ -18,6 +18,7 @@
 import { UserModel } from '../user/user.model';
 import { ArticleTypeModel } from './article.type.model';
 import { ArticleTagModel } from './article.tag.model';
+import { SpaceModel } from '../space/space.model';
 
 export class ArticleModel {
 
@@ -27,5 +28,6 @@ export class ArticleModel {
     public userEntity: UserModel;
     public articleTypeEntity: ArticleTypeModel;
     public articleTags: Array<ArticleTagModel>;
+    public space: SpaceModel;
 
 }

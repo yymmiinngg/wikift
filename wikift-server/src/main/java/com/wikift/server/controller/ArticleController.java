@@ -30,6 +30,7 @@ import com.wikift.support.service.article.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -44,7 +45,7 @@ public class ArticleController {
 
     @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    CommonResult<ArticleEntity> save(@RequestBody ArticleEntity entity) {
+    CommonResult<ArticleEntity> createArticle(@RequestBody @Validated ArticleEntity entity) {
         Assert.notNull(entity, MessageEnums.PARAMS_NOT_NULL.getValue());
         entity.setId(0l);
         ArticleEntity article = articleService.save(entity);

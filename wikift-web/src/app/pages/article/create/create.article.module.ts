@@ -24,6 +24,7 @@ import { ArchwizardModule } from 'ng2-archwizard';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { BusyModule, BusyConfig } from 'angular2-busy';
 import { Select2Module } from 'ng2-select2';
+import { ToastyModule } from 'ng2-toasty';
 
 import { CreateArticleComponent } from './create.article.component';
 
@@ -31,6 +32,7 @@ import { ArticleService } from '../../../../services/article.service';
 import { WikiftEditorModule } from '../../../shared/directives/wikift-editor/wikift-editor.module';
 import { ArticleTypeService } from '../../../../services/article.type.service';
 import { ArticleTagService } from '../../../../services/article.tag.service';
+import { SpaceService } from '../../../../services/space.service';
 
 const CREATE_ARTICLE_ROUTES: Routes = [
     { path: '', component: CreateArticleComponent }
@@ -52,6 +54,7 @@ export function busyConfigFactory() {
         FormsModule,
         BusyModule,
         Select2Module,
+        ToastyModule.forRoot(),
         ModalModule.forRoot(),
         AlertModule.forRoot(),
         RouterModule.forChild(CREATE_ARTICLE_ROUTES)
@@ -64,6 +67,7 @@ export function busyConfigFactory() {
         ArticleService,
         ArticleTypeService,
         ArticleTagService,
+        SpaceService,
         {
             provide: BusyConfig,
             useFactory: busyConfigFactory

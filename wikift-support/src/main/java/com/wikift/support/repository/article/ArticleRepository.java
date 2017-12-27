@@ -30,39 +30,47 @@ import java.util.List;
 @Transactional
 public interface ArticleRepository extends PagingAndSortingRepository<ArticleEntity, Long> {
 
-    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(a.view_count, IFNULL(SUM(uavr.uavr_view_count) , 0)) AS view_count, IFNULL(a.fabulou_count, IFNULL(COUNT(uafr.uafr_user_id), 0)) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id " +
+    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(a.view_count, IFNULL(SUM(uavr.uavr_view_count) , 0)) AS view_count, IFNULL(a.fabulou_count, IFNULL(COUNT(DISTINCT uafr.uafr_user_id), 0)) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
             "FROM article AS a " +
             "LEFT OUTER JOIN users_article_relation AS uar ON a.a_id = uar.uar_article_id " +
             "LEFT OUTER JOIN article_type_relation AS atr ON a.a_id = atr.atr_article_id " +
             "LEFT OUTER JOIN users_article_view_relation AS uavr ON a.a_id = uavr.uavr_article_id " +
             "LEFT OUTER JOIN users_article_fabulous_relation AS uafr ON a.a_id = uafr.uafr_article_id " +
-            "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id " +
+            "LEFT OUTER JOIN space_article_relation AS sar ON a.a_id = sar.sar_article_id " +
+            "LEFT OUTER JOIN space AS s ON s.s_id = sar.sar_space_id " +
+            "WHERE s.s_private = FALSE " +
+            "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
 //            "ORDER BY ?#{#pageable}",
             "ORDER BY SUM(uavr.uavr_view_count) DESC \n#pageable\n",
             countQuery = "SELECT COUNT(a.a_id) FROM article AS a",
             nativeQuery = true)
     Page<ArticleEntity> findAllOrderByViewCount(Pageable pageable);
 
-    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(a.view_count, IFNULL(SUM(uavr.uavr_view_count) , 0)) AS view_count, IFNULL(a.fabulou_count, IFNULL(COUNT(uafr.uafr_user_id), 0)) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id " +
+    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(a.view_count, IFNULL(SUM(uavr.uavr_view_count) , 0)) AS view_count, IFNULL(a.fabulou_count, IFNULL(COUNT(DISTINCT uafr.uafr_user_id), 0)) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
             "FROM article AS a " +
             "LEFT OUTER JOIN users_article_relation AS uar ON a.a_id = uar.uar_article_id " +
             "LEFT OUTER JOIN article_type_relation AS atr ON a.a_id = atr.atr_article_id " +
             "LEFT OUTER JOIN users_article_view_relation AS uavr ON a.a_id = uavr.uavr_article_id " +
             "LEFT OUTER JOIN users_article_fabulous_relation AS uafr ON a.a_id = uafr.uafr_article_id " +
-            "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id " +
-//            "ORDER BY ?#{#pageable}",
+            "LEFT OUTER JOIN space_article_relation AS sar ON a.a_id = sar.sar_article_id " +
+            "LEFT OUTER JOIN space AS s ON s.s_id = sar.sar_space_id " +
+            "WHERE s.s_private = FALSE " +
+            "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
             "ORDER BY COUNT(uafr.uafr_user_id) DESC \n#pageable\n",
             countQuery = "SELECT COUNT(a.a_id) FROM article AS a",
             nativeQuery = true)
     Page<ArticleEntity> findAllOrderByFabulouCount(Pageable pageable);
 
-    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(a.view_count, IFNULL(SUM(uavr.uavr_view_count) , 0)) AS view_count, IFNULL(a.fabulou_count, IFNULL(COUNT(uafr.uafr_user_id), 0)) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id " +
+    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(a.view_count, IFNULL(SUM(uavr.uavr_view_count) , 0)) AS view_count, IFNULL(a.fabulou_count, IFNULL(COUNT(DISTINCT uafr.uafr_user_id), 0)) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
             "FROM article AS a " +
             "LEFT OUTER JOIN users_article_relation AS uar ON a.a_id = uar.uar_article_id " +
             "LEFT OUTER JOIN article_type_relation AS atr ON a.a_id = atr.atr_article_id " +
             "LEFT OUTER JOIN users_article_view_relation AS uavr ON a.a_id = uavr.uavr_article_id " +
             "LEFT OUTER JOIN users_article_fabulous_relation AS uafr ON a.a_id = uafr.uafr_article_id " +
-            "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id " +
+            "LEFT OUTER JOIN space_article_relation AS sar ON a.a_id = sar.sar_article_id " +
+            "LEFT OUTER JOIN space AS s ON s.s_id = sar.sar_space_id " +
+            "WHERE s.s_private = FALSE " +
+            "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
             "ORDER BY a.a_create_time DESC \n#pageable\n",
             countQuery = "SELECT COUNT(a.a_id) FROM article AS a",
             nativeQuery = true)
@@ -74,11 +82,12 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
      * @param username 用户id
      * @return 文章列表
      */
-    @Query(value = "SELECT * FROM users_article_relation AS uar, article AS a, users AS u, article_type AS at, article_type_relation AS atr " +
+    @Query(value = "SELECT * FROM users_article_relation AS uar, article AS a, users AS u, article_type AS at, article_type_relation AS atr, space_article_relation AS sar " +
             "WHERE uar.uar_user_id = u.u_id " +
             "AND atr.atr_article_id = a.a_id " +
             "AND atr.atr_article_type_id = at.at_id " +
             "AND uar.uar_article_id = a.a_id " +
+            "AND a.a_id = sar.sar_article_id " +
             "AND DATE_SUB(CURDATE() , INTERVAL 7 DAY) <= date(a.a_create_time) " +
             "AND u.u_username = ?1", nativeQuery = true)
     List<ArticleEntity> findTopByUserEntityAndCreateTime(String username);

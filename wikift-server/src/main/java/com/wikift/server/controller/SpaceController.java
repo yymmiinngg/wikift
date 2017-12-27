@@ -20,15 +20,13 @@ package com.wikift.server.controller;
 import com.wikift.common.utils.MessageUtils;
 import com.wikift.model.result.CommonResult;
 import com.wikift.model.space.SpaceEntity;
+import com.wikift.model.user.UserEntity;
 import com.wikift.support.service.space.SpaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/space")
@@ -41,6 +39,15 @@ public class SpaceController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     CommonResult<SpaceEntity> getAllSpaces() {
         return CommonResult.success(spaceService.getAllSpace());
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "/list/user/{userId}", method = RequestMethod.GET)
+    CommonResult<SpaceEntity> getAllSpaceByPrivatedFalseAndUser(@PathVariable Long userId) {
+        Assert.notNull(userId, MessageUtils.getParamNotNull("userId"));
+        UserEntity entity = new UserEntity();
+        entity.setId(userId);
+        return CommonResult.success(spaceService.getAllSpaceByPrivatedFalseOrUser(entity));
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
