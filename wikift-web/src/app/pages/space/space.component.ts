@@ -41,23 +41,41 @@ export class SpaceComponent implements OnInit {
 
     // 分页数据
     page: CommonPageModel;
+    // 当前页数
+    currentPage: number;
     // 空间列表
     public spaces;
+    maxSize: number = 15;
 
     constructor(private articleService: ArticleService,
         private userService: UserService,
         private spaceService: SpaceService) {
         this.page = new CommonPageModel();
+        this.page.size = 24;
     }
 
     ngOnInit() {
-        this.initSpaceList();
+        this.initSpaceList(this.page);
     }
 
-    initSpaceList() {
-        this.spaceService.getAllSpaces().subscribe(
+    initSpaceList(page: CommonPageModel) {
+        page.number = 0;
+        this.spaceService.getAllSpaces(page).subscribe(
             result => {
-                this.spaces = result.data;
+                this.spaces = result.data.content;
+                this.page = CommonPageModel.getPage(result.data);
+                this.currentPage = this.page.number;
+            }
+        );
+    }
+
+    pageChanged(event: any) {
+        this.page.number = event.page - 1;
+        console.log(this.page);
+        this.spaceService.getAllSpaces(this.page).subscribe(
+            result => {
+                this.spaces = result.data.content;
+                this.page = CommonPageModel.getPage(result.data);
             }
         );
     }

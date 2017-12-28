@@ -30,6 +30,7 @@ import { ApiConfig } from '../config/api.config';
 
 import { CommonResultModel } from '../app/shared/model/result/result.model';
 import { SpaceModel } from '../app/shared/model/space/space.model';
+import { CommonPageModel } from '../app/shared/model/result/page.model';
 
 /**
  * 空间服务
@@ -46,8 +47,10 @@ export class SpaceService {
     /**
      * 获取所有的空间
      */
-    getAllSpaces(): Observable<CommonResultModel> {
+    getAllSpaces(page: CommonPageModel): Observable<CommonResultModel> {
         const options = HttpUtils.getDefaultRequestOptionsByToken();
+        const params = HttpUtils.getPaginationParamsByModel(page);
+        options.params = params;
         return this.http.get(ApiConfig.API_SPACE_LIST, options).map(ResultUtils.extractData);
     }
 

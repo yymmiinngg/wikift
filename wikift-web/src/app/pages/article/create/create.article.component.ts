@@ -132,7 +132,6 @@ export class CreateArticleComponent implements OnInit {
             articleTag.id = e;
             this.articleModel.articleTags.push(articleTag);
         });
-        console.log(this.articleModel);
         this.articleService.save(this.articleModel).subscribe(
             result => {
                 if (result.code === CodeConfig.SUCCESS) {

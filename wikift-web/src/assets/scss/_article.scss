@@ -40,6 +40,13 @@
     margin-right: 0.8rem;
   }
   
+  .article__user__name {
+    min-width: 0;
+  }
+
+  .article__user__name > p {
+    overflow: hidden;
+  }
   .user__name {
     color: $headings-color;
     font-weight: $font-weight-bold;

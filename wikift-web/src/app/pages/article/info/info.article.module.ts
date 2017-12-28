@@ -27,6 +27,7 @@ import { InfoArticleComponent } from './info.article.component';
 
 import { ArticleService } from '../../../../services/article.service';
 import { WikiftEditorModule } from '../../../shared/directives/wikift-editor/wikift-editor.module';
+import { UserService } from '../../../../services/user.service';
 
 const INFO_ARTICLE_ROUTES: Routes = [
     { path: '', component: InfoArticleComponent }
@@ -47,7 +48,8 @@ const INFO_ARTICLE_ROUTES: Routes = [
         InfoArticleComponent
     ],
     providers: [
-        ArticleService
+        ArticleService,
+        UserService
     ],
 })
 export class InfoArticleModule { }
