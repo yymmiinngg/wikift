@@ -36,7 +36,14 @@ export class CookieUtils {
     }
 
     public static setBy(key: string, value: string) {
-        return Cookie.set(key, value);
+        const expire = new Date();
+        const time = Date.now() + ((3600 * 1000) * 1); // 保存1小时cookie
+        expire.setTime(time);
+        return Cookie.set(key, value, expire);
+    }
+
+    public static getUser() {
+        return JSON.parse(Cookie.get(CommonConfig.AUTH_USER_INFO));
     }
 
     public static clear() {

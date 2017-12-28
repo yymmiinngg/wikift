@@ -216,11 +216,19 @@ CREATE TABLE space (
   COMMENT '空间创建时间',
   PRIMARY KEY (s_id)
 );
--- 专栏/空间用户表
+-- 专栏/空间用户关系表
 DROP TABLE IF EXISTS space_users_relation;
 CREATE TABLE space_users_relation (
   sur_space_id BIGINT(20) NOT NULL,
   sur_users_id BIGINT(20) NOT NULL,
-  CONSTRAINT FK_sur_space_relation_id FOREIGN KEY (sur_space_id) REFERENCES article (a_id),
+  CONSTRAINT FK_sur_space_relation_id FOREIGN KEY (sur_space_id) REFERENCES space (s_id),
   CONSTRAINT FK_sur_users_relation_id FOREIGN KEY (sur_users_id) REFERENCES users (u_id)
+);
+-- 专栏/空间文章关系表
+DROP TABLE IF EXISTS space_article_relation;
+CREATE TABLE space_article_relation (
+  sar_space_id BIGINT(20) NOT NULL,
+  sar_article_id BIGINT(20) NOT NULL,
+  CONSTRAINT FK_sar_space_relation_id FOREIGN KEY (sar_space_id) REFERENCES space (s_id),
+  CONSTRAINT FK_sar_article_relation_id FOREIGN KEY (sar_article_id) REFERENCES article (a_id)
 );

@@ -1,6 +1,7 @@
 package com.wikift.support.service.space;
 
 import com.wikift.model.space.SpaceEntity;
+import com.wikift.model.user.UserEntity;
 
 import java.util.List;
 
@@ -36,5 +37,7 @@ public interface SpaceService {
      * @return 空间信息
      */
     SpaceEntity getSpaceInfoById(Long id);
+
+    List<SpaceEntity> getAllSpaceByPrivatedFalseOrUser(UserEntity entity);
 
 }

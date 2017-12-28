@@ -18,8 +18,11 @@
 package com.wikift.support.repository.space;
 
 import com.wikift.model.space.SpaceEntity;
+import com.wikift.model.user.UserEntity;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Transactional
 public interface SpaceRepository extends PagingAndSortingRepository<SpaceEntity, Long> {
@@ -31,5 +34,13 @@ public interface SpaceRepository extends PagingAndSortingRepository<SpaceEntity,
      * @return 空间信息
      */
     SpaceEntity findByCode(String code);
+
+    /**
+     * 查询所有公开, 用户自己创建的空间
+     *
+     * @param entity 用户信息
+     * @return 空间列表
+     */
+    List<SpaceEntity> findAllByPrivatedFalseOrUser(UserEntity entity);
 
 }

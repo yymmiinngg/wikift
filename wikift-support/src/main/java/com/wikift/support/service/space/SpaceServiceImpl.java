@@ -18,6 +18,7 @@
 package com.wikift.support.service.space;
 
 import com.wikift.model.space.SpaceEntity;
+import com.wikift.model.user.UserEntity;
 import com.wikift.support.repository.space.SpaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,11 @@ public class SpaceServiceImpl implements SpaceService {
     @Override
     public SpaceEntity getSpaceInfoById(Long id) {
         return spaceRepository.findOne(id);
+    }
+
+    @Override
+    public List<SpaceEntity> getAllSpaceByPrivatedFalseOrUser(UserEntity entity) {
+        return spaceRepository.findAllByPrivatedFalseOrUser(entity);
     }
 
 }

@@ -17,8 +17,10 @@
  */
 package com.wikift.model.article;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.wikift.model.space.SpaceEntity;
 import com.wikift.model.user.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +32,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -49,9 +53,12 @@ public class ArticleEntity {
     private Long id;
 
     @Column(name = "a_title")
+    @NotNull
     private String title;
 
     @Column(name = "a_content")
+    @NotNull
+    @Size(min = 10)
     private String content;
 
     @Column(name = "a_create_time")
@@ -63,12 +70,14 @@ public class ArticleEntity {
     @JoinTable(name = "users_article_relation",
             joinColumns = @JoinColumn(name = "uar_article_id"),
             inverseJoinColumns = @JoinColumn(name = "uar_user_id"))
+    @NotNull
     private UserEntity userEntity;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "article_type_relation",
             joinColumns = @JoinColumn(name = "atr_article_id"),
             inverseJoinColumns = @JoinColumn(name = "atr_article_type_id"))
+    @NotNull
     private ArticleTypeEntity articleTypeEntity;
 
     @OneToMany(fetch = FetchType.EAGER)
@@ -77,6 +86,13 @@ public class ArticleEntity {
             inverseJoinColumns = @JoinColumn(name = "atr_article_tag_id"))
     @Fetch(FetchMode.SUBSELECT)
     private List<ArticleTagEntity> articleTags;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinTable(name = "space_article_relation",
+            joinColumns = @JoinColumn(name = "sar_article_id"),
+            inverseJoinColumns = @JoinColumn(name = "sar_space_id"))
+    @NotNull
+    private SpaceEntity space;
 
     // 该字段为统计字段不与数据库字段映射
     @Column(name = "view_count", insertable = false)

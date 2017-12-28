@@ -15,22 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Serializable } from '../../model/serialization/serialization.model';
+export class CodeConfig {
 
-/**
- * API返回数据模型
- *
- * @author shicheng
- */
-export class CommonResultModel implements Serializable<CommonResultModel> {
-
-    public code;
-    public msg: string;
-    public data: any;
-    public color: string;
-
-    public deserialize(input) {
-        return this;
-    }
+    public static readonly SUCCESS = 0;
+    public static readonly ERROR_PARAM = '4001';
 
 }
