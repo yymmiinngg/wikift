@@ -53,6 +53,13 @@ public class CommonResult<T> {
         return validateError(null);
     }
 
+    public static CommonResult validateError(MessageEnums message) {
+        CommonResult result = new CommonResult();
+        result.setCodeMessage(message);
+        result.setData(null);
+        return result;
+    }
+
     public static <T> CommonResult validateError(T data) {
         CommonResult result = new CommonResult();
         result.setCodeMessage(MessageEnums.PARAMS_VALIDATE_ERROR);

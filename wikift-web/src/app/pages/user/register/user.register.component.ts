@@ -19,8 +19,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
+import { ToastyService } from 'ng2-toasty';
+
 import { UserParamModel } from '../../../shared/model/param/user.param.model';
+
 import { UserService } from '../../../../services/user.service';
+import { CodeConfig } from '../../../../config/code.config';
+import { ResultUtils } from '../../../shared/utils/result.util';
 
 @Component({
     selector: 'wikift-user-register',
@@ -33,7 +38,8 @@ export class UserRegisterComponent implements OnInit {
     user: UserParamModel;
 
     constructor(private router: Router,
-        private userService: UserService) {
+        private userService: UserService,
+        private toastyService: ToastyService) {
         this.form = new FormGroup({
             username: new FormControl('', CustomValidators.range([5, 9])),
             password: new FormControl('', CustomValidators.number)
@@ -47,8 +53,12 @@ export class UserRegisterComponent implements OnInit {
     register() {
         this.userService.register(this.user).subscribe(
             result => {
-                if (result.data) {
+                if (result.code === CodeConfig.SUCCESS) {
+                    this.toastyService.info('用户 ' + this.user.username + ' 注册成功!!!');
+                    // 跳转到首页
                     this.router.navigate(['/user/login']);
+                } else {
+                    this.toastyService.error(ResultUtils.getError(result));
                 }
             }
         );

@@ -32,4 +32,16 @@ export class ResultUtils {
         return commonResponseModel;
     }
 
+    public static getError(result) {
+        if (!result) {
+            return null;
+        }
+        let errors = '';
+        result.data.error.forEach(e => {
+            errors = e.message + '\n';
+        });
+        return '本次提交表单共出现 ' + result.data.count + ' 次错误, 以下是错误详情: \n'
+            + errors;
+    }
+
 }
