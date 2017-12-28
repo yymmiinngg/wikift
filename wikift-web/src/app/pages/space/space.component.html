@@ -43,5 +43,10 @@
                 </div>
             </div>
         </div>
+        <div class="mr-center">
+            <pagination *ngIf="spaces?.length && page" [itemsPerPage]="page.size" [(ngModel)]="currentPage" totalItems="{{page.totalElements}}"
+                [maxSize]="maxSize" (pageChanged)="pageChanged($event)" [boundaryLinks]="true">
+            </pagination>
+        </div>
     </div>
 </section>

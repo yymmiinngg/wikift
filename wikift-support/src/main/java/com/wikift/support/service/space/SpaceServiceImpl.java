@@ -21,6 +21,8 @@ import com.wikift.model.space.SpaceEntity;
 import com.wikift.model.user.UserEntity;
 import com.wikift.support.repository.space.SpaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,8 +34,8 @@ public class SpaceServiceImpl implements SpaceService {
     private SpaceRepository spaceRepository;
 
     @Override
-    public List<SpaceEntity> getAllSpace() {
-        return (List<SpaceEntity>) spaceRepository.findAll();
+    public Page<SpaceEntity> getAllSpace(Pageable pageable) {
+        return spaceRepository.findAll(pageable);
     }
 
     @Override

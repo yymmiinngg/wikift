@@ -15,38 +15,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wikift.support.service.user;
+package com.wikift.support.validate.user;
 
-import com.wikift.model.user.UserEntity;
+import com.wikift.support.service.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 
-import java.util.List;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
-public interface UserService {
+public class UserNameExistsValidator implements ConstraintValidator<UserNameExists, String> {
 
-    UserEntity getUserById(Long id);
+    @Autowired
+    private UserService userService;
 
-    UserEntity save(UserEntity entity);
+    @Override
+    public void initialize(UserNameExists userNameExists) {
 
-    UserEntity update(UserEntity entity);
+    }
 
-    Long delete(Long id);
-
-    UserEntity getInfoByUsername(String username);
-
-    List<UserEntity> findTopByArticle();
-
-    List<UserEntity> findAllFollowersByUserId(Long userId);
-
-    List<UserEntity> findAllCoversByUserId(Long userId);
-
-    UserEntity findUserEntityByFollowsExists(Long followUserId, Long coverUserId);
-
-    Integer follow(Long followUserId, Long coverUserId);
-
-    Integer unFollow(Long followUserId, Long coverUserId);
-
-    Integer findFollowCount(Long followUserId);
-
-    Integer findFollowCoverCount(Long followUserId);
+    @Override
+    public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
+        return ObjectUtils.isEmpty(userService.getInfoByUsername(s));
+    }
 
 }

@@ -18,6 +18,7 @@
 package com.wikift.server.controller;
 
 import com.wikift.common.utils.MessageUtils;
+import com.wikift.common.utils.PageAndSortUtils;
 import com.wikift.model.result.CommonResult;
 import com.wikift.model.space.SpaceEntity;
 import com.wikift.model.user.UserEntity;
@@ -37,8 +38,11 @@ public class SpaceController {
 
     @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    CommonResult<SpaceEntity> getAllSpaces() {
-        return CommonResult.success(spaceService.getAllSpace());
+    CommonResult<SpaceEntity> getAllSpaces(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                           @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        Assert.notNull(page, MessageUtils.getParamNotNull("page"));
+        Assert.notNull(page, MessageUtils.getParamNotNull("size"));
+        return CommonResult.success(spaceService.getAllSpace(PageAndSortUtils.getPage(page, size)));
     }
 
     @PreAuthorize("hasAuthority(('USER'))")

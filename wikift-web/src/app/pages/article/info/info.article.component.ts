@@ -29,6 +29,7 @@ import { CommonConfig } from '../../../../config/common.config';
 import { ArticleFabulousParamModel } from '../../../shared/model/param/article.fabulous.param.model';
 import { ArticleViewParamModel } from '../../../shared/model/param/article.view.param.model';
 import { ArticleTypeService } from '../../../../services/article.type.service';
+import { UserService } from '../../../../services/user.service';
 
 @Component({
     selector: 'wikift-article-info',
@@ -51,9 +52,12 @@ export class InfoArticleComponent implements OnInit {
     public articleFabulousCount;
     // 当前时间
     public currentDay = new Date().getTime();
+    // 关注按钮显示状态
+    isFollow = true;
 
     constructor(private route: ActivatedRoute,
         private articleService: ArticleService,
+        private userService: UserService,
         private deviceService: Ng2DeviceService) {
         // 获取页面url传递的id参数
         this.route.params.subscribe((params) => this.id = params.id);
@@ -75,6 +79,7 @@ export class InfoArticleComponent implements OnInit {
                 this.initFabulousStatus();
                 this.initViewArticle();
                 this.initFabulousCount();
+                this.initUserFollowStatus();
             }
         );
     }
@@ -130,6 +135,16 @@ export class InfoArticleComponent implements OnInit {
         );
     }
 
+    initUserFollowStatus() {
+        this.userService.followCheck(this.currentUser.id, this.article.userEntity.id).subscribe(
+            result => {
+                if (result.data) {
+                    this.isFollow = false;
+                }
+            }
+        );
+    }
+
     fabulous() {
         const fabulous = new ArticleFabulousParamModel();
         fabulous.userId = this.article.userEntity.id;
@@ -150,6 +165,32 @@ export class InfoArticleComponent implements OnInit {
             result => {
                 this.fabulousStatus = true;
                 this.initFabulousCount();
+            }
+        );
+    }
+
+    follow() {
+        const follows = new Array();
+        follows.push(this.article.userEntity);
+        this.currentUser.follows = follows;
+        this.userService.follow(this.currentUser).subscribe(
+            result => {
+                if (result.data) {
+                    this.isFollow = false;
+                }
+            }
+        );
+    }
+
+    unfollow() {
+        const follows = new Array();
+        follows.push(this.article.userEntity);
+        this.currentUser.follows = follows;
+        this.userService.unfollow(this.currentUser).subscribe(
+            result => {
+                if (result.data) {
+                    this.isFollow = true;
+                }
             }
         );
     }

@@ -26,6 +26,7 @@ import com.wikift.support.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -39,8 +40,11 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    CommonResult<UserEntity> register(@RequestBody UserParam param) {
+    CommonResult<UserEntity> register(@RequestBody @Validated UserParam param) {
         Assert.notNull(param, MessageEnums.PARAMS_NOT_NULL.getValue());
+        if (!param.getPassword().equals(param.getRepassword())) {
+            return CommonResult.validateError(MessageEnums.PARAMS_CONTRAST_VALIDATE_ERROR);
+        }
         // 手动设置id为0, 阻止jpa存储数据出现json绑定错误
         UserEntity entity = new UserEntity();
         entity.setId(0l);
@@ -53,14 +57,14 @@ public class UserController {
     @RequestMapping(value = "/info/{username}", method = RequestMethod.GET)
     CommonResult<UserEntity> info(@PathVariable(value = "username") String username) {
         Assert.notNull(username, MessageEnums.PARAMS_NOT_NULL.getValue());
-        return CommonResult.success(userService.findByUsername(username));
+        return CommonResult.success(userService.getInfoByUsername(username));
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     CommonResult<UserEntity> update(@RequestBody UserEntity entity) {
         Assert.notNull(entity, MessageEnums.PARAMS_NOT_NULL.getValue());
-        UserEntity targetUserEntity = userService.findByUsername(entity.getUsername());
+        UserEntity targetUserEntity = userService.getInfoByUsername(entity.getUsername());
         entity.setPassword(targetUserEntity.getPassword());
         return CommonResult.success(userService.update(entity));
     }

@@ -40,7 +40,7 @@ public class UserDetailsSupport implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        UserEntity userEntity = userService.findByUsername(s);
+        UserEntity userEntity = userService.getInfoByUsername(s);
         if (ObjectUtils.isEmpty(userEntity)) {
             throw new UsernameNotFoundException(String.format("this user %s not found", s));
         }

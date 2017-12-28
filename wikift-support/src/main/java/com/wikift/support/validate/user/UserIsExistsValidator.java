@@ -21,7 +21,6 @@ import com.wikift.model.user.UserEntity;
 import com.wikift.support.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -37,16 +36,8 @@ public class UserIsExistsValidator implements ConstraintValidator<UserIsExists, 
 
     @Override
     public boolean isValid(String field, ConstraintValidatorContext constraintValidatorContext) {
-        if (!StringUtils.isEmpty(field)) {
-            try {
-                Long userId = Long.valueOf(field);
-                UserEntity entity = userService.getUserById(userId);
-                return !ObjectUtils.isEmpty(entity);
-            } catch (Exception e) {
-                return false;
-            }
-        }
-        return false;
+        Long userId = Long.valueOf(field);
+        return ObjectUtils.isEmpty(userService.getUserById(userId));
     }
 
 }

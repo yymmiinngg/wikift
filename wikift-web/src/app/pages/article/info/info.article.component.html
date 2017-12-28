@@ -134,18 +134,78 @@
                 </div>
             </div>
         </div>
-        <!-- 文章目录 -->
+        <!-- 文章属性 -->
         <div class="col-md-3">
-            <div>
-                <div class="card">
-                    <div class="card-header border-b-1 px-4 py-3 mr-center">
-                        <div class="card-block">
-                            <h2 class="card-title">文章目录</h2>
+            <!-- 文章作者 -->
+            <div class="card">
+                <div class="card-body">
+                    <div *ngIf="article" class="card-header px-4 py-3">
+                        <div class="card-block d-flex">
+                            <div class="mr-auto d-flex justify-content-center flex-wrap p-2">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <div class="user-sm">
+                                            <div class="article__user__info mr-auto">
+                                                <img class="article__user__img" src="{{article.userEntity.avatar}}" alt="{{article.userEntity.username}}">
+                                                <div class="article__user__name">
+                                                    <a [routerLink]="['/account', article.userEntity.username, 'info']">{{article.userEntity.username}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <div *ngIf="isFollow; else unfollowUser" class="d-flex justify-content-center flex-wrap p-2">
+                                    <a class="btn btn-success btn-sm m-2" [ngClass]="{'disabled': currentUser?.id === article?.userEntity.id}" (click)="follow()">
+                                        <i class="zmdi zmdi-account zmdi-hc-fw mr-1"></i>关注该用户
+                                    </a>
+                                </div>
+                                <ng-template #unfollowUser>
+                                    <div class="d-flex justify-content-center flex-wrap p-2">
+                                        <a class="btn btn-success btn-sm m-2" (click)="unfollow()">
+                                            <i class="zmdi zmdi-account zmdi-hc-fw mr-1"></i>取消关注该用户
+                                        </a>
+                                    </div>
+                                </ng-template>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="markdown-body editormd-preview-container-article" style="height:430px" id="wikift-toc-container"></div>
+                </div>
+            </div>
+            <!-- 文章专栏/空间 -->
+            <div class="card">
+                <div class="card-body">
+                    <div *ngIf="article" class="card-header px-4 py-3">
+                        <div class="card-block d-flex">
+                            <div class="mr-auto d-flex justify-content-center flex-wrap p-2">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <div class="user-sm">
+                                            <div class="article__user__info mr-auto">
+                                                <img class="article__user__img" src="{{article.space.avatar}}" alt="{{article.space.name}}">
+                                                <div class="article__user__name">
+                                                    <a>{{article.space.name}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ml-4"></div>
+                        </div>
                     </div>
+                </div>
+            </div>
+            <!-- 文章目录 -->
+            <div class="card">
+                <div class="card-header border-b-1 px-4 py-3 mr-center">
+                    <div class="card-block">
+                        <h2 class="card-title">文章目录</h2>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="markdown-body editormd-preview-container-article" style="height:430px" id="wikift-toc-container"></div>
                 </div>
             </div>
         </div>

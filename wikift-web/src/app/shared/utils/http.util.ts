@@ -20,6 +20,7 @@ import { Headers, RequestOptions, URLSearchParams, QueryEncoder } from '@angular
 import { CommonConfig } from '../../../config/common.config';
 
 import { CookieUtils } from '../utils/cookie.util';
+import { CommonPageModel } from '../model/result/page.model';
 
 /**
  * 全局HTTP请求
@@ -75,6 +76,18 @@ export class HttpUtils {
         const params = new URLSearchParams();
         params.append('page', page.toString());
         params.append('size', size.toString());
+        return params;
+    }
+
+    /**
+     * 分页查询参数
+     * @param page 页数
+     * @param size 页面总数
+     */
+    public static getPaginationParamsByModel(page: CommonPageModel): URLSearchParams {
+        const params = new URLSearchParams();
+        params.append('page', page.number.toString());
+        params.append('size', page.size.toString());
         return params;
     }
 

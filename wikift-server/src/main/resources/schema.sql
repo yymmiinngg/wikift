@@ -227,7 +227,7 @@ CREATE TABLE space_users_relation (
 -- 专栏/空间文章关系表
 DROP TABLE IF EXISTS space_article_relation;
 CREATE TABLE space_article_relation (
-  sar_space_id BIGINT(20) NOT NULL,
+  sar_space_id   BIGINT(20) NOT NULL,
   sar_article_id BIGINT(20) NOT NULL,
   CONSTRAINT FK_sar_space_relation_id FOREIGN KEY (sar_space_id) REFERENCES space (s_id),
   CONSTRAINT FK_sar_article_relation_id FOREIGN KEY (sar_article_id) REFERENCES article (a_id)

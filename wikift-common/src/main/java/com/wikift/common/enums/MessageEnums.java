@@ -24,6 +24,9 @@ public enum MessageEnums {
 
     PARAMS_NOT_NULL(4000, "参数不能为空"),
     PARAMS_VALIDATE_ERROR(4001, "参数输入错误"),
+    PARAMS_CONTRAST_VALIDATE_ERROR(4002, "两次输入的数据不一致"),
+
+    CREDENTIALS_BAD(4100, "无效的认证凭据, 请检查输入的认证信息"),
 
     UNSUPPORT_MEDIA_TYPE(4415, "不支持的数据类型");
 

@@ -19,6 +19,7 @@ export class UserParamModel {
 
     public username: string;
     public password: string;
+    public repassword: string;
 
     constructor() { }
 
