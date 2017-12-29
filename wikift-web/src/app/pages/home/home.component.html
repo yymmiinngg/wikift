@@ -27,6 +27,8 @@
                 </tab>
                 <tab heading="推荐文章" (select)="loadArticleOrderByFabulou()">
                 </tab>
+                <tab heading="我的文章" *ngIf="userInfo" (select)="loadMyArticle()">
+                </tab>
             </tabset>
             <div *ngFor="let article of articles" class="card">
                 <!-- 文章用户信息 -->

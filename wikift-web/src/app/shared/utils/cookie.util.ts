@@ -43,7 +43,10 @@ export class CookieUtils {
     }
 
     public static getUser() {
-        return JSON.parse(Cookie.get(CommonConfig.AUTH_USER_INFO));
+        const data = Cookie.get(CommonConfig.AUTH_USER_INFO);
+        if (data.length > 0) {
+            return JSON.parse(data);
+        }
     }
 
     public static clear() {
