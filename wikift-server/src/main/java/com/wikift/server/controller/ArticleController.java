@@ -84,6 +84,17 @@ public class ArticleController {
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "my", method = RequestMethod.GET)
+    CommonResult<ArticleEntity> getAllArticleByUser(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                     @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                     @RequestParam(value = "userId") Long userId) {
+        Assert.notNull(page, MessageUtils.getParamNotNull("page"));
+        Assert.notNull(page, MessageUtils.getParamNotNull("size"));
+        Assert.notNull(userId, MessageUtils.getParamNotNull("userId"));
+        return CommonResult.success(articleService.getMyArticles(userId, PageAndSortUtils.getPage(page, size)));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "top/by/user", method = RequestMethod.GET)
     CommonResult<ArticleEntity> findTopByUserEntityAndCreateTime(@RequestParam(value = "username") String username) {
         Assert.notNull(username, MessageEnums.PARAMS_NOT_NULL.getValue());

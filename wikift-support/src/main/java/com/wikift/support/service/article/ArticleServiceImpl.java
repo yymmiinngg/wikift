@@ -58,6 +58,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public Page<ArticleEntity> getMyArticles(Long userId, Pageable pageable) {
+        return articleRepository.findAllToUserAndCreateTime(userId, pageable);
+    }
+
+    @Override
     public ArticleEntity info(Long id) {
         return articleRepository.findOne(id);
     }

@@ -50,10 +50,13 @@ export class HomeComponent implements OnInit {
     public loadArticleBusy: Subscription;
     // 排序规则
     public order;
+    // 抽取layout布局的用户信息
+    public userInfo;
 
     constructor(private articleService: ArticleService,
         private userService: UserService) {
         this.page = new CommonPageModel();
+        this.userInfo = CookieUtils.getUser();
     }
 
     ngOnInit() {

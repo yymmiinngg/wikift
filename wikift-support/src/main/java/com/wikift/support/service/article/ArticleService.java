@@ -32,6 +32,8 @@ public interface ArticleService {
      */
     Page<ArticleEntity> findAll(OrderEnums order, Pageable pageable);
 
+    Page<ArticleEntity> getMyArticles(Long userId, Pageable pageable);
+
     /**
      * 根据文章ID查询文章信息
      *
