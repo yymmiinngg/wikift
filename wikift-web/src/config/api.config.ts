@@ -43,6 +43,7 @@ export class ApiConfig {
     public static API_ARTICLE_UNFABULOUS = '/article/unfabulous/';
     public static API_ARTICLE_VIEW = '/article/view';
     public static API_ARTICLE_VIEW_COUNT = '/article/view/count';
+    public static API_ARTICLE_FOR_MY = '/article/my';
 
     public static API_ARTICLE_TYPE_LIST = '/article/type/list';
 

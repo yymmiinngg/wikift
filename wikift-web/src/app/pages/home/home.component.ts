@@ -38,13 +38,13 @@ import { OrderEnumModel } from '../../shared/model/enum/order.enum.model';
 
 export class HomeComponent implements OnInit {
 
-    articles;
+    public articles;
     // 活跃用户
-    activeUsers;
+    public activeUsers;
     // 分页数据
-    page: CommonPageModel;
+    public page: CommonPageModel;
     // 当前页数
-    currentPage: number;
+    public currentPage: number;
     // 当前时间
     public currentDay = new Date().getTime();
     public loadArticleBusy: Subscription;
@@ -95,6 +95,18 @@ export class HomeComponent implements OnInit {
         this.order = OrderEnumModel.FABULOU;
         this.page.order = this.order;
         this.initArticleList(this.page);
+    }
+
+    loadMyArticle() {
+        this.page.number = 0;
+        this.page.size = 10;
+        this.loadArticleBusy = this.articleService.getMyArticle(this.userInfo.id, this.page).subscribe(
+            result => {
+                this.articles = result.data.content;
+                this.page = CommonPageModel.getPage(result.data);
+                this.currentPage = this.page.number;
+            }
+        );
     }
 
     pageChanged(event: any) {

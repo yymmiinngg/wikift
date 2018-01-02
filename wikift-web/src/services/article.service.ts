@@ -88,6 +88,14 @@ export class ArticleService {
         return this.http.get(ApiConfig.API_ARTICLE_TOP_BY_USER, options).map(ResultUtils.extractData);
     }
 
+    getMyArticle(userId, page: CommonPageModel): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        const params = HttpUtils.getPaginationParamsByModel(page);
+        params.append('userId', userId);
+        options.params = params;
+        return this.http.get(ApiConfig.API_ARTICLE_FOR_MY, options).map(ResultUtils.extractData);
+    }
+
     fabulous(param: ArticleFabulousParamModel): Observable<CommonResultModel> {
         const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
         return this.http.post(ApiConfig.API_ARTICLE_FABULOUS, param.toJosn(), options).map(ResultUtils.extractData);
