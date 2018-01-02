@@ -30,6 +30,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 
 import { SpaceCreateComponent } from './space.create.component';
 import { SpaceService } from '../../../../services/space.service';
+import { ToastyModule } from '_ng2-toasty@4.0.3@ng2-toasty';
 
 // import { ArticleService } from '../../../services/article.service';
 // import { UserService } from '../../../services/user.service';
@@ -56,6 +57,7 @@ const SPACE_CREATE_ROUTES: Routes = [
         AlertModule.forRoot(),
         TooltipModule.forRoot(),
         TabsModule.forRoot(),
+        ToastyModule.forRoot(),
         PaginationModule.forRoot(),
         RouterModule.forChild(SPACE_CREATE_ROUTES)
     ],

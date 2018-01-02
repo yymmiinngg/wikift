@@ -19,6 +19,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
 import { ImageCropperComponent, CropperSettings } from 'ng2-img-cropper';
+import { ToastyService } from 'ng2-toasty';
 
 import { SpaceModel } from '../../../shared/model/space/space.model';
 import { CookieUtils } from '../../../shared/utils/cookie.util';
@@ -26,6 +27,7 @@ import { CommonConfig } from '../../../../config/common.config';
 import { UserModel } from '../../../shared/model/user/user.model';
 import { SpaceService } from '../../../../services/space.service';
 import { CodeConfig } from '../../../../config/code.config';
+import { ResultUtils } from '../../../shared/utils/result.util';
 
 @Component({
     selector: 'wikift-space-create',
@@ -42,7 +44,8 @@ export class SpaceCreateComponent implements OnInit {
     public cropperImage; any;
 
     constructor(private router: Router,
-        private spaceService: SpaceService) {
+        private spaceService: SpaceService,
+        private toastyService: ToastyService) {
         this.spaceModel = new SpaceModel();
         this.cropperSettings = new CropperSettings();
         this.cropperSettings.keepAspect = false;
@@ -70,8 +73,12 @@ export class SpaceCreateComponent implements OnInit {
         this.spaceModel.user = user;
         this.spaceService.createSpace(this.spaceModel).subscribe(
             result => {
-                if (result.data === CodeConfig.SUCCESS) {
+                if (result.code === CodeConfig.SUCCESS) {
+                    this.toastyService.info('空间 ' + this.spaceModel.name + ' 创建成功!!!');
+                    // 跳转到首页
                     this.router.navigate(['/space']);
+                } else {
+                    this.toastyService.error(ResultUtils.getError(result));
                 }
             }
         );

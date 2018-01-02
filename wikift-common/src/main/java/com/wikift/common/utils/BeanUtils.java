@@ -36,6 +36,11 @@ public class BeanUtils {
         org.springframework.beans.BeanUtils.copyProperties(src, target, getNullProperties(src));
     }
 
+    public static <T, R> R copy(T source, R target) {
+        org.springframework.beans.BeanUtils.copyProperties(source, target);
+        return target;
+    }
+
     /**
      * 将为空的properties给找出来,然后返回出来
      *

@@ -15,31 +15,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wikift.support.validate.user;
+package com.wikift.support.validate.space;
 
-import com.wikift.model.user.UserEntity;
-import com.wikift.support.service.user.UserService;
+import com.wikift.support.service.space.SpaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class UserIsExistsValidator implements ConstraintValidator<UserIsExists, UserEntity> {
+public class SpaceCodeExistsValidator implements ConstraintValidator<SpaceCodeExists, String> {
 
     @Autowired
-    private UserService userService;
+    private SpaceService spaceService;
 
-    @Override
-    public void initialize(UserIsExists userConstraint) {
+    public void initialize(SpaceCodeExists constraint) {
     }
 
-    @Override
-    public boolean isValid(UserEntity userEntity, ConstraintValidatorContext constraintValidatorContext) {
-        if (!ObjectUtils.isEmpty(userEntity)) {
-            return !ObjectUtils.isEmpty(userService.getUserById(userEntity.getId()));
-        }
-        return false;
+    public boolean isValid(String obj, ConstraintValidatorContext context) {
+        return ObjectUtils.isEmpty(spaceService.getSpaceInfoByCode(obj));
     }
 
 }
