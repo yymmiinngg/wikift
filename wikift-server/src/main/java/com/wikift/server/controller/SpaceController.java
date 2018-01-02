@@ -17,11 +17,13 @@
  */
 package com.wikift.server.controller;
 
+import com.wikift.common.utils.BeanUtils;
 import com.wikift.common.utils.MessageUtils;
 import com.wikift.common.utils.PageAndSortUtils;
 import com.wikift.model.result.CommonResult;
 import com.wikift.model.space.SpaceEntity;
 import com.wikift.model.user.UserEntity;
+import com.wikift.server.param.SpaceParam;
 import com.wikift.support.service.space.SpaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -56,9 +58,11 @@ public class SpaceController {
 
     @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    CommonResult<SpaceEntity> createSpace(@RequestBody @Validated SpaceEntity entity) {
-        Assert.notNull(entity, MessageUtils.getParamNotNull("entity"));
-        return CommonResult.success(spaceService.createSpace(entity));
+    CommonResult<SpaceEntity> createSpace(@RequestBody @Validated SpaceParam param) {
+        Assert.notNull(param, MessageUtils.getParamNotNull("param"));
+        SpaceEntity space = new SpaceEntity();
+        BeanUtils.copy(param, space);
+        return CommonResult.success(spaceService.createSpace(space));
     }
 
 }
