@@ -34,6 +34,7 @@ import { UserParamModel } from '../app/shared/model/param/user.param.model';
 import { UserModel } from '../app/shared/model/user/user.model';
 import { CommonResultModel } from '../app/shared/model/result/result.model';
 import { ResultUtils } from '../app/shared/utils/result.util';
+import { ToastyService } from 'ng2-toasty';
 
 /**
  * 用户服务
@@ -44,7 +45,8 @@ export class UserService {
     constructor(
         private http: Http,
         private options: RequestOptions,
-        private router: Router) {
+        private router: Router,
+        private toastyService: ToastyService) {
     }
 
     /**
@@ -69,7 +71,7 @@ export class UserService {
             },
             err => {
                 CookieUtils.clearBy(CommonConfig.AUTH_USER_NAME);
-                alert('Invalid Credentials');
+                this.toastyService.error('登录失败, 请检查您的用户名或密码');
                 return false;
             });
     }

@@ -20,8 +20,6 @@ import { LayoutComponent } from './layout.component';
 
 import { AuthGuard } from '../../app/auth/auth.guard';
 
-import { LoginComponent } from '../pages/user/login/login.component';
-
 const LAYOUT_ROUTES: Routes = [
     {
         path: '', component: LayoutComponent, children: [
@@ -41,7 +39,7 @@ const LAYOUT_ROUTES: Routes = [
     },
     {
         path: 'user', children: [
-            { path: 'login', component: LoginComponent },
+            { path: 'login', loadChildren: '../pages/user/login/user.login.module#UserLoginModule' },
             { path: 'register', loadChildren: '../pages/user/register/user.register.module#UserRegisterModule' },
         ]
     }

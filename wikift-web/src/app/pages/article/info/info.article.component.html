@@ -156,18 +156,20 @@
                                 </div>
                             </div>
                             <div class="ml-4">
-                                <div *ngIf="isFollow; else unfollowUser" class="d-flex justify-content-center flex-wrap p-2">
-                                    <a class="btn btn-success btn-sm m-2" [ngClass]="{'disabled': currentUser?.id === article?.userEntity.id}" (click)="follow()">
-                                        <i class="zmdi zmdi-account zmdi-hc-fw mr-1"></i>关注该用户
-                                    </a>
-                                </div>
-                                <ng-template #unfollowUser>
-                                    <div class="d-flex justify-content-center flex-wrap p-2">
-                                        <a class="btn btn-success btn-sm m-2" (click)="unfollow()">
-                                            <i class="zmdi zmdi-account zmdi-hc-fw mr-1"></i>取消关注该用户
+                                <div *ngIf="currentUser">
+                                    <div *ngIf="isFollow; else unfollowUser" class="d-flex justify-content-center flex-wrap p-2">
+                                        <a class="btn btn-success btn-sm m-2" [ngClass]="{'disabled': currentUser?.id === article?.userEntity.id}" (click)="follow()">
+                                            <i class="zmdi zmdi-account zmdi-hc-fw mr-1"></i>关注该用户
                                         </a>
                                     </div>
-                                </ng-template>
+                                    <ng-template #unfollowUser>
+                                        <div class="d-flex justify-content-center flex-wrap p-2">
+                                            <a class="btn btn-success btn-sm m-2" (click)="unfollow()">
+                                                <i class="zmdi zmdi-account zmdi-hc-fw mr-1"></i>取消关注该用户
+                                            </a>
+                                        </div>
+                                    </ng-template>
+                                </div>
                             </div>
                         </div>
                     </div>
