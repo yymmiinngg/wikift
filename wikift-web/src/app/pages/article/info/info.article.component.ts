@@ -46,10 +46,6 @@ export class InfoArticleComponent implements OnInit {
     public article: ArticleModel;
     // 是否可赞状态
     public fabulousStatus = true;
-    // 文章访问总数
-    public articleViewCount;
-    // 文章赞总数
-    public articleFabulousCount;
     // 当前时间
     public currentDay = new Date().getTime();
     // 关注按钮显示状态
@@ -78,7 +74,6 @@ export class InfoArticleComponent implements OnInit {
                 this.article = result.data;
                 this.initFabulousStatus();
                 this.initViewArticle();
-                this.initFabulousCount();
                 this.initUserFollowStatus();
             }
         );
@@ -88,13 +83,15 @@ export class InfoArticleComponent implements OnInit {
         const fabulous = new ArticleFabulousParamModel();
         fabulous.userId = this.article.userEntity.id;
         fabulous.articleId = this.article.id;
-        this.articleService.fabulousCheck(fabulous).subscribe(
-            result => {
-                if (result.data > 0) {
-                    this.fabulousStatus = false;
+        if (this.currentUser) {
+            this.articleService.fabulousCheck(fabulous).subscribe(
+                result => {
+                    if (result.data > 0) {
+                        this.fabulousStatus = false;
+                    }
                 }
-            }
-        );
+            );
+        }
     }
 
     initViewArticle() {
@@ -108,41 +105,20 @@ export class InfoArticleComponent implements OnInit {
         articleView.device = Md5.hashStr(hashStr);
         this.articleService.viewArticle(articleView).subscribe(
             result => {
-                // 在这里初始化是为了加载本次访问的数据
-                this.initViewArticleCount();
-            }
-        );
-    }
-
-    initViewArticleCount() {
-        const articleView = new ArticleViewParamModel();
-        articleView.userId = this.article.userEntity.id;
-        articleView.articleId = this.article.id;
-        this.articleService.viewArticleCount(articleView).subscribe(
-            result => {
-                this.articleViewCount = result.data;
-            }
-        );
-    }
-
-    initFabulousCount() {
-        const articleView = new ArticleViewParamModel();
-        articleView.articleId = this.article.id;
-        this.articleService.fabulousCount(articleView).subscribe(
-            result => {
-                this.articleFabulousCount = result.data;
             }
         );
     }
 
     initUserFollowStatus() {
-        this.userService.followCheck(this.currentUser.id, this.article.userEntity.id).subscribe(
-            result => {
-                if (result.data) {
-                    this.isFollow = false;
+        if (this.currentUser) {
+            this.userService.followCheck(this.currentUser.id, this.article.userEntity.id).subscribe(
+                result => {
+                    if (result.data) {
+                        this.isFollow = false;
+                    }
                 }
-            }
-        );
+            );
+        }
     }
 
     fabulous() {
@@ -152,7 +128,7 @@ export class InfoArticleComponent implements OnInit {
         this.articleService.fabulous(fabulous).subscribe(
             result => {
                 this.fabulousStatus = false;
-                this.initFabulousCount();
+                this.initArticleInfo();
             }
         );
     }
@@ -164,7 +140,7 @@ export class InfoArticleComponent implements OnInit {
         this.articleService.unfabulous(fabulous).subscribe(
             result => {
                 this.fabulousStatus = true;
-                this.initFabulousCount();
+                this.initArticleInfo();
             }
         );
     }

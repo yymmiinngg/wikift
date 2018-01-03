@@ -40,7 +40,7 @@ public interface ArticleService {
      * @param id 文章ID
      * @return 文章信息
      */
-    ArticleEntity info(Long id);
+    ArticleEntity getArticle(Long id);
 
     /**
      * 删除文章

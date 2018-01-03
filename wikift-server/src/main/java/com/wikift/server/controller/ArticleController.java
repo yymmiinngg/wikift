@@ -69,9 +69,9 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "info/{id}", method = RequestMethod.GET)
-    CommonResult<ArticleEntity> info(@PathVariable(value = "id") Long id) {
+    CommonResult<ArticleEntity> getArticle(@PathVariable(value = "id") Long id) {
         Assert.notNull(id, MessageEnums.PARAMS_NOT_NULL.getValue());
-        return CommonResult.success(articleService.info(id));
+        return CommonResult.success(articleService.getArticle(id));
     }
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
@@ -133,7 +133,6 @@ public class ArticleController {
         return CommonResult.success(articleService.fabulousArticleCount(articleId));
     }
 
-    @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "view", method = RequestMethod.POST)
     CommonResult viewArticle(@RequestBody ArticleViewParam param) {
         Assert.notNull(param, MessageEnums.PARAMS_NOT_NULL.getValue());

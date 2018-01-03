@@ -63,8 +63,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public ArticleEntity info(Long id) {
-        return articleRepository.findOne(id);
+    public ArticleEntity getArticle(Long id) {
+        return articleRepository.findById(id);
     }
 
     @Override
