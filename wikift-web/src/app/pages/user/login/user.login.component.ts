@@ -17,6 +17,8 @@
  */
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, FormControl } from '@angular/forms';
+import { CustomValidators } from 'ng2-validation';
 
 import { LoginParamModel } from '../../../shared/model/param/login.param.model';
 
@@ -24,16 +26,22 @@ import { UserService } from '../../../../services/user.service';
 
 @Component({
     selector: 'wikift-user-login',
-    templateUrl: 'login.component.html'
+    templateUrl: 'user.login.component.html'
 })
 
-export class LoginComponent implements OnInit {
+export class UserLoginComponent implements OnInit {
 
+    form: FormGroup;
     // 页面登录用户
     user: LoginParamModel;
 
     constructor(private router: Router,
-        private userService: UserService) { }
+        private userService: UserService) {
+        this.form = new FormGroup({
+            username: new FormControl('', CustomValidators.range([5, 9])),
+            password: new FormControl('', CustomValidators.number)
+        });
+    }
 
     ngOnInit() {
         // 初始化数据模型

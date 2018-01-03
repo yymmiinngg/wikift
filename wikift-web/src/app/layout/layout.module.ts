@@ -28,13 +28,12 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BusyModule, BusyConfig } from 'angular2-busy';
+import { ToastyModule, ToastyService } from 'ng2-toasty';
 
 import { LayoutComponent } from './layout.component';
 import { HeaderComponent } from './header/header.component';
 import { SearchComponent } from './header/search/search.component';
 import { NavigationTriggerComponent } from './header/navigation-trigger/navigation-trigger.component';
-
-import { LoginComponent } from '../pages/user/login/login.component';
 
 import { UserService } from '../../services/user.service';
 import { RemindService } from '../../services/remind.service';
@@ -53,7 +52,6 @@ export function busyConfigFactory() {
 
 @NgModule({
   declarations: [
-    LoginComponent,
     LayoutComponent,
     HeaderComponent,
     SearchComponent,
@@ -69,6 +67,7 @@ export function busyConfigFactory() {
     ButtonsModule.forRoot(),
     TabsModule.forRoot(),
     ModalModule.forRoot(),
+    ToastyModule.forRoot(),
     PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG)
   ],
   providers: [
@@ -77,7 +76,8 @@ export function busyConfigFactory() {
     {
       provide: BusyConfig,
       useFactory: busyConfigFactory
-    }
+    },
+    ToastyService
   ]
 })
 
