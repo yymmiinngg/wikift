@@ -107,6 +107,27 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
     ArticleEntity findById(Long articleId);
 
     /**
+     * 根据空间查询所有该空间下的文章
+     *
+     * @param spaceId 空间id
+     * @return 该空间的文章列表
+     */
+    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(a.view_count, IFNULL(SUM(uavr.uavr_view_count) , 0)) AS view_count, IFNULL(a.fabulou_count, IFNULL(COUNT(DISTINCT uafr.uafr_user_id), 0)) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
+            "FROM article AS a " +
+            "LEFT OUTER JOIN users_article_relation AS uar ON a.a_id = uar.uar_article_id " +
+            "LEFT OUTER JOIN article_type_relation AS atr ON a.a_id = atr.atr_article_id " +
+            "LEFT OUTER JOIN users_article_view_relation AS uavr ON a.a_id = uavr.uavr_article_id " +
+            "LEFT OUTER JOIN users_article_fabulous_relation AS uafr ON a.a_id = uafr.uafr_article_id " +
+            "LEFT OUTER JOIN space_article_relation AS sar ON a.a_id = sar.sar_article_id " +
+            "LEFT OUTER JOIN space AS s ON s.s_id = sar.sar_space_id " +
+            "WHERE sar.sar_space_id = ?1 " +
+            "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
+            "ORDER BY SUM(uavr.uavr_view_count) DESC \n#pageable\n",
+            countQuery = "SELECT COUNT(a.a_id) FROM article AS a",
+            nativeQuery = true)
+    Page<ArticleEntity> findAllBySpace(Long spaceId, Pageable pageable);
+
+    /**
      * 根据用户和时间查询文章信息
      *
      * @param username 用户id

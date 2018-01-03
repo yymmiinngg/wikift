@@ -34,8 +34,8 @@ public class SpaceServiceImpl implements SpaceService {
     private SpaceRepository spaceRepository;
 
     @Override
-    public Page<SpaceEntity> getAllSpace(Pageable pageable) {
-        return spaceRepository.findAll(pageable);
+    public Page<SpaceEntity> getAllPublicSpace(Pageable pageable) {
+        return spaceRepository.findAllByPrivatedFalse(pageable);
     }
 
     @Override
@@ -56,6 +56,11 @@ public class SpaceServiceImpl implements SpaceService {
     @Override
     public List<SpaceEntity> getAllSpaceByPrivatedFalseOrUser(UserEntity entity) {
         return spaceRepository.findAllByPrivatedFalseOrUser(entity);
+    }
+
+    @Override
+    public Page<SpaceEntity> getAllSpaceByUser(UserEntity entity, Pageable pageable) {
+        return spaceRepository.findAllByUser(entity, pageable);
     }
 
 }

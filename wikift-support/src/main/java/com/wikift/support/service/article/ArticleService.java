@@ -32,6 +32,8 @@ public interface ArticleService {
      */
     Page<ArticleEntity> findAll(OrderEnums order, Pageable pageable);
 
+    Page<ArticleEntity> getAllArticleBySpace(Long spaceId, Pageable pageable);
+
     Page<ArticleEntity> getMyArticles(Long userId, Pageable pageable);
 
     /**

@@ -24,10 +24,12 @@ import com.wikift.model.result.CommonResult;
 import com.wikift.model.space.SpaceEntity;
 import com.wikift.model.user.UserEntity;
 import com.wikift.server.param.SpaceParam;
+import com.wikift.support.service.article.ArticleService;
 import com.wikift.support.service.space.SpaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +39,8 @@ public class SpaceController {
 
     @Autowired
     private SpaceService spaceService;
+    @Autowired
+    private ArticleService articleService;
 
     @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -44,17 +48,17 @@ public class SpaceController {
                                            @RequestParam(value = "size", defaultValue = "10") Integer size) {
         Assert.notNull(page, MessageUtils.getParamNotNull("page"));
         Assert.notNull(page, MessageUtils.getParamNotNull("size"));
-        return CommonResult.success(spaceService.getAllSpace(PageAndSortUtils.getPage(page, size)));
+        return CommonResult.success(spaceService.getAllPublicSpace(PageAndSortUtils.getPage(page, size)));
     }
 
-    @PreAuthorize("hasAuthority(('USER'))")
-    @RequestMapping(value = "/list/user/{userId}", method = RequestMethod.GET)
-    CommonResult<SpaceEntity> getAllSpaceByPrivatedFalseAndUser(@PathVariable Long userId) {
-        Assert.notNull(userId, MessageUtils.getParamNotNull("userId"));
-        UserEntity entity = new UserEntity();
-        entity.setId(userId);
-        return CommonResult.success(spaceService.getAllSpaceByPrivatedFalseOrUser(entity));
-    }
+//    @PreAuthorize("hasAuthority(('USER'))")
+//    @RequestMapping(value = "/list/user/{userId}", method = RequestMethod.GET)
+//    CommonResult<SpaceEntity> getAllSpaceByPrivatedFalseAndUser(@PathVariable Long userId) {
+//        Assert.notNull(userId, MessageUtils.getParamNotNull("userId"));
+//        UserEntity entity = new UserEntity();
+//        entity.setId(userId);
+//        return CommonResult.success(spaceService.getAllSpaceByPrivatedFalseOrUser(entity));
+//    }
 
     @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -63,6 +67,31 @@ public class SpaceController {
         SpaceEntity space = new SpaceEntity();
         BeanUtils.copy(param, space);
         return CommonResult.success(spaceService.createSpace(space));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "/article", method = RequestMethod.GET)
+    CommonResult<SpaceEntity> getAllArticleBySpace(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                   @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                                   @RequestParam(value = "spaceCode") String spaceCode) {
+        Assert.notNull(spaceCode, MessageUtils.getParamNotNull("spaceCode"));
+        SpaceEntity space = spaceService.getSpaceInfoByCode(spaceCode);
+        if (!ObjectUtils.isEmpty(space)) {
+            return CommonResult.success(articleService.getAllArticleBySpace(space.getId(), PageAndSortUtils.getPage(page, size)));
+        } else {
+            return CommonResult.success(space);
+        }
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "/list/user/{userId}", method = RequestMethod.GET)
+    CommonResult<SpaceEntity> getAllSpaceByUser(@PathVariable Long userId,
+                                                @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        Assert.notNull(userId, MessageUtils.getParamNotNull("userId"));
+        UserEntity entity = new UserEntity();
+        entity.setId(userId);
+        return CommonResult.success(spaceService.getAllSpaceByUser(entity, PageAndSortUtils.getPage(page, size)));
     }
 
 }
