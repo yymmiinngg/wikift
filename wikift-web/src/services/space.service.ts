@@ -54,7 +54,7 @@ export class SpaceService {
         return this.http.get(ApiConfig.API_SPACE_LIST, options).map(ResultUtils.extractData);
     }
 
-    getAllSpacesByPublicOrUser(userId: number): Observable<CommonResultModel> {
+    getAllSpacesByUser(userId: number): Observable<CommonResultModel> {
         const options = HttpUtils.getDefaultRequestOptionsByToken();
         const path = ApiConfig.API_SPACE_LIST_USER + '/' + userId;
         return this.http.get(path, options).map(ResultUtils.extractData);

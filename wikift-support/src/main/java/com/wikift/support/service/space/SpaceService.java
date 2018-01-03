@@ -15,7 +15,7 @@ public interface SpaceService {
      * @param pageable 分页数据
      * @return 空间列表
      */
-    Page<SpaceEntity> getAllSpace(Pageable pageable);
+    Page<SpaceEntity> getAllPublicSpace(Pageable pageable);
 
     /**
      * 创建空间
@@ -42,5 +42,7 @@ public interface SpaceService {
     SpaceEntity getSpaceInfoById(Long id);
 
     List<SpaceEntity> getAllSpaceByPrivatedFalseOrUser(UserEntity entity);
+
+    Page<SpaceEntity> getAllSpaceByUser(UserEntity entity, Pageable pageable);
 
 }

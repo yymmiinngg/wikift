@@ -19,6 +19,8 @@ package com.wikift.support.repository.space;
 
 import com.wikift.model.space.SpaceEntity;
 import com.wikift.model.user.UserEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,14 @@ import java.util.List;
 
 @Transactional
 public interface SpaceRepository extends PagingAndSortingRepository<SpaceEntity, Long> {
+
+    /**
+     * 查询所有的公开空间
+     *
+     * @param pageable 分页信息
+     * @return 空间列表
+     */
+    Page<SpaceEntity> findAllByPrivatedFalse(Pageable pageable);
 
     /**
      * 根据空间编码获取空间信息
@@ -42,5 +52,13 @@ public interface SpaceRepository extends PagingAndSortingRepository<SpaceEntity,
      * @return 空间列表
      */
     List<SpaceEntity> findAllByPrivatedFalseOrUser(UserEntity entity);
+
+    /**
+     * 查询用户所有空间
+     *
+     * @param entity 用户信息
+     * @return 空间列表
+     */
+    Page<SpaceEntity> findAllByUser(UserEntity entity, Pageable pageable);
 
 }

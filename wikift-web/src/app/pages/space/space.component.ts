@@ -39,28 +39,41 @@ import { SpaceService } from '../../../services/space.service';
 
 export class SpaceComponent implements OnInit {
 
+    public loadSpaceBusy: Subscription;
     // 分页数据
     page: CommonPageModel;
     // 当前页数
     currentPage: number;
     // 空间列表
     public spaces;
-    maxSize: number = 15;
 
     constructor(private articleService: ArticleService,
         private userService: UserService,
         private spaceService: SpaceService) {
         this.page = new CommonPageModel();
         this.page.size = 24;
+        this.page.number = 0;
     }
 
     ngOnInit() {
-        this.initSpaceList(this.page);
+        this.loadSpaces();
     }
 
-    initSpaceList(page: CommonPageModel) {
-        page.number = 0;
-        this.spaceService.getAllSpaces(page).subscribe(
+    loadSpaces() {
+        this.loadSpaceBusy = this.spaceService.getAllSpaces(this.page).subscribe(
+            result => {
+                this.spaces = result.data.content;
+                this.page = CommonPageModel.getPage(result.data);
+                this.currentPage = this.page.number;
+            }
+        );
+    }
+
+    loadMySpaces() {
+        this.page = new CommonPageModel();
+        this.page.size = 24;
+        this.page.number = 0;
+        this.loadSpaceBusy = this.spaceService.getAllSpacesByUser(CookieUtils.getUser().id).subscribe(
             result => {
                 this.spaces = result.data.content;
                 this.page = CommonPageModel.getPage(result.data);
@@ -71,7 +84,6 @@ export class SpaceComponent implements OnInit {
 
     pageChanged(event: any) {
         this.page.number = event.page - 1;
-        console.log(this.page);
         this.spaceService.getAllSpaces(this.page).subscribe(
             result => {
                 this.spaces = result.data.content;

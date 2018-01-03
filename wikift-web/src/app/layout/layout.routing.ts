@@ -35,6 +35,7 @@ const LAYOUT_ROUTES: Routes = [
             { path: 'account/:username/info', loadChildren: '../pages/user/info/user.info.module#UserInfoModule' },
             { path: 'space', loadChildren: '../pages/space/space.module#SpaceModule' },
             { path: 'space/create', loadChildren: '../pages/space/create/space.create.module#SpaceCreateModule' },
+            { path: 'space/:code/display', loadChildren: '../pages/space/info/space.info.module#SpaceInfoModule' },
         ]
     },
     {
