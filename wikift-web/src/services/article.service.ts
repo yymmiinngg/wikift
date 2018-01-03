@@ -125,7 +125,7 @@ export class ArticleService {
     }
 
     viewArticle(param: ArticleViewParamModel): Observable<CommonResultModel> {
-        const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
+        const options = HttpUtils.getDefaultRequestOptions();
         return this.http.post(ApiConfig.API_ARTICLE_VIEW, param.toJosn(), options).map(ResultUtils.extractData);
     }
 

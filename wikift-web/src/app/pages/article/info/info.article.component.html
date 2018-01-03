@@ -33,12 +33,12 @@
                         </div>
                         <!-- 赞功能 -->
                         <div class="ml-4">
-                            <div *ngIf="currentUser?.id !== article?.userEntity.id; else showfabulousNotCLick">
+                            <div *ngIf="currentUser && currentUser?.id !== article?.userEntity.id; else showfabulousNotCLick">
                                 <ng-container *ngIf="fabulousStatus; else showfabulous">
                                     <button type="button" class="btn btn-success btn-sm" tooltip="对该文章点赞" placement="bottom" container="body" (click)="fabulous()">
                                         <span>
                                             <i class="zmdi zmdi-thumb-up zmdi-hc-fw"></i>
-                                            <span>{{articleFabulousCount}}</span>
+                                            <span>{{article.fabulouCount}}</span>
                                         </span>
                                     </button>
                                 </ng-container>
@@ -46,7 +46,7 @@
                                     <button type="button" class="btn btn-success btn-sm" tooltip="取消对该文章的赞" placement="bottom" container="body" (click)="unFabulous()">
                                         <span>
                                             <i class="zmdi zmdi-thumb-up-down zmdi-hc-fw"></i>
-                                            <span>{{articleFabulousCount}}</span>
+                                            <span>{{article.fabulouCount}}</span>
                                         </span>
                                     </button>
                                 </ng-template>
@@ -55,7 +55,7 @@
                                 <button type="button" class="btn btn-success btn-sm disabled" tooltip="用户对该文章赞的总数据" container="body" placement="bottom">
                                     <span>
                                         <i class="zmdi zmdi-thumb-up zmdi-hc-fw"></i>
-                                        <span>{{articleFabulousCount}}</span>
+                                        <span>{{article.fabulouCount}}</span>
                                     </span>
                                 </button>
                             </ng-template>
@@ -76,7 +76,7 @@
                             <button type="button" class="btn btn-success btn-sm" tooltip="该文章访问总数据" container="body" placement="bottom">
                                 <span>
                                     <i class="zmdi zmdi-eye zmdi-hc-fw"></i>
-                                    <span>{{articleViewCount}}</span>
+                                    <span>{{article.viewCount}}</span>
                                 </span>
                             </button>
                         </div>
