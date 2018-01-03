@@ -63,4 +63,14 @@ public class SpaceServiceImpl implements SpaceService {
         return spaceRepository.findAllByUser(entity, pageable);
     }
 
+    @Override
+    public Page<SpaceEntity> getAllPublicSpaceByUser(UserEntity entity, Pageable pageable) {
+        return spaceRepository.findAllByUserAndPrivatedFalse(entity, pageable);
+    }
+
+    @Override
+    public Page<SpaceEntity> getAllPrivateSpaceByUser(UserEntity entity, Pageable pageable) {
+        return spaceRepository.findAllByUserAndPrivatedTrue(entity, pageable);
+    }
+
 }

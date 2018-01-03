@@ -45,4 +45,8 @@ public interface SpaceService {
 
     Page<SpaceEntity> getAllSpaceByUser(UserEntity entity, Pageable pageable);
 
+    Page<SpaceEntity> getAllPublicSpaceByUser(UserEntity entity, Pageable pageable);
+
+    Page<SpaceEntity> getAllPrivateSpaceByUser(UserEntity entity, Pageable pageable);
+
 }
