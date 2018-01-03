@@ -57,8 +57,26 @@ public interface SpaceRepository extends PagingAndSortingRepository<SpaceEntity,
      * 查询用户所有空间
      *
      * @param entity 用户信息
+     *               * @param pageable 分页信息
      * @return 空间列表
      */
     Page<SpaceEntity> findAllByUser(UserEntity entity, Pageable pageable);
 
+    /**
+     * 查询用户所有公开空间
+     *
+     * @param entity   用户信息
+     * @param pageable 分页信息
+     * @return 空间列表
+     */
+    Page<SpaceEntity> findAllByUserAndPrivatedFalse(UserEntity entity, Pageable pageable);
+
+    /**
+     * 查询用户所有私有空间
+     *
+     * @param entity   用户信息
+     * @param pageable 分页信息
+     * @return 空间列表
+     */
+    Page<SpaceEntity> findAllByUserAndPrivatedTrue(UserEntity entity, Pageable pageable);
 }

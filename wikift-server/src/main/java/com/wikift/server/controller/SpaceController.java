@@ -51,14 +51,14 @@ public class SpaceController {
         return CommonResult.success(spaceService.getAllPublicSpace(PageAndSortUtils.getPage(page, size)));
     }
 
-//    @PreAuthorize("hasAuthority(('USER'))")
-//    @RequestMapping(value = "/list/user/{userId}", method = RequestMethod.GET)
-//    CommonResult<SpaceEntity> getAllSpaceByPrivatedFalseAndUser(@PathVariable Long userId) {
-//        Assert.notNull(userId, MessageUtils.getParamNotNull("userId"));
-//        UserEntity entity = new UserEntity();
-//        entity.setId(userId);
-//        return CommonResult.success(spaceService.getAllSpaceByPrivatedFalseOrUser(entity));
-//    }
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "/list/public/user/{userId}", method = RequestMethod.GET)
+    CommonResult<SpaceEntity> getAllSpaceByPrivatedFalseAndUser(@PathVariable Long userId) {
+        Assert.notNull(userId, MessageUtils.getParamNotNull("userId"));
+        UserEntity entity = new UserEntity();
+        entity.setId(userId);
+        return CommonResult.success(spaceService.getAllSpaceByPrivatedFalseOrUser(entity));
+    }
 
     @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -92,6 +92,28 @@ public class SpaceController {
         UserEntity entity = new UserEntity();
         entity.setId(userId);
         return CommonResult.success(spaceService.getAllSpaceByUser(entity, PageAndSortUtils.getPage(page, size)));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "/list/user/public/{userId}", method = RequestMethod.GET)
+    CommonResult<SpaceEntity> getAllPublicSpaceByUser(@PathVariable Long userId,
+                                                @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        Assert.notNull(userId, MessageUtils.getParamNotNull("userId"));
+        UserEntity entity = new UserEntity();
+        entity.setId(userId);
+        return CommonResult.success(spaceService.getAllPublicSpaceByUser(entity, PageAndSortUtils.getPage(page, size)));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "/list/user/private/{userId}", method = RequestMethod.GET)
+    CommonResult<SpaceEntity> getAllPrivateSpaceByUser(@PathVariable Long userId,
+                                                @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        Assert.notNull(userId, MessageUtils.getParamNotNull("userId"));
+        UserEntity entity = new UserEntity();
+        entity.setId(userId);
+        return CommonResult.success(spaceService.getAllPrivateSpaceByUser(entity, PageAndSortUtils.getPage(page, size)));
     }
 
 }

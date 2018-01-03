@@ -60,6 +60,12 @@ export class SpaceService {
         return this.http.get(path, options).map(ResultUtils.extractData);
     }
 
+    getAllSpacesByPublicOrUser(userId: number): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        const path = ApiConfig.API_SPACE_LIST_PUBLIC_USER + '/' + userId;
+        return this.http.get(path, options).map(ResultUtils.extractData);
+    }
+
     /**
      * 创建空间
      */
