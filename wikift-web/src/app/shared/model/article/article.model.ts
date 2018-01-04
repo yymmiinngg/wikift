@@ -25,8 +25,8 @@ export class ArticleModel {
     public id: Number;
     public title: String = '';
     public content: String = '';
-    public userEntity: UserModel;
-    public articleTypeEntity: ArticleTypeModel;
+    public user: UserModel;
+    public articleType: ArticleTypeModel;
     public articleTags: Array<ArticleTagModel>;
     public space: SpaceModel;
 

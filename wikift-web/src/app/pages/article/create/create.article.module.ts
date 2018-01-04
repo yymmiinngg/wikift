@@ -25,6 +25,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { BusyModule, BusyConfig } from 'angular2-busy';
 import { Select2Module } from 'ng2-select2';
 import { ToastyModule } from 'ng2-toasty';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { CreateArticleComponent } from './create.article.component';
 
@@ -57,6 +58,7 @@ export function busyConfigFactory() {
         ToastyModule.forRoot(),
         ModalModule.forRoot(),
         AlertModule.forRoot(),
+        PaginationModule.forRoot(),
         RouterModule.forChild(CREATE_ARTICLE_ROUTES)
     ],
     exports: [],

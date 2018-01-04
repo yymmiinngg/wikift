@@ -54,8 +54,8 @@ public class SpaceServiceImpl implements SpaceService {
     }
 
     @Override
-    public List<SpaceEntity> getAllSpaceByPrivatedFalseOrUser(UserEntity entity) {
-        return spaceRepository.findAllByPrivatedFalseOrUser(entity);
+    public Page<SpaceEntity> getAllSpaceByPrivatedFalseOrUser(UserEntity entity, Pageable pageable) {
+        return spaceRepository.findAllByPrivatedFalseOrUser(entity, pageable);
     }
 
     @Override
