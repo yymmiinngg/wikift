@@ -63,8 +63,8 @@
                                     </alert>
                                 </div>
                                 <label *ngFor="let type of articleType" class="custom-control custom-radio">
-                                    <input type="radio" [checked]="type.id === article.articleTypeEntity.id" disabled [(ngModel)]="article.articleTypeEntity"
-                                        [value]="type" name="article.articleTypeEntity" class="custom-control-input">
+                                    <input type="radio" [checked]="type.id === article.articleType.id" disabled [(ngModel)]="article.articleType" [value]="type"
+                                        name="article.articleType" class="custom-control-input">
                                     <span class="custom-control-indicator"></span>
                                     <span class="custom-control-description">{{type.title}}</span>
                                 </label>
@@ -74,7 +74,7 @@
                                     <a class="btn btn-secondary" previousStep>上一步</a>
                                 </div>
                                 <div class="ml-4">
-                                    <a class="btn btn-info" [ngClass]="{'disabled': !article.articleTypeEntity?.id}" nextStep>下一步</a>
+                                    <a class="btn btn-info" [ngClass]="{'disabled': !article.articleType?.id}" nextStep>下一步</a>
                                 </div>
                             </div>
                         </wizard-step>
@@ -86,9 +86,9 @@
                                             <th scope="row">文章标题:</th>
                                             <td>{{article.title}}</td>
                                         </tr>
-                                        <tr *ngIf="article.articleTypeEntity">
+                                        <tr *ngIf="article.articleType">
                                             <th scope="row">文章类型</th>
-                                            <td>{{article.articleTypeEntity.title}}</td>
+                                            <td>{{article.articleType.title}}</td>
                                         </tr>
                                     </tbody>
                                 </table>

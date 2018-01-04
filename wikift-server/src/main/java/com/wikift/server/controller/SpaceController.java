@@ -53,11 +53,13 @@ public class SpaceController {
 
     @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "/list/public/user/{userId}", method = RequestMethod.GET)
-    CommonResult<SpaceEntity> getAllSpaceByPrivatedFalseAndUser(@PathVariable Long userId) {
+    CommonResult<SpaceEntity> getAllSpaceByPrivatedFalseAndUser(@PathVariable Long userId,
+                                                                @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                                @RequestParam(value = "size", defaultValue = "10") Integer size) {
         Assert.notNull(userId, MessageUtils.getParamNotNull("userId"));
         UserEntity entity = new UserEntity();
         entity.setId(userId);
-        return CommonResult.success(spaceService.getAllSpaceByPrivatedFalseOrUser(entity));
+        return CommonResult.success(spaceService.getAllSpaceByPrivatedFalseOrUser(entity, PageAndSortUtils.getPage(page, size)));
     }
 
     @PreAuthorize("hasAuthority(('USER'))")

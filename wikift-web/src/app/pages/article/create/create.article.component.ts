@@ -32,6 +32,7 @@ import { ArticleTagService } from '../../../../services/article.tag.service';
 import { ArticleTagModel } from '../../../shared/model/article/article.tag.model';
 import { CodeConfig } from '../../../../config/code.config';
 import { SpaceService } from '../../../../services/space.service';
+import { CommonPageModel } from '../../../shared/model/result/page.model';
 
 @Component({
     selector: 'wikift-article-create',
@@ -61,6 +62,10 @@ export class CreateArticleComponent implements OnInit {
     public articleTagsValue: any = [];
     // 空间列表
     private spaces;
+    // 分页数据
+    page: CommonPageModel;
+    // 当前页数
+    currentPage: number;
 
     // 文章属性框
     @ViewChild('settingAritcleModel')
@@ -71,7 +76,11 @@ export class CreateArticleComponent implements OnInit {
         private articleTypeService: ArticleTypeService,
         private articleTagService: ArticleTagService,
         private toastyService: ToastyService,
-        private spaceService: SpaceService) { }
+        private spaceService: SpaceService) {
+        this.page = new CommonPageModel();
+        this.page.size = 3;
+        this.page.number = 0;
+    }
 
     ngOnInit() {
         this.articleModel = new ArticleModel();
@@ -104,10 +113,12 @@ export class CreateArticleComponent implements OnInit {
         );
     }
 
-    initSpace() {
-        this.articleTagsBusy = this.spaceService.getAllSpacesByPublicOrUser(CookieUtils.getUser().id).subscribe(
+    initSpace(page: CommonPageModel) {
+        this.articleTagsBusy = this.spaceService.getAllSpacesByPublicOrUser(CookieUtils.getUser().id, page).subscribe(
             result => {
-                this.spaces = result.data;
+                this.spaces = result.data.content;
+                this.page = CommonPageModel.getPage(result.data);
+                this.currentPage = this.page.number;
             }
         );
     }
@@ -125,7 +136,7 @@ export class CreateArticleComponent implements OnInit {
         const userModel = new UserModel();
         const user = JSON.parse(CookieUtils.getBy(CommonConfig.AUTH_USER_INFO));
         userModel.id = user.id;
-        this.articleModel.userEntity = userModel;
+        this.articleModel.user = userModel;
         this.articleModel.articleTags = new Array();
         this.articleTagsValue.value.forEach(e => {
             const articleTag = new ArticleTagModel();
@@ -151,11 +162,23 @@ export class CreateArticleComponent implements OnInit {
     }
 
     showSpaceStep(event) {
-        this.initSpace();
+        this.initSpace(this.page);
     }
 
-    tagChanged(data: { value: string[] }) {
+    tagChanged(data: { value: string[], title: string[] }) {
         this.articleTagsValue = data;
+        console.log(this.articleTagsValue);
+        console.log(this.articleTagsValue.value);
+    }
+
+    pageChanged(event: any) {
+        this.page.number = event.page - 1;
+        this.spaceService.getAllSpacesByPublicOrUser(CookieUtils.getUser().id, this.page).subscribe(
+            result => {
+                this.spaces = result.data.content;
+                this.page = CommonPageModel.getPage(result.data);
+            }
+        );
     }
 
 }

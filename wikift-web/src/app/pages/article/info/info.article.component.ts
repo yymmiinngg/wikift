@@ -81,7 +81,7 @@ export class InfoArticleComponent implements OnInit {
 
     initFabulousStatus() {
         const fabulous = new ArticleFabulousParamModel();
-        fabulous.userId = this.article.userEntity.id;
+        fabulous.userId = this.article.user.id;
         fabulous.articleId = this.article.id;
         if (this.currentUser) {
             this.articleService.fabulousCheck(fabulous).subscribe(
@@ -96,7 +96,7 @@ export class InfoArticleComponent implements OnInit {
 
     initViewArticle() {
         const articleView = new ArticleViewParamModel();
-        articleView.userId = this.article.userEntity.id;
+        articleView.userId = this.article.user.id;
         articleView.articleId = this.article.id;
         articleView.viewCount = 1;
         const hashStr = this.deviceService.userAgent + this.deviceService.browser +
@@ -111,7 +111,7 @@ export class InfoArticleComponent implements OnInit {
 
     initUserFollowStatus() {
         if (this.currentUser) {
-            this.userService.followCheck(this.currentUser.id, this.article.userEntity.id).subscribe(
+            this.userService.followCheck(this.currentUser.id, this.article.user.id).subscribe(
                 result => {
                     if (result.data) {
                         this.isFollow = false;
@@ -123,7 +123,7 @@ export class InfoArticleComponent implements OnInit {
 
     fabulous() {
         const fabulous = new ArticleFabulousParamModel();
-        fabulous.userId = this.article.userEntity.id;
+        fabulous.userId = this.article.user.id;
         fabulous.articleId = this.article.id;
         this.articleService.fabulous(fabulous).subscribe(
             result => {
@@ -135,7 +135,7 @@ export class InfoArticleComponent implements OnInit {
 
     unFabulous() {
         const fabulous = new ArticleFabulousParamModel();
-        fabulous.userId = this.article.userEntity.id;
+        fabulous.userId = this.article.user.id;
         fabulous.articleId = this.article.id;
         this.articleService.unfabulous(fabulous).subscribe(
             result => {
@@ -147,7 +147,7 @@ export class InfoArticleComponent implements OnInit {
 
     follow() {
         const follows = new Array();
-        follows.push(this.article.userEntity);
+        follows.push(this.article.user);
         this.currentUser.follows = follows;
         this.userService.follow(this.currentUser).subscribe(
             result => {
@@ -160,7 +160,7 @@ export class InfoArticleComponent implements OnInit {
 
     unfollow() {
         const follows = new Array();
-        follows.push(this.article.userEntity);
+        follows.push(this.article.user);
         this.currentUser.follows = follows;
         this.userService.unfollow(this.currentUser).subscribe(
             result => {

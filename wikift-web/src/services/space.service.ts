@@ -60,9 +60,11 @@ export class SpaceService {
         return this.http.get(path, options).map(ResultUtils.extractData);
     }
 
-    getAllSpacesByPublicOrUser(userId: number): Observable<CommonResultModel> {
+    getAllSpacesByPublicOrUser(userId: number, page: CommonPageModel): Observable<CommonResultModel> {
         const options = HttpUtils.getDefaultRequestOptionsByToken();
         const path = ApiConfig.API_SPACE_LIST_PUBLIC_USER + '/' + userId;
+        const params = HttpUtils.getPaginationParamsByModel(page);
+        options.params = params;
         return this.http.get(path, options).map(ResultUtils.extractData);
     }
 

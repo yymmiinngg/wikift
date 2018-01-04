@@ -41,7 +41,7 @@ public interface SpaceService {
      */
     SpaceEntity getSpaceInfoById(Long id);
 
-    List<SpaceEntity> getAllSpaceByPrivatedFalseOrUser(UserEntity entity);
+    Page<SpaceEntity> getAllSpaceByPrivatedFalseOrUser(UserEntity entity, Pageable pageable);
 
     Page<SpaceEntity> getAllSpaceByUser(UserEntity entity, Pageable pageable);
 

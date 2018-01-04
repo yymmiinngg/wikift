@@ -38,8 +38,8 @@
                             <h5>
                                 <a [routerLink]="['/article/info', article.id]">{{ article?.title }}</a>
                                 <span *ngIf="(currentDay| date:'yyyyMMdd') === (article.createTime | date:'yyyyMMdd')" class="badge badge-pill badge-danger">新</span>
-                                <span *ngIf="article.articleTypeEntity.id === 1" class="badge badge-pill badge-success">原</span>
-                                <span *ngIf="article.articleTypeEntity.id === 2" class="badge badge-pill badge-info">转</span>
+                                <span *ngIf="article.articleType.id === 1" class="badge badge-pill badge-success">原</span>
+                                <span *ngIf="article.articleType.id === 2" class="badge badge-pill badge-info">转</span>
                             </h5>
                         </div>
                         <!-- 文章PV -->
@@ -52,13 +52,13 @@
                             </button>
                         </div>
                     </div>
-                    <div *ngIf="article.userEntity" class="media">
+                    <div *ngIf="article.user" class="media">
                         <div class="media-body">
                             <div class="user-sm">
                                 <div class="article__user__info">
-                                    <img class="article__user__img" src="{{ article.userEntity.avatar }}" alt="{{ article.userEntity.username }}">
+                                    <img class="article__user__img" src="{{ article.user.avatar }}" alt="{{ article.user.username }}">
                                     <div class="article__user__name">
-                                        <a [routerLink]="['/account', article.userEntity.username, 'info']">{{ article.userEntity.username }}</a> - {{ article.createTime | date:'yyyy年MM月dd日HH:mm:ss'
+                                        <a [routerLink]="['/account', article.user.username, 'info']">{{ article.user.username }}</a> - {{ article.createTime | date:'yyyy年MM月dd日HH:mm:ss'
                                         }} 发布
                                     </div>
                                     <!-- 文章标签 -->

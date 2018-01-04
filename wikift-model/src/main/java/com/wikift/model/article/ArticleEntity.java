@@ -71,14 +71,14 @@ public class ArticleEntity {
             joinColumns = @JoinColumn(name = "uar_article_id"),
             inverseJoinColumns = @JoinColumn(name = "uar_user_id"))
     @NotNull
-    private UserEntity userEntity;
+    private UserEntity user;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "article_type_relation",
             joinColumns = @JoinColumn(name = "atr_article_id"),
             inverseJoinColumns = @JoinColumn(name = "atr_article_type_id"))
     @NotNull
-    private ArticleTypeEntity articleTypeEntity;
+    private ArticleTypeEntity articleType;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "article_tag_relation",

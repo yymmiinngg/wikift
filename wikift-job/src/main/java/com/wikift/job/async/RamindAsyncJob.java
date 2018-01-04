@@ -52,7 +52,7 @@ public class RamindAsyncJob {
     @Async
     public void sendRamindToUserFollows(ArticleEntity entity) {
         // 查询所有关注当前创建文章的用户列表
-        List<UserEntity> covers = userService.findAllCoversByUserId(entity.getUserEntity().getId());
+        List<UserEntity> covers = userService.findAllCoversByUserId(entity.getUser().getId());
         if (covers != null && covers.size() > 0) {
             RemindEntity remind = new RemindEntity();
             remind.setId(0l);
@@ -62,7 +62,7 @@ public class RamindAsyncJob {
             type.setId(2l);
             remind.setRemindType(type);
             remind.setTitle("文章通知");
-            remind.setContent(String.format("用户 %s 创建了 %s 文章", entity.getUserEntity().getUsername(), entity.getTitle()));
+            remind.setContent(String.format("用户 %s 创建了 %s 文章", entity.getUser().getUsername(), entity.getTitle()));
             remindService.save(remind);
         }
     }
