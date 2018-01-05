@@ -42,6 +42,7 @@
         <module>wikift-web</module>
         <module>wikift-center</module>
         <module>wikift-job</module>
+        <module>wikift-design</module>
     </modules>
 
     <!-- url -->

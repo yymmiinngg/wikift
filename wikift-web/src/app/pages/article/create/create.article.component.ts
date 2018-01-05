@@ -165,10 +165,8 @@ export class CreateArticleComponent implements OnInit {
         this.initSpace(this.page);
     }
 
-    tagChanged(data: { value: string[], title: string[] }) {
+    tagChanged(data: { value: string[] }) {
         this.articleTagsValue = data;
-        console.log(this.articleTagsValue);
-        console.log(this.articleTagsValue.value);
     }
 
     pageChanged(event: any) {

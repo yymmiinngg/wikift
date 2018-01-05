@@ -62,12 +62,14 @@
                                         文章类型不支持修改
                                     </alert>
                                 </div>
-                                <label *ngFor="let type of articleType" class="custom-control custom-radio">
-                                    <input type="radio" [checked]="type.id === article.articleType.id" disabled [(ngModel)]="article.articleType" [value]="type"
-                                        name="article.articleType" class="custom-control-input">
-                                    <span class="custom-control-indicator"></span>
-                                    <span class="custom-control-description">{{type.title}}</span>
-                                </label>
+                                <div *ngIf="articleType && articleType.length > 0">
+                                    <label *ngFor="let type of articleType" class="custom-control custom-radio">
+                                        <input type="radio" name="radio" [(ngModel)]="type.id === article.articleType.id" [value]="type.id === article.articleType.id"
+                                            disabled class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">{{type.title}}</span>
+                                    </label>
+                                </div>
                             </div>
                             <div class="card-footer d-flex px-4 py-3">
                                 <div class="mr-auto">
