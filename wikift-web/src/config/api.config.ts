@@ -58,5 +58,7 @@ export class ApiConfig {
     public static API_SPACE_LIST_PUBLIC_USER = '/space/list/public/user';
     public static API_SPACE_LIST_USER = '/space/list/user';
     public static API_SPACE_ARTICLE = '/space/article';
+    public static API_SPACE_INFO_CODE = '/space/info/code/';
+    public static API_SPACE_INFO = '/space/info/';
 
 }

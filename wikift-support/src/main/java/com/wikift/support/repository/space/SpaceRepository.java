@@ -21,6 +21,7 @@ import com.wikift.model.space.SpaceEntity;
 import com.wikift.model.user.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,4 +80,16 @@ public interface SpaceRepository extends PagingAndSortingRepository<SpaceEntity,
      * @return 空间列表
      */
     Page<SpaceEntity> findAllByUserAndPrivatedTrue(UserEntity entity, Pageable pageable);
+
+    /**
+     * 查询空间文章总数
+     *
+     * @return 文章总数
+     */
+    @Query(value = "SELECT COUNT(sar.sar_article_id) " +
+            "FROM space AS s " +
+            "LEFT OUTER JOIN space_article_relation AS sar ON s.s_id = sar.sar_space_id " +
+            "WHERE s_id = ?1",
+    nativeQuery = true)
+    Long findArticleCountById(Long spaceId);
 }

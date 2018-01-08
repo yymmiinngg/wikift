@@ -86,6 +86,18 @@ public class SpaceController {
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "/article/{spaceCode}", method = RequestMethod.GET)
+    CommonResult<SpaceEntity> getArticleCountBySpace(@PathVariable(value = "spaceCode") String spaceCode) {
+        Assert.notNull(spaceCode, MessageUtils.getParamNotNull("spaceCode"));
+        SpaceEntity space = spaceService.getSpaceInfoByCode(spaceCode);
+        if (!ObjectUtils.isEmpty(space)) {
+            return CommonResult.success(spaceService.getArticleCountById(space.getId()));
+        } else {
+            return CommonResult.success(space);
+        }
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "/list/user/{userId}", method = RequestMethod.GET)
     CommonResult<SpaceEntity> getAllSpaceByUser(@PathVariable Long userId,
                                                 @RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -99,8 +111,8 @@ public class SpaceController {
     @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "/list/user/public/{userId}", method = RequestMethod.GET)
     CommonResult<SpaceEntity> getAllPublicSpaceByUser(@PathVariable Long userId,
-                                                @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                @RequestParam(value = "size", defaultValue = "10") Integer size) {
+                                                      @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                      @RequestParam(value = "size", defaultValue = "10") Integer size) {
         Assert.notNull(userId, MessageUtils.getParamNotNull("userId"));
         UserEntity entity = new UserEntity();
         entity.setId(userId);
@@ -110,12 +122,26 @@ public class SpaceController {
     @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "/list/user/private/{userId}", method = RequestMethod.GET)
     CommonResult<SpaceEntity> getAllPrivateSpaceByUser(@PathVariable Long userId,
-                                                @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                @RequestParam(value = "size", defaultValue = "10") Integer size) {
+                                                       @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                       @RequestParam(value = "size", defaultValue = "10") Integer size) {
         Assert.notNull(userId, MessageUtils.getParamNotNull("userId"));
         UserEntity entity = new UserEntity();
         entity.setId(userId);
         return CommonResult.success(spaceService.getAllPrivateSpaceByUser(entity, PageAndSortUtils.getPage(page, size)));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "/info/{spaceId}", method = RequestMethod.GET)
+    CommonResult<SpaceEntity> getSpaceInfoById(@PathVariable Long spaceId) {
+        Assert.notNull(spaceId, MessageUtils.getParamNotNull("spaceId"));
+        return CommonResult.success(spaceService.getSpaceInfoById(spaceId));
+    }
+
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "/info/code/{code}", method = RequestMethod.GET)
+    CommonResult<SpaceEntity> getSpaceInfoByCode(@PathVariable String code) {
+        Assert.notNull(code, MessageUtils.getParamNotNull("code"));
+        return CommonResult.success(spaceService.getSpaceInfoByCode(code));
     }
 
 }

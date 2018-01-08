@@ -19,6 +19,36 @@
     <div class="content__inner">
         <!-- 工具栏 -->
         <div class="toolbar">
+            <div class="toolbar__label">
+                <div *ngIf="space" class="media">
+                    <div class="media-body">
+                        <div class="user-sm">
+                            <!-- 空间详细信息 -->
+                            <template #spaceDetail>
+                                <div class="article__user__info mr-auto">
+                                    <img class="article__user__img" src="{{space.avatar}}" alt="{{space.name}}" [popover]="spaceDetail" triggers="mouseenter:mouseleave"
+                                        placement="right">
+                                    <div class="article__user__name mr-center">
+                                        <strong>{{space.name}}</strong>
+                                        <p>{{space.description? space.description: '该空间还没有任何描述'}}</p>
+                                    </div>
+                                </div>
+                            </template>
+                            <!-- 空间基本信息 -->
+                            <div class="article__user__info mr-auto">
+                                <img class="article__user__img" src="{{space.avatar}}" alt="{{space.name}}" [popover]="spaceDetail" triggers="mouseenter:mouseleave"
+                                    container="body" placement="right">
+                                <div class="article__user__name">
+                                    {{space.name}}
+                                </div>
+                                <div *ngIf="articleCount" class="article__user__name" style="margin-left: 10px;">
+                                    共有{{articleCount}}文章
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- 文章内容 -->
         <div class="col-md-9">
