@@ -17,6 +17,8 @@
  */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+import { Router, ActivatedRoute } from '@angular/router';
+
 import { CommonPageModel } from '../../../shared/model/result/page.model';
 import { ArticleService } from '../../../../services/article.service';
 import { UserService } from '../../../../services/user.service';
@@ -34,25 +36,30 @@ export class SpaceInfoComponent implements OnInit {
     // 当前页数
     currentPage: number;
     // 空间列表
-    public spaces;
-    maxSize = 15;
+    public articles;
+    // 当前空间编码
+    private spaceCode;
+    public loadArticleBusy: Subscription;
 
-    constructor(private articleService: ArticleService,
+    constructor(private route: ActivatedRoute,
         private userService: UserService,
         private spaceService: SpaceService) {
         this.page = new CommonPageModel();
-        this.page.size = 24;
     }
 
     ngOnInit() {
+        this.route.params.subscribe((params) => this.spaceCode = params.code);
+        this.initArticleList(this.page);
     }
 
-    pageChanged(event: any) {
-        this.page.number = event.page - 1;
-        this.spaceService.getAllSpaces(this.page).subscribe(
+    initArticleList(page: CommonPageModel) {
+        page.number = 0;
+        page.size = 10;
+        this.loadArticleBusy = this.spaceService.getAllArticleBySpace(page, this.spaceCode).subscribe(
             result => {
-                this.spaces = result.data.content;
+                this.articles = result.data.content;
                 this.page = CommonPageModel.getPage(result.data);
+                this.currentPage = this.page.number;
             }
         );
     }

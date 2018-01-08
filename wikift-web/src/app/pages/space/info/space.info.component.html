@@ -19,18 +19,77 @@
     <div class="content__inner">
         <!-- 工具栏 -->
         <div class="toolbar">
-            <div class="actions">
-                <a [routerLink]="['/space/create']" class="actions__item zmdi zmdi-info-outline hidden-xs-down"></a>
+        </div>
+        <!-- 文章内容 -->
+        <div class="col-md-9">
+            <tabset>
+                <div [ngBusy]="loadArticleBusy"></div>
+                <tab heading="最新文章" (select)="loadArticleOrderByCreateTime()">
+                </tab>
+            </tabset>
+            <div *ngFor="let article of articles" class="card">
+                <!-- 文章用户信息 -->
+                <div class="card-header border-b-1 px-4 py-3">
+                    <div class="card-block d-flex py-3">
+                        <div class="mr-auto">
+                            <h5>
+                                <a [routerLink]="['/article/info', article.id]">{{ article?.title }}</a>
+                                <span *ngIf="(currentDay| date:'yyyyMMdd') === (article.createTime | date:'yyyyMMdd')" class="badge badge-pill badge-danger">新</span>
+                                <span *ngIf="article.articleType.id === 1" class="badge badge-pill badge-success">原</span>
+                                <span *ngIf="article.articleType.id === 2" class="badge badge-pill badge-info">转</span>
+                            </h5>
+                        </div>
+                        <!-- 文章PV -->
+                        <div class="ml-4">
+                            <button type="button" class="btn btn-success btn-sm" tooltip="该文章访问总数据" container="body" placement="bottom">
+                                <span>
+                                    <i class="zmdi zmdi-eye zmdi-hc-fw"></i>
+                                    <span>{{article.viewCount}}</span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div *ngIf="article.user" class="media">
+                        <div class="media-body">
+                            <div class="user-sm">
+                                <div class="article__user__info">
+                                    <img class="article__user__img" src="{{ article.user.avatar }}" alt="{{ article.user.username }}">
+                                    <div class="article__user__name">
+                                        <a [routerLink]="['/account', article.user.username, 'info']">{{ article.user.username }}</a> - {{ article.createTime | date:'yyyy年MM月dd日HH:mm:ss'
+                                        }} 发布
+                                    </div>
+                                    <!-- 文章标签 -->
+                                    <div class="card-block ml-10">
+                                        <span *ngFor="let articleTag of article.articleTags" class="badge badge-success ml-2">{{articleTag.title}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 文章内容信息 -->
+                <div class="card-body border-b-1">
+                    <p class="mb-0">
+                        <wikift-editor id="editormd-{{article.id}}" markdown="{{article.content| slice: 0:100}}" [preview]="'true'"></wikift-editor>
+                    </p>
+                </div>
+                <!-- 文章附属信息 -->
+                <div class="card-footer d-flex px-4 py-3">
+                    <div class="mr-auto">
+                        <button type="button" class="btn btn-secondary btn-sm disabled" tooltip="该文章用户赞总数据" container="body" placement="bottom">
+                            <span>
+                                <i class="zmdi zmdi-thumb-up zmdi-hc-fw"></i>
+                                <span>{{article.fabulouCount}}</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="toolbar__search" style="display: none;">
-                <input type="text" placeholder="Search...">
-                <i class="toolbar__search__close zmdi zmdi-long-arrow-left" data-ma-action="toolbar-search-close"></i>
+            <div class="mr-center">
+                <pagination *ngIf="articles?.length && page" [(ngModel)]="currentPage" totalItems="{{page.totalElements}}" maxSize="{{page.size}}"
+                    (pageChanged)="pageChanged($event)" [boundaryLinks]="true">
+                </pagination>
             </div>
         </div>
-        <!-- <div class="mr-center">
-                <pagination *ngIf="spaces?.length && page" [itemsPerPage]="page.size" [(ngModel)]="currentPage" totalItems="{{page.totalElements}}"
-                    [maxSize]="maxSize" (pageChanged)="pageChanged($event)" [boundaryLinks]="true">
-                </pagination>
-            </div> -->
     </div>
 </section>

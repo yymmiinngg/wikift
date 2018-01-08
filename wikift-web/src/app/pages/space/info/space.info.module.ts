@@ -24,6 +24,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BusyModule, BusyConfig } from 'angular2-busy';
+import { WikiftEditorModule } from '../../../shared/directives/wikift-editor/wikift-editor.module';
 
 import { SpaceInfoComponent } from './space.info.component';
 
@@ -46,6 +47,7 @@ const SPACE_INFO_ROUTES: Routes = [
         CommonModule,
         FormsModule,
         BusyModule,
+        WikiftEditorModule,
         TooltipModule.forRoot(),
         TabsModule.forRoot(),
         PaginationModule.forRoot(),

@@ -57,5 +57,6 @@ export class ApiConfig {
     public static API_SPACE_CREATE = '/space/create';
     public static API_SPACE_LIST_PUBLIC_USER = '/space/list/public/user';
     public static API_SPACE_LIST_USER = '/space/list/user';
+    public static API_SPACE_ARTICLE = '/space/article';
 
 }
