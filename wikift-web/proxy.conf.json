@@ -154,6 +154,16 @@
         "secure": false,
         "logLevel": "debug"
     },
+    "/space/info": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/space/info/code": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "logLevel": "debug"
+    },
     "/space/list/user": {
         "target": "http://localhost:8080",
         "secure": false,

@@ -5,8 +5,6 @@ import com.wikift.model.user.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-
 public interface SpaceService {
 
     /**
@@ -48,5 +46,7 @@ public interface SpaceService {
     Page<SpaceEntity> getAllPublicSpaceByUser(UserEntity entity, Pageable pageable);
 
     Page<SpaceEntity> getAllPrivateSpaceByUser(UserEntity entity, Pageable pageable);
+
+    Long getArticleCountById(Long spaceId);
 
 }

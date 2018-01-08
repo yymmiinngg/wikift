@@ -73,4 +73,9 @@ public class SpaceServiceImpl implements SpaceService {
         return spaceRepository.findAllByUserAndPrivatedTrue(entity, pageable);
     }
 
+    @Override
+    public Long getArticleCountById(Long spaceId) {
+        return spaceRepository.findArticleCountById(spaceId);
+    }
+
 }

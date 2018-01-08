@@ -85,4 +85,19 @@ export class SpaceService {
         return this.http.get(ApiConfig.API_SPACE_ARTICLE, options).map(ResultUtils.extractData);
     }
 
+    getSpaceInfoByCode(spaceCode: string): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        return this.http.get(ApiConfig.API_SPACE_INFO_CODE + spaceCode, options).map(ResultUtils.extractData);
+    }
+
+    getSpaceInfoById(spaceId: number): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        return this.http.get(ApiConfig.API_SPACE_INFO + spaceId, options).map(ResultUtils.extractData);
+    }
+
+    getArticleCountByCode(spaceCode: string): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        return this.http.get(ApiConfig.API_SPACE_ARTICLE + '/' + spaceCode, options).map(ResultUtils.extractData);
+    }
+
 }

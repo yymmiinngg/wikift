@@ -37,8 +37,11 @@ export class SpaceInfoComponent implements OnInit {
     currentPage: number;
     // 空间列表
     public articles;
+    public articleCount;
     // 当前空间编码
     private spaceCode;
+    // 当前空间信息
+    public space;
     public loadArticleBusy: Subscription;
 
     constructor(private route: ActivatedRoute,
@@ -49,7 +52,25 @@ export class SpaceInfoComponent implements OnInit {
 
     ngOnInit() {
         this.route.params.subscribe((params) => this.spaceCode = params.code);
+        this.initSpaceInfo();
+        this.initSpaceArticleCount();
         this.initArticleList(this.page);
+    }
+
+    initSpaceInfo() {
+        this.spaceService.getSpaceInfoByCode(this.spaceCode).subscribe(
+            result => {
+                this.space = result.data;
+            }
+        );
+    }
+
+    initSpaceArticleCount() {
+        this.spaceService.getArticleCountByCode(this.spaceCode).subscribe(
+            result => {
+                this.articleCount = result.data;
+            }
+        );
     }
 
     initArticleList(page: CommonPageModel) {
