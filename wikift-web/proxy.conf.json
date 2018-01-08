@@ -144,6 +144,11 @@
         "secure": false,
         "logLevel": "debug"
     },
+    "/space/article": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "logLevel": "debug"
+    },
     "/space/create": {
         "target": "http://localhost:8080",
         "secure": false,

@@ -77,4 +77,12 @@ export class SpaceService {
             .map(ResultUtils.extractData);
     }
 
+    getAllArticleBySpace(page: CommonPageModel, spaceCode: string): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        const params = HttpUtils.getPaginationParamsByModel(page);
+        params.append('spaceCode', spaceCode);
+        options.params = params;
+        return this.http.get(ApiConfig.API_SPACE_ARTICLE, options).map(ResultUtils.extractData);
+    }
+
 }
