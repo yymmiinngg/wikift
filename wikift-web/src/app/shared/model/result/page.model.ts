@@ -28,8 +28,8 @@ export class CommonPageModel implements Serializable<CommonPageModel> {
     public totalPages: number;
     public totalElements: number;
     public last: boolean;
-    public size;
-    public number;
+    public size = 10;
+    public number = 0;
     public first: number;
     public numberOfElements: number;
     public order: OrderEnumModel;

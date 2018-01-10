@@ -20,6 +20,8 @@ package com.wikift.model.article;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.wikift.model.comment.CommentEntity;
 import com.wikift.model.space.SpaceEntity;
 import com.wikift.model.user.UserEntity;
 import lombok.AllArgsConstructor;
@@ -44,6 +46,7 @@ import java.util.List;
 @Entity
 @Table(name = "article")
 @EntityListeners(value = AuditingEntityListener.class)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties({"articleEntityList"})
 public class ArticleEntity {
 

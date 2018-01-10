@@ -232,3 +232,29 @@ CREATE TABLE space_article_relation (
   CONSTRAINT FK_sar_space_relation_id FOREIGN KEY (sar_space_id) REFERENCES space (s_id),
   CONSTRAINT FK_sar_article_relation_id FOREIGN KEY (sar_article_id) REFERENCES article (a_id)
 );
+-- 评论表
+DROP TABLE IF EXISTS comments;
+CREATE TABLE comments (
+  c_id        BIGINT(20) NOT NULL AUTO_INCREMENT
+  COMMENT '评论id',
+  c_content   LONGTEXT COMMENT '评论内容',
+  create_time TIMESTAMP           DEFAULT CURRENT_TIMESTAMP()
+  COMMENT '评论内容时间',
+  PRIMARY KEY (c_id)
+);
+-- 文章评论关系表
+DROP TABLE IF EXISTS comments_article_relation;
+CREATE TABLE comments_article_relation (
+  car_comments_id BIGINT(20) NOT NULL,
+  car_article_id     BIGINT(20) NOT NULL,
+  CONSTRAINT FK_car_comments_relation_id FOREIGN KEY (car_comments_id) REFERENCES comments (c_id),
+  CONSTRAINT FK_car_article_relation_id FOREIGN KEY (car_article_id) REFERENCES article (a_id)
+);
+-- 用户评论关系表
+DROP TABLE IF EXISTS comments_users_relation;
+CREATE TABLE comments_users_relation (
+  cur_comments_id BIGINT(20) NOT NULL,
+  cur_users_id     BIGINT(20) NOT NULL,
+  CONSTRAINT FK_cur_comments_relation_id FOREIGN KEY (cur_comments_id) REFERENCES comments (c_id),
+  CONSTRAINT FK_cur_users_relation_id FOREIGN KEY (cur_users_id) REFERENCES users (u_id)
+);

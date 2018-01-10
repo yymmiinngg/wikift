@@ -19,6 +19,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Ng2DeviceService } from 'ng2-device-detector';
 import { Md5 } from 'ts-md5/dist/md5';
+import { ModalDirective } from 'ngx-bootstrap/modal';
+import { ToastyService } from 'ng2-toasty';
 
 import { ArticleModel } from '../../../../app/shared/model/article/article.model';
 import { UserModel } from '../../../../app/shared/model/user/user.model';
@@ -30,6 +32,10 @@ import { ArticleFabulousParamModel } from '../../../shared/model/param/article.f
 import { ArticleViewParamModel } from '../../../shared/model/param/article.view.param.model';
 import { ArticleTypeService } from '../../../../services/article.type.service';
 import { UserService } from '../../../../services/user.service';
+import { CommentService } from '../../../../services/comment.service';
+import { CommonPageModel } from '../../../shared/model/result/page.model';
+import { CommentModel } from '../../../shared/model/comment/comment.model';
+import { Comment } from '_@angular_compiler@4.4.6@@angular/compiler/compiler';
 
 @Component({
     selector: 'wikift-article-info',
@@ -50,11 +56,17 @@ export class InfoArticleComponent implements OnInit {
     public currentDay = new Date().getTime();
     // 关注按钮显示状态
     isFollow = true;
+    // 评论内容
+    public commentContext;
+    // 评论列表
+    public comments;
 
     constructor(private route: ActivatedRoute,
         private articleService: ArticleService,
         private userService: UserService,
-        private deviceService: Ng2DeviceService) {
+        private deviceService: Ng2DeviceService,
+        private toastyService: ToastyService,
+        private commentService: CommentService) {
         // 获取页面url传递的id参数
         this.route.params.subscribe((params) => this.id = params.id);
     }
@@ -75,6 +87,7 @@ export class InfoArticleComponent implements OnInit {
                 this.initFabulousStatus();
                 this.initViewArticle();
                 this.initUserFollowStatus();
+                this.initComments();
             }
         );
     }
@@ -119,6 +132,14 @@ export class InfoArticleComponent implements OnInit {
                 }
             );
         }
+    }
+
+    initComments() {
+        this.commentService.getAllCommentByArticle(this.article.id, new CommonPageModel()).subscribe(
+            result => {
+                this.comments = result.data.content;
+            }
+        );
     }
 
     fabulous() {
@@ -167,6 +188,26 @@ export class InfoArticleComponent implements OnInit {
                 if (result.data) {
                     this.isFollow = true;
                 }
+            }
+        );
+    }
+
+    getData(value) {
+        this.commentContext = value;
+    }
+
+    publishComment() {
+        if (!this.commentContext) {
+            this.toastyService.error('评论内容不能为空!!!');
+        }
+        const comment = new CommentModel();
+        comment.article = this.article;
+        comment.content = this.commentContext;
+        comment.user = this.currentUser;
+        this.commentService.createComment(comment).subscribe(
+            result => {
+                this.toastyService.success('评论成功');
+                this.initComments();
             }
         );
     }

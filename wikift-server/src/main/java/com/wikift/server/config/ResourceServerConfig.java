@@ -48,6 +48,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         "/article/info/*",
                         "/article/view",
                         "/user/register",
+                        "/comment/list",
                         "/user/top").permitAll()
                 .antMatchers("/**").authenticated();
     }

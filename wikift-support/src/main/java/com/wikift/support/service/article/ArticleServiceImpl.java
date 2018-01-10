@@ -120,4 +120,9 @@ public class ArticleServiceImpl implements ArticleService {
         return articleRepository.findViewArticle(userId, articleId);
     }
 
+    @Override
+    public ArticleEntity getArticleInfoById(Long id) {
+        return articleRepository.findById(id);
+    }
+
 }
