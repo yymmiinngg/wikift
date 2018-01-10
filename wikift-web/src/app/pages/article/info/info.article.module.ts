@@ -22,12 +22,15 @@ import { Routes, RouterModule } from '@angular/router';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Ng2DeviceDetectorModule } from 'ng2-device-detector';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { ToastyModule } from 'ng2-toasty';
 
 import { InfoArticleComponent } from './info.article.component';
 
 import { ArticleService } from '../../../../services/article.service';
 import { WikiftEditorModule } from '../../../shared/directives/wikift-editor/wikift-editor.module';
 import { UserService } from '../../../../services/user.service';
+import { CommentService } from '../../../../services/comment.service';
 
 const INFO_ARTICLE_ROUTES: Routes = [
     { path: '', component: InfoArticleComponent }
@@ -40,6 +43,8 @@ const INFO_ARTICLE_ROUTES: Routes = [
         FormsModule,
         TooltipModule.forRoot(),
         BsDropdownModule.forRoot(),
+        ModalModule.forRoot(),
+        ToastyModule.forRoot(),
         Ng2DeviceDetectorModule.forRoot(),
         RouterModule.forChild(INFO_ARTICLE_ROUTES)
     ],
@@ -49,7 +54,8 @@ const INFO_ARTICLE_ROUTES: Routes = [
     ],
     providers: [
         ArticleService,
-        UserService
+        UserService,
+        CommentService
     ],
 })
 export class InfoArticleModule { }

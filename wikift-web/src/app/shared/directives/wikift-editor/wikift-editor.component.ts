@@ -45,30 +45,49 @@ export class WikiftEditorComponent implements OnInit {
     @Input('preview')
     preview: Boolean = false;
 
+    // 编辑器模式, full, simple, mini
+    @Input('mode')
+    mode = 'full';
+
+    // 编辑器高度
+    @Input('height')
+    height = 490;
+
+    // 自动获取焦点
+    @Input('focus')
+    focus = false;
+
+    // 预览模式
+    @Input('watch')
+    watch = true;
+
     constructor() { }
 
     // 初始化组件
     ngAfterViewInit() {
+        const config = {
+            id: this.id,
+            markdown: this.markdown,
+            tocContainer: this.tocId,
+            tex: true,
+            flowChart: true,
+            emoji: true,
+            taskList: true,
+            sequenceDiagram: true,
+            toolbarIcons: this.getToolbarIcons(this.mode),
+            width: '100%',
+            height: this.height,
+            syncScrolling: 'single',
+            autoFocus: this.focus,
+            watch: this.watch,
+            path: '../../../../assets/js/wikift-editor/lib/',
+            imageUploadURL: 'api/upload/mdupload?test=dfdf'
+        };
+
         if (this.preview) {
-            editormd.markdownToHTML(this.id, {
-                markdown: this.markdown,
-                tocContainer: this.tocId,
-                tex: true,
-                flowChart: true,
-                emoji: true,
-                taskList: true,
-                sequenceDiagram: true
-            });
+            editormd.markdownToHTML(this.id, config);
         } else {
-            this.editor = editormd({
-                id: this.id,
-                markdown: this.markdown,
-                width: '100%',
-                height: 490,
-                syncScrolling: 'single',
-                path: '../../../../assets/js/wikift-editor/lib/',
-                imageUploadURL: 'api/upload/mdupload?test=dfdf'
-            });
+            this.editor = editormd(config);
         }
     }
 
@@ -90,6 +109,31 @@ export class WikiftEditorComponent implements OnInit {
     getEditorValue = new EventEmitter<any>();
     getValue() {
         this.getEditorValue.emit(this.editor.getMarkdown());
+    }
+
+    getToolbarIcons(mode) {
+        switch (mode) {
+            default:
+            case 'full':
+                return ['undo', 'redo', '|', 'bold', 'del', 'italic', 'quote',
+                    'ucwords', 'uppercase', 'lowercase', '|', 'h1', 'h2',
+                    'h3', 'h4', 'h5', 'h6', '|', 'list-ul', 'list-ol', 'hr',
+                    '|', 'link', 'reference-link', 'image', 'code', 'preformatted-text',
+                    'code-block', 'table', 'datetime', 'emoji', 'html-entities',
+                    'pagebreak', '|', 'goto-line', 'watch', 'preview', 'fullscreen',
+                    'clear', 'search', '|', 'help'];
+            case 'simple':
+                return ['undo', 'redo', '|', 'bold', 'del', 'italic', 'quote',
+                    'uppercase', 'lowercase', '|', 'h1', 'h2', 'h3', 'h4', 'h5',
+                    'h6', '|', 'list-ul', 'list-ol', 'hr', '|', 'watch', 'preview',
+                    'fullscreen', '|', 'help'];
+            case 'mini':
+                return ['undo', 'redo', 'watch', 'preview', 'help'];
+            case 'comment':
+                return ['undo', 'redo', '|', 'bold', 'del', 'italic', 'quote',
+                    'uppercase', 'lowercase', '|', 'h1', 'h2', 'h3', 'h4', 'h5',
+                    'h6', '|', 'list-ul', 'list-ol', 'hr', '|', 'watch', 'preview'];
+        }
     }
 
 }

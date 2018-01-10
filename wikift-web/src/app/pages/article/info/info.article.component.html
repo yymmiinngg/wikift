@@ -15,6 +15,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
+<ng2-toasty [position]="'top-center'"></ng2-toasty>
 <section class="content--row">
     <div class="row">
         <!-- 文章内容 -->
@@ -102,7 +103,7 @@
                 <div class="card-body border-b-1">
                     <p class="mb-0">
                         <span *ngIf="article; else loadingData">
-                            <wikift-editor id="editormd-{{article.id}}" markdown="{{article.content}}" [tocId]="'#wikift-toc-container'" [preview]="'true'"></wikift-editor>
+                            <wikift-editor id="wikift-editor-{{article.id}}" markdown="{{article.content}}" [tocId]="'#wikift-toc-container'" [preview]="'true'"></wikift-editor>
                         </span>
                         <ng-template #loadingData>
                             数据加载中...
@@ -129,6 +130,37 @@
                                     <small> 删除该文章</small>
                                 </a>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 评论功能 -->
+            <div class="card">
+                <div class="card-header border-b-1 px-4 py-3">
+                    <div class="card-block">
+                        <h2 class="card-title">对
+                            <<em>{{article?.title}}</em>> 文章的评论</h2>
+                    </div>
+                </div>
+                <!-- 评论键入器 -->
+                <div class="card-body">
+                    <div *ngIf="currentUser && currentUser?.id !== article?.user.id">
+                        <wikift-editor [id]="wikift-comment" [height]="200" [mode]="'comment'" [watch]="false" (getEditorValue)="getData($event)"></wikift-editor>
+                        <div class="actions" style="margin-top: -11px;">
+                            <a class="btn btn-info" [ngClass]="{'disabled': commentContext == ''}" (click)="publishComment()">发布评论</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 评论列表 -->
+                <div class="messages__content">
+                    <div *ngFor="let comment of comments" class="messages__item">
+                        <img src="{{comment.user.avatar}}" class="messages__avatar" alt="{{comment.user.username}}">
+                        <div class="messages__details">
+                            <p>
+                                <wikift-editor id="wikift-comment-{{comment.id}}" markdown="{{comment.content}}" [tocId]="'#wikift-toc-container'" [preview]="'true'"></wikift-editor>
+                            </p>
+                            <small>
+                                <i class="zmdi zmdi-time"></i> {{ comment.createTime | date:'yyyy年MM月dd日HH:mm:ss' }} 评论</small>
                         </div>
                     </div>
                 </div>

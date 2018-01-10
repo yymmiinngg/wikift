@@ -80,4 +80,6 @@ public interface ArticleService {
 
     Integer viewArticleCount(Integer userId, Integer articleId);
 
+    ArticleEntity getArticleInfoById(Long id);
+
 }

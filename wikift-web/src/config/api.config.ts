@@ -61,4 +61,7 @@ export class ApiConfig {
     public static API_SPACE_INFO_CODE = '/space/info/code/';
     public static API_SPACE_INFO = '/space/info/';
 
+    public static API_COMMENT_CREATE = '/comment/create';
+    public static API_COMMENT_LIST = '/comment/list';
+
 }
