@@ -71,7 +71,7 @@
                         </div>
                         <!-- 文章PV -->
                         <div class="ml-4">
-                            <button type="button" class="btn btn-success btn-sm" tooltip="该文章访问总数据" container="body" placement="bottom">
+                            <button type="button" class="btn btn-success btn-sm" tooltip="该文章共有{{article.viewCount}}次访问" container="body" placement="bottom">
                                 <span>
                                     <i class="zmdi zmdi-eye zmdi-hc-fw"></i>
                                     <span>{{article.viewCount}}</span>
@@ -106,10 +106,20 @@
                 <!-- 文章附属信息 -->
                 <div class="card-footer d-flex px-4 py-3">
                     <div class="mr-auto">
-                        <button type="button" class="btn btn-secondary btn-sm disabled" tooltip="该文章用户赞总数据" container="body" placement="bottom">
+                        <button type="button" class="btn btn-secondary btn-sm disabled" tooltip="该文章共有{{article.fabulouCount}}位用户赞" container="body"
+                            placement="bottom">
                             <span>
                                 <i class="zmdi zmdi-thumb-up zmdi-hc-fw"></i>
                                 <span>{{article.fabulouCount}}</span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="ml-4">
+                        <button type="button" class="btn btn-secondary btn-sm disabled" tooltip="该文章共有{{article.commentsCount}}条评论" container="body"
+                            placement="bottom">
+                            <span>
+                                <i class="zmdi zmdi-comments zmdi-hc-fw"></i>
+                                <span>{{article.commentsCount}}</span>
                             </span>
                         </button>
                     </div>

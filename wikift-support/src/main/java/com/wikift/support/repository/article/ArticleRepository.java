@@ -30,7 +30,7 @@ import java.util.List;
 @Transactional
 public interface ArticleRepository extends PagingAndSortingRepository<ArticleEntity, Long> {
 
-    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(a.view_count, IFNULL(SUM(uavr.uavr_view_count) , 0)) AS view_count, IFNULL(a.fabulou_count, IFNULL(COUNT(DISTINCT uafr.uafr_user_id), 0)) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
+    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(SUM(uavr.uavr_view_count) , 0) AS view_count, IFNULL(COUNT(DISTINCT uafr.uafr_user_id), 0) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id, c.comments_count AS comments_count " +
             "FROM article AS a " +
             "LEFT OUTER JOIN users_article_relation AS uar ON a.a_id = uar.uar_article_id " +
             "LEFT OUTER JOIN article_type_relation AS atr ON a.a_id = atr.atr_article_id " +
@@ -38,6 +38,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             "LEFT OUTER JOIN users_article_fabulous_relation AS uafr ON a.a_id = uafr.uafr_article_id " +
             "LEFT OUTER JOIN space_article_relation AS sar ON a.a_id = sar.sar_article_id " +
             "LEFT OUTER JOIN space AS s ON s.s_id = sar.sar_space_id " +
+            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count from comments_article_relation as car group by car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
             "WHERE s.s_private = FALSE " +
             "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
 //            "ORDER BY ?#{#pageable}",
@@ -46,7 +47,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             nativeQuery = true)
     Page<ArticleEntity> findAllOrderByViewCount(Pageable pageable);
 
-    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(a.view_count, IFNULL(SUM(uavr.uavr_view_count) , 0)) AS view_count, IFNULL(a.fabulou_count, IFNULL(COUNT(DISTINCT uafr.uafr_user_id), 0)) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
+    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(SUM(uavr.uavr_view_count) , 0) AS view_count, IFNULL(COUNT(DISTINCT uafr.uafr_user_id), 0) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id, c.comments_count AS comments_count " +
             "FROM article AS a " +
             "LEFT OUTER JOIN users_article_relation AS uar ON a.a_id = uar.uar_article_id " +
             "LEFT OUTER JOIN article_type_relation AS atr ON a.a_id = atr.atr_article_id " +
@@ -54,6 +55,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             "LEFT OUTER JOIN users_article_fabulous_relation AS uafr ON a.a_id = uafr.uafr_article_id " +
             "LEFT OUTER JOIN space_article_relation AS sar ON a.a_id = sar.sar_article_id " +
             "LEFT OUTER JOIN space AS s ON s.s_id = sar.sar_space_id " +
+            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count from comments_article_relation as car group by car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
             "WHERE s.s_private = FALSE " +
             "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
             "ORDER BY COUNT(uafr.uafr_user_id) DESC \n#pageable\n",
@@ -61,7 +63,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             nativeQuery = true)
     Page<ArticleEntity> findAllOrderByFabulouCount(Pageable pageable);
 
-    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(a.view_count, IFNULL(SUM(uavr.uavr_view_count) , 0)) AS view_count, IFNULL(a.fabulou_count, IFNULL(COUNT(DISTINCT uafr.uafr_user_id), 0)) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
+    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(SUM(uavr.uavr_view_count) , 0) AS view_count, IFNULL(COUNT(DISTINCT uafr.uafr_user_id), 0) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id, c.comments_count AS comments_count " +
             "FROM article AS a " +
             "LEFT OUTER JOIN users_article_relation AS uar ON a.a_id = uar.uar_article_id " +
             "LEFT OUTER JOIN article_type_relation AS atr ON a.a_id = atr.atr_article_id " +
@@ -69,6 +71,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             "LEFT OUTER JOIN users_article_fabulous_relation AS uafr ON a.a_id = uafr.uafr_article_id " +
             "LEFT OUTER JOIN space_article_relation AS sar ON a.a_id = sar.sar_article_id " +
             "LEFT OUTER JOIN space AS s ON s.s_id = sar.sar_space_id " +
+            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count from comments_article_relation as car group by car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
             "WHERE s.s_private = FALSE " +
             "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
             "ORDER BY a.a_create_time DESC \n#pageable\n",
@@ -76,7 +79,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             nativeQuery = true)
     Page<ArticleEntity> findAllOrderByCreateTime(Pageable pageable);
 
-    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(a.view_count, IFNULL(SUM(uavr.uavr_view_count) , 0)) AS view_count, IFNULL(a.fabulou_count, IFNULL(COUNT(DISTINCT uafr.uafr_user_id), 0)) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
+    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(SUM(uavr.uavr_view_count) , 0) AS view_count, IFNULL(COUNT(DISTINCT uafr.uafr_user_id), 0) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id, c.comments_count AS comments_count " +
             "FROM article AS a " +
             "LEFT OUTER JOIN users_article_relation AS uar ON a.a_id = uar.uar_article_id " +
             "LEFT OUTER JOIN article_type_relation AS atr ON a.a_id = atr.atr_article_id " +
@@ -84,6 +87,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             "LEFT OUTER JOIN users_article_fabulous_relation AS uafr ON a.a_id = uafr.uafr_article_id " +
             "LEFT OUTER JOIN space_article_relation AS sar ON a.a_id = sar.sar_article_id " +
             "LEFT OUTER JOIN space AS s ON s.s_id = sar.sar_space_id " +
+            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count from comments_article_relation as car group by car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
             "WHERE uar.uar_user_id = ?1 " +
             "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
             "ORDER BY a.a_create_time DESC \n#pageable\n",
@@ -91,7 +95,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             nativeQuery = true)
     Page<ArticleEntity> findAllToUserAndCreateTime(Long userId, Pageable pageable);
 
-    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(a.view_count, IFNULL(SUM(uavr.uavr_view_count) , 0)) AS view_count, IFNULL(a.fabulou_count, IFNULL(COUNT(DISTINCT uafr.uafr_user_id), 0)) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
+    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(SUM(uavr.uavr_view_count) , 0) AS view_count, IFNULL(COUNT(DISTINCT uafr.uafr_user_id), 0) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id, c.comments_count AS comments_count " +
             "FROM article AS a " +
             "LEFT OUTER JOIN users_article_relation AS uar ON a.a_id = uar.uar_article_id " +
             "LEFT OUTER JOIN article_type_relation AS atr ON a.a_id = atr.atr_article_id " +
@@ -99,6 +103,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             "LEFT OUTER JOIN users_article_fabulous_relation AS uafr ON a.a_id = uafr.uafr_article_id " +
             "LEFT OUTER JOIN space_article_relation AS sar ON a.a_id = sar.sar_article_id " +
             "LEFT OUTER JOIN space AS s ON s.s_id = sar.sar_space_id " +
+            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count from comments_article_relation as car group by car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
             "WHERE a.a_id = ?1 " +
             "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
             "ORDER BY SUM(uavr.uavr_view_count) DESC \n#pageable\n",
@@ -112,7 +117,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
      * @param spaceId 空间id
      * @return 该空间的文章列表
      */
-    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(a.view_count, IFNULL(SUM(uavr.uavr_view_count) , 0)) AS view_count, IFNULL(a.fabulou_count, IFNULL(COUNT(DISTINCT uafr.uafr_user_id), 0)) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
+    @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(SUM(uavr.uavr_view_count) , 0) AS view_count, IFNULL(COUNT(DISTINCT uafr.uafr_user_id), 0) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id, c.comments_count AS comments_count " +
             "FROM article AS a " +
             "LEFT OUTER JOIN users_article_relation AS uar ON a.a_id = uar.uar_article_id " +
             "LEFT OUTER JOIN article_type_relation AS atr ON a.a_id = atr.atr_article_id " +
@@ -120,6 +125,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             "LEFT OUTER JOIN users_article_fabulous_relation AS uafr ON a.a_id = uafr.uafr_article_id " +
             "LEFT OUTER JOIN space_article_relation AS sar ON a.a_id = sar.sar_article_id " +
             "LEFT OUTER JOIN space AS s ON s.s_id = sar.sar_space_id " +
+            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count from comments_article_relation as car group by car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
             "WHERE sar.sar_space_id = ?1 " +
             "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
             "ORDER BY SUM(uavr.uavr_view_count) DESC \n#pageable\n",

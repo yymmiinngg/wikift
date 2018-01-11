@@ -105,4 +105,8 @@ public class ArticleEntity {
     @Column(name = "fabulou_count", insertable = false)
     private Integer fabulouCount;
 
+    // 该字段为统计字段不与数据库字段映射
+    @Column(name = "comments_count", insertable = false)
+    private Integer commentsCount;
+
 }
