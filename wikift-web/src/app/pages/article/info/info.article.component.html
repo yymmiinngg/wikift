@@ -139,7 +139,7 @@
                 <div class="card-header border-b-1 px-4 py-3">
                     <div class="card-block">
                         <h2 class="card-title">对
-                            <<em>{{article?.title}}</em>> 文章的评论</h2>
+                            <<em>{{article?.title}}</em>> 文章的评论 (该文章共有{{article?.commentsCount}}条评论)</h2>
                     </div>
                 </div>
                 <!-- 评论键入器 -->
@@ -163,6 +163,11 @@
                                 <i class="zmdi zmdi-time"></i> {{ comment.createTime | date:'yyyy年MM月dd日HH:mm:ss' }} 评论</small>
                         </div>
                     </div>
+                </div>
+                <div class="mr-center">
+                    <pagination *ngIf="comments?.length && page" [(ngModel)]="currentPage" totalItems="{{page.totalElements}}" [maxSize]="page.size"
+                        (pageChanged)="pageChanged($event)" [boundaryLinks]="true" [rotate]="false" (numPages)="numPages = $event">
+                    </pagination>
                 </div>
             </div>
         </div>

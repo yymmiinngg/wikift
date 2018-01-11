@@ -24,6 +24,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Ng2DeviceDetectorModule } from 'ng2-device-detector';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastyModule } from 'ng2-toasty';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { InfoArticleComponent } from './info.article.component';
 
@@ -45,6 +46,7 @@ const INFO_ARTICLE_ROUTES: Routes = [
         BsDropdownModule.forRoot(),
         ModalModule.forRoot(),
         ToastyModule.forRoot(),
+        PaginationModule.forRoot(),
         Ng2DeviceDetectorModule.forRoot(),
         RouterModule.forChild(INFO_ARTICLE_ROUTES)
     ],

@@ -60,6 +60,14 @@ export class InfoArticleComponent implements OnInit {
     public commentContext;
     // 评论列表
     public comments;
+    // 分页数据
+    public page: CommonPageModel;
+    // 当前页数
+    public currentPage: number;
+    numPages = 0;
+    maxSize: number = 5;
+    bigTotalItems: number = 175;
+    bigCurrentPage: number = 1;
 
     constructor(private route: ActivatedRoute,
         private articleService: ArticleService,
@@ -138,6 +146,19 @@ export class InfoArticleComponent implements OnInit {
         this.commentService.getAllCommentByArticle(this.article.id, new CommonPageModel()).subscribe(
             result => {
                 this.comments = result.data.content;
+                this.page = CommonPageModel.getPage(result.data);
+                this.currentPage = this.page.number;
+            }
+        );
+    }
+
+    pageChanged(event: any) {
+        this.page.number = event.page - 1;
+        this.page.size = event.itemsPerPage;
+        this.commentService.getAllCommentByArticle(this.article.id, this.page).subscribe(
+            result => {
+                this.comments = result.data.content;
+                this.page = CommonPageModel.getPage(result.data);
             }
         );
     }
