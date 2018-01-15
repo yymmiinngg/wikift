@@ -35,7 +35,7 @@ import { UserService } from '../../../../services/user.service';
 import { CommentService } from '../../../../services/comment.service';
 import { CommonPageModel } from '../../../shared/model/result/page.model';
 import { CommentModel } from '../../../shared/model/comment/comment.model';
-import { Comment } from '_@angular_compiler@4.4.6@@angular/compiler/compiler';
+import { CodeConfig } from '../../../../config/code.config';
 
 @Component({
     selector: 'wikift-article-info',
@@ -70,6 +70,7 @@ export class InfoArticleComponent implements OnInit {
     bigCurrentPage: number = 1;
 
     constructor(private route: ActivatedRoute,
+        private router: Router,
         private articleService: ArticleService,
         private userService: UserService,
         private deviceService: Ng2DeviceService,
@@ -229,6 +230,17 @@ export class InfoArticleComponent implements OnInit {
             result => {
                 this.toastyService.success('评论成功');
                 this.initComments();
+            }
+        );
+    }
+
+    deleteArticle() {
+        this.articleService.delete(this.article).subscribe(
+            result => {
+                if (result && result.code === CodeConfig.SUCCESS) {
+                    this.toastyService.success('文章 ' + this.article.title + ' 删除成功');
+                    this.router.navigate(['/']);
+                }
             }
         );
     }
