@@ -238,6 +238,17 @@
                     </div>
                 </div>
             </div>
+            <!-- 评论趋势 -->
+            <div class="card">
+                <div class="card-header border-b-1 px-4 py-3">
+                    <div class="card-block">
+                        <h2 class="card-title">评论趋势</h2>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div echarts [options]="linkoption" [loading]="showloading" class="comments-counter-chart"></div>
+                </div>
+            </div>
             <!-- 文章目录 -->
             <div class="card">
                 <div class="card-header border-b-1 px-4 py-3 mr-center">
