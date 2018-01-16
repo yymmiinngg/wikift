@@ -99,7 +99,9 @@ export class InfoArticleComponent implements OnInit {
                 this.initViewArticle();
                 this.initUserFollowStatus();
                 this.initComments();
-                this.initCounter();
+                if (this.currentUser) {
+                    this.initCounter();
+                }
             }
         );
     }

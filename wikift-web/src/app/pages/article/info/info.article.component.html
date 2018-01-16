@@ -246,7 +246,10 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div echarts [options]="linkoption" [loading]="showloading" class="comments-counter-chart"></div>
+                    <div *ngIf="currentUser; else noLogin" echarts [options]="linkoption" [loading]="showloading" class="comments-counter-chart"></div>
+                    <ng-template #noLogin class="mr-center">
+                        登录后才可使用本功能
+                    </ng-template>
                 </div>
             </div>
             <!-- 文章目录 -->
