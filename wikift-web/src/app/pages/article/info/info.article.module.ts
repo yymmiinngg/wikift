@@ -25,6 +25,7 @@ import { Ng2DeviceDetectorModule } from 'ng2-device-detector';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastyModule } from 'ng2-toasty';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { AngularEchartsModule } from 'ngx-echarts';
 
 import { InfoArticleComponent } from './info.article.component';
 
@@ -42,6 +43,7 @@ const INFO_ARTICLE_ROUTES: Routes = [
         WikiftEditorModule,
         CommonModule,
         FormsModule,
+        AngularEchartsModule,
         TooltipModule.forRoot(),
         BsDropdownModule.forRoot(),
         ModalModule.forRoot(),

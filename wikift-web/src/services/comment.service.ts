@@ -61,4 +61,10 @@ export class CommentService {
             .map(ResultUtils.extractData);
     }
 
+    getCounterCommentsByWeekAndArticle(articleId) {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        return this.http.get(ApiConfig.API_COMMENT_COUNTER_TOP_WEEK + articleId, options)
+            .map(ResultUtils.extractData);
+    }
+
 }

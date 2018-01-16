@@ -52,3 +52,7 @@ wikift是一套开源的易用的知识管理系统.
 #### 空间详情页
 
 [![空间详情页](https://github.com/qianmoQ/wikift/blob/master/wikift-design/snapshot/空间详情页.png?raw=true "空间详情页")](https://github.com/qianmoQ/wikift/blob/master/wikift-design/snapshot/空间详情页.png?raw=true "空间详情页")
+
+#### 用户文章评论趋势
+
+[![用户文章评论趋势](https://github.com/qianmoQ/wikift/blob/master/wikift-design/snapshot/用户文章评论趋势.png?raw=true "用户文章评论趋势")](https://github.com/qianmoQ/wikift/blob/master/wikift-design/snapshot/用户文章评论趋势.png?raw=true "用户文章评论趋势")

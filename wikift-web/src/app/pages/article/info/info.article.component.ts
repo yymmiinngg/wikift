@@ -36,6 +36,7 @@ import { CommentService } from '../../../../services/comment.service';
 import { CommonPageModel } from '../../../shared/model/result/page.model';
 import { CommentModel } from '../../../shared/model/comment/comment.model';
 import { CodeConfig } from '../../../../config/code.config';
+import { ChartsUtils } from '../../../shared/utils/chart.echarts.utils';
 
 @Component({
     selector: 'wikift-article-info',
@@ -66,8 +67,9 @@ export class InfoArticleComponent implements OnInit {
     public currentPage: number;
     numPages = 0;
     maxSize: number = 5;
-    bigTotalItems: number = 175;
-    bigCurrentPage: number = 1;
+    // 评论趋势报表配置
+    public showloading = true;
+    public linkoption;
 
     constructor(private route: ActivatedRoute,
         private router: Router,
@@ -97,6 +99,7 @@ export class InfoArticleComponent implements OnInit {
                 this.initViewArticle();
                 this.initUserFollowStatus();
                 this.initComments();
+                this.initCounter();
             }
         );
     }
@@ -240,6 +243,25 @@ export class InfoArticleComponent implements OnInit {
                 if (result && result.code === CodeConfig.SUCCESS) {
                     this.toastyService.success('文章 ' + this.article.title + ' 删除成功');
                     this.router.navigate(['/']);
+                }
+            }
+        );
+    }
+
+    initCounter() {
+        this.initCommentsCounter();
+    }
+
+    initCommentsCounter() {
+        this.commentService.getCounterCommentsByWeekAndArticle(this.article.id).subscribe(
+            result => {
+                if (result && result.code === CodeConfig.SUCCESS) {
+                    const xData = [], seriesData = [];
+                    result.data.forEach(element => {
+                        xData.push(element.dataKey);
+                        seriesData.push(element.dataValue);
+                    });
+                    this.linkoption = ChartsUtils.gerenateLineChart(false, 'line', xData, seriesData);
                 }
             }
         );
