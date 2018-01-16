@@ -15,23 +15,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wikift.support.service.comment;
+package com.wikift.model.counter;
 
-import com.wikift.model.article.ArticleEntity;
-import com.wikift.model.comment.CommentEntity;
-import com.wikift.model.counter.CounterEntity;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import java.util.List;
-import java.util.Map;
+import javax.persistence.Column;
+import java.util.Date;
 
-public interface CommentService {
+/**
+ * 数据统计实体 <br/>
+ * 描述 : 该实体类用于封装数据库查询的统计数据 <br/>
+ * 作者 : qianmoQ <br/>
+ * 版本 : 1.0 <br/>
+ * 创建时间 : 2018-01-16 上午9:23 <br/>
+ * 联系作者 : <a href="mailTo:shichengoooo@163.com">qianmoQ</a>
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class CounterEntity {
 
-    CommentEntity createComment(CommentEntity entity);
+    @Column(name = "dataKey")
+    private Object dataKey;
 
-    Page<CommentEntity> getAllCommentByArticle(ArticleEntity entity, Pageable pageable);
-
-    List<CounterEntity> getArticleCommentsByCreateTimeAndTop7(Long articleId);
+    @Column(name = "dataValue")
+    private Object dataValue;
 
 }
