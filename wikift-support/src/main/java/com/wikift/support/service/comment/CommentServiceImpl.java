@@ -19,11 +19,15 @@ package com.wikift.support.service.comment;
 
 import com.wikift.model.article.ArticleEntity;
 import com.wikift.model.comment.CommentEntity;
+import com.wikift.model.counter.CounterEntity;
 import com.wikift.support.repository.comment.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service(value = "commentService")
 public class CommentServiceImpl implements CommentService {
@@ -39,6 +43,15 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Page<CommentEntity> getAllCommentByArticle(ArticleEntity entity, Pageable pageable) {
         return commentRepository.findAllByArticle(entity, pageable);
+    }
+
+    @Override
+    public List<CounterEntity> getArticleCommentsByCreateTimeAndTop7(Long articleId) {
+        List<CounterEntity> counters = new ArrayList<>();
+        commentRepository.findArticleCommentsByCreateTimeAndTop7(articleId).forEach(v -> {
+            counters.add(new CounterEntity(v[0], v[1]));
+        });
+        return counters;
     }
 
 }

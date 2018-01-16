@@ -32,6 +32,9 @@ import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping(value = "/comment")
 public class CommentController {
@@ -58,6 +61,12 @@ public class CommentController {
         ArticleEntity entity = new ArticleEntity();
         entity.setId(articleId);
         return CommonResult.success(commentService.getAllCommentByArticle(entity, PageAndSortUtils.getPage(page, size)));
+    }
+
+    @RequestMapping(value = "/view/{articleId}", method = RequestMethod.GET)
+    CommonResult<List> getArticleCommentsByCreateTimeAndTop7(@PathVariable(value = "articleId") Long articleId) {
+        Assert.notNull(articleId, MessageUtils.getParamNotNull("articleId"));
+        return CommonResult.success(commentService.getArticleCommentsByCreateTimeAndTop7(articleId));
     }
 
 }
