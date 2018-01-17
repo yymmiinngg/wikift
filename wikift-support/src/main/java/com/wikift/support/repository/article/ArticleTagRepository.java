@@ -18,11 +18,28 @@
 package com.wikift.support.repository.article;
 
 import com.wikift.model.article.ArticleTagEntity;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Transactional
 public interface ArticleTagRepository extends PagingAndSortingRepository<ArticleTagEntity, Long> {
+
+    /**
+     * 查询前?排行的标签
+     *
+     * @param top 排行数
+     * @return 标签集
+     */
+    @Query(value = "SELECT ats.at_title AS dataKey, COUNT(atr.atr_article_id) AS dataValue " +
+            "FROM article_tag AS ats " +
+            "LEFT OUTER JOIN article_tag_relation AS atr ON ats.at_id = atr.atr_article_tag_id " +
+            "GROUP BY dataKey " +
+            "ORDER BY dataValue DESC " +
+            "LIMIT ?1",
+            nativeQuery = true)
+    List<Object[]> findAllByArticlesCounterAndTop(Long top);
 
 }

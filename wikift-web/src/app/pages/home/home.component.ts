@@ -30,6 +30,9 @@ import { ArticleService } from '../../../services/article.service';
 import { UserService } from '../../../services/user.service';
 import { CommonPageModel } from '../../shared/model/result/page.model';
 import { OrderEnumModel } from '../../shared/model/enum/order.enum.model';
+import { ChartsUtils } from '../../shared/utils/chart.echarts.utils';
+import { ChartWordCloudModel } from '../../shared/model/chart/chart.wordcloud.model';
+import { ArticleTagService } from '../../../services/article.tag.service';
 
 @Component({
     selector: 'wikift-home',
@@ -52,9 +55,12 @@ export class HomeComponent implements OnInit {
     public order;
     // 抽取layout布局的用户信息
     public userInfo;
+    // 字符云图表
+    public wordCloudChart;
 
     constructor(private articleService: ArticleService,
-        private userService: UserService) {
+        private userService: UserService,
+        private articleTagService: ArticleTagService) {
         this.page = new CommonPageModel();
         this.userInfo = CookieUtils.getUser();
     }
@@ -62,6 +68,7 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
         this.initArticleList(this.page);
         this.initTopUserByActive();
+        this.initArticleTagTop();
     }
 
     /**
@@ -75,6 +82,20 @@ export class HomeComponent implements OnInit {
                 this.articles = result.data.content;
                 this.page = CommonPageModel.getPage(result.data);
                 this.currentPage = this.page.number;
+            }
+        );
+    }
+
+    initTopUserByActive() {
+        this.userService.topByActive().subscribe(
+            result => { this.activeUsers = result.data; }
+        );
+    }
+
+    initArticleTagTop() {
+        this.articleTagService.top().subscribe(
+            result => {
+                this.wordCloudChart = ChartsUtils.gerenateWordCloudChart(true, ChartWordCloudModel.generateArrayByResponse(result));
             }
         );
     }
@@ -118,12 +139,6 @@ export class HomeComponent implements OnInit {
                 this.articles = result.data.content;
                 this.page = CommonPageModel.getPage(result.data);
             }
-        );
-    }
-
-    initTopUserByActive() {
-        this.userService.topByActive().subscribe(
-            result => { this.activeUsers = result.data; }
         );
     }
 
