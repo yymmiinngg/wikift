@@ -29,5 +29,7 @@ export class ArticleModel {
     public articleType: ArticleTypeModel;
     public articleTags: Array<ArticleTagModel>;
     public space: SpaceModel;
+    public createTime;
+    public commentsCount;
 
 }

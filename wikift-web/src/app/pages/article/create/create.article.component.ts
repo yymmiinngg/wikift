@@ -42,7 +42,7 @@ import { CommonPageModel } from '../../../shared/model/result/page.model';
 export class CreateArticleComponent implements OnInit {
 
     // 选择标签配置
-    multipleOptions: any = {
+    public multipleOptions: any = {
         multiple: true,
         dropdownAutoWidth: true,
         placeholder: '请选择文章标签',
@@ -50,7 +50,7 @@ export class CreateArticleComponent implements OnInit {
         containerCssClass: 'select2-selection--alt',
         dropdownCssClass: 'select2-dropdown--alt'
     };
-    articleModel: ArticleModel;
+    public articleModel: ArticleModel;
     // 文章类型
     public articleType;
     // 文章标签, 加载框
@@ -61,11 +61,11 @@ export class CreateArticleComponent implements OnInit {
     public tagsValue: any = [];
     public articleTagsValue: any = [];
     // 空间列表
-    private spaces;
+    public spaces;
     // 分页数据
-    page: CommonPageModel;
+    public page: CommonPageModel;
     // 当前页数
-    currentPage: number;
+    public currentPage: number;
 
     // 文章属性框
     @ViewChild('settingAritcleModel')
