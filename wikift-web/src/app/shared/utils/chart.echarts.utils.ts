@@ -76,4 +76,29 @@ export class ChartsUtils {
         return lineChart;
     }
 
+    /**
+     * 生成字符云图表
+     * @param tooltip 是否显示提示信息
+     * @param wordCloudData 字符云数据
+     */
+    public static gerenateWordCloudChart(tooltip: boolean, wordCloudData: any[]) {
+        const wordCloudChart = {
+            tooltip: {
+                show: tooltip
+            },
+            series: [{
+                type: 'wordCloud',
+                size: ['80%', '80%'],
+                textRotation: [0, 45, 90, -45],
+                textPadding: 0,
+                autoSize: {
+                    enable: true,
+                    minSize: 14
+                },
+                data: wordCloudData
+            }]
+        };
+        return wordCloudChart;
+    }
+
 }

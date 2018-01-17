@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -37,6 +38,11 @@ public class ArticleTagController {
     @RequestMapping(value = "list", method = RequestMethod.GET)
     CommonResult<ArticleTagEntity> list() {
         return CommonResult.success(articleTagService.findAll(null));
+    }
+
+    @RequestMapping(value = "top", method = RequestMethod.GET)
+    CommonResult<ArticleTagEntity> getAllByArticlesCounterAndTop(@RequestParam(value = "top", defaultValue = "20") Long top) {
+        return CommonResult.success(articleTagService.getAllByArticlesCounterAndTop(top));
     }
 
 }

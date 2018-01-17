@@ -24,12 +24,14 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BusyModule, BusyConfig } from 'angular2-busy';
+import { AngularEchartsModule } from 'ngx-echarts';
 
 import { HomeComponent } from './home.component';
 
 import { ArticleService } from '../../../services/article.service';
 import { WikiftEditorModule } from '../../shared/directives/wikift-editor/wikift-editor.module';
 import { UserService } from '../../../services/user.service';
+import { ArticleTagService } from '../../../services/article.tag.service';
 
 export function busyConfigFactory() {
     return new BusyConfig({
@@ -48,6 +50,7 @@ const HOME_ROUTES: Routes = [
         CommonModule,
         FormsModule,
         BusyModule,
+        AngularEchartsModule,
         TooltipModule.forRoot(),
         TabsModule.forRoot(),
         PaginationModule.forRoot(),
@@ -60,6 +63,7 @@ const HOME_ROUTES: Routes = [
     providers: [
         ArticleService,
         UserService,
+        ArticleTagService,
         {
             provide: BusyConfig,
             useFactory: busyConfigFactory

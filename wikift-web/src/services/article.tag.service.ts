@@ -47,4 +47,14 @@ export class ArticleTagService {
         return this.http.get(ApiConfig.API_ARTICLE_TAG_LIST, options).map(ResultUtils.extractData);
     }
 
+    top(top?: number): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptions();
+        if (top) {
+            const params = HttpUtils.getParams();
+            params.append('top', top.toString());
+            options.params = params;
+        }
+        return this.http.get(ApiConfig.API_ARTICLE_TAG_TOP, options).map(ResultUtils.extractData);
+    }
+
 }

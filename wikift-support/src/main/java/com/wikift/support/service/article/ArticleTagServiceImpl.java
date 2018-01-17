@@ -18,11 +18,15 @@
 package com.wikift.support.service.article;
 
 import com.wikift.model.article.ArticleTagEntity;
+import com.wikift.model.counter.CounterEntity;
 import com.wikift.support.repository.article.ArticleTagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service(value = "articleTagService")
 public class ArticleTagServiceImpl implements ArticleTagService {
@@ -33,6 +37,15 @@ public class ArticleTagServiceImpl implements ArticleTagService {
     @Override
     public Page<ArticleTagEntity> findAll(Pageable pageable) {
         return articleTagRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<CounterEntity> getAllByArticlesCounterAndTop(Long top) {
+        List<CounterEntity> counters = new ArrayList<>();
+        articleTagRepository.findAllByArticlesCounterAndTop(top).forEach(v -> {
+            counters.add(new CounterEntity(v[0], v[1]));
+        });
+        return counters;
     }
 
 }

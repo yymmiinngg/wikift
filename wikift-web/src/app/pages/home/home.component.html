@@ -127,6 +127,17 @@
                     </div>
                 </div>
             </div>
+            <!-- 标签排行榜 -->
+            <div class="card">
+                <div class="card-header border-b-1 mr-center">
+                    <div class="card-block">
+                        <h2 class="card-title">活跃标签</h2>
+                    </div>
+                </div>
+                <div class="card-body" style="margin-top: 20px;">
+                    <div echarts [options]="wordCloudChart" class="comments-counter-chart"></div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

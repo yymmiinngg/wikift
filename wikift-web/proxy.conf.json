@@ -119,6 +119,11 @@
         "secure": false,
         "logLevel": "debug"
     },
+    "/article/tag/top": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "logLevel": "debug"
+    },
     "/article/my": {
         "target": "http://localhost:8080",
         "secure": false,

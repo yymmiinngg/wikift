@@ -27,10 +27,10 @@ import { BusyModule, BusyConfig } from 'angular2-busy';
 import { ArchwizardModule } from 'ng2-archwizard';
 import { ImageCropperModule } from 'ng2-img-cropper';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import { ToastyModule } from 'ng2-toasty';
 
 import { SpaceCreateComponent } from './space.create.component';
 import { SpaceService } from '../../../../services/space.service';
-import { ToastyModule } from '_ng2-toasty@4.0.3@ng2-toasty';
 
 // import { ArticleService } from '../../../services/article.service';
 // import { UserService } from '../../../services/user.service';

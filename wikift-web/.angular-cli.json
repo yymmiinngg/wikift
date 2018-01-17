@@ -34,7 +34,8 @@
         "../src/assets/js/wikift-editor/lib/jquery.flowchart.min.js",
         "../node_modules/echarts/dist/echarts.min.js",
         "../node_modules/echarts/map/js/china.js",
-        "../node_modules/echarts/dist/extension/bmap.js"
+        "../node_modules/echarts/dist/extension/bmap.js",
+        "../node_modules/echarts-wordcloud/dist/echarts-wordcloud.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
