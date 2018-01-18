@@ -54,7 +54,7 @@
         <div class="col-md-9">
             <tabset>
                 <div [ngBusy]="loadArticleBusy"></div>
-                <tab heading="最新文章" (select)="loadArticleOrderByCreateTime()">
+                <tab heading="最新文章">
                 </tab>
             </tabset>
             <div *ngFor="let article of articles" class="card">

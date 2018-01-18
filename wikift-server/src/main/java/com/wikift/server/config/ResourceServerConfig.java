@@ -43,14 +43,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.requestMatchers()
                 .and()
                 .authorizeRequests()
-                .antMatchers(
-                        "/article/list",
-                        "/article/info/*",
-                        "/article/view",
-                        "/user/register",
-                        "/comment/list",
-                        "/article/tag/top",
-                        "/user/top").permitAll()
+                .antMatchers("/api/v1/public/**").permitAll()
                 .antMatchers("/**").authenticated();
     }
 

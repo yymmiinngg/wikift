@@ -15,21 +15,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { UserModel } from '../user/user.model';
-import { ArticleTypeModel } from './article.type.model';
-import { ArticleTagModel } from './article.tag.model';
-import { SpaceModel } from '../space/space.model';
+package com.wikift.common.enums;
 
-export class ArticleModel {
+/**
+ * RepositoryEnums <br/>
+ * 描述 : 该类用于校验归属于哪个Repository <br/>
+ * 作者 : qianmoQ <br/>
+ * 版本 : 1.0 <br/>
+ * 创建时间 : 2018-01-18 上午10:26 <br/>
+ * 联系作者 : <a href="mailTo:shichengoooo@163.com">qianmoQ</a>
+ */
+public enum RepositoryEnums {
 
-    public id: Number;
-    public title: String = '';
-    public content: String = '';
-    public user: UserModel;
-    public articleType: ArticleTypeModel;
-    public articleTags: Array<ArticleTagModel>;
-    public space: SpaceModel;
-    public createTime;
-    public commentsCount;
+    ARTICLE,
+    SPACE,
+    COMMENT,
+    USER,
+    REMIND;
+
+    /**
+     * 枚举是否包含字符串
+     *
+     * @param type 字符串
+     * @return 包含状态
+     */
+    public static RepositoryEnums get(String type) {
+        for (RepositoryEnums repositoryEnums : RepositoryEnums.values()) {
+            if (type.equals(repositoryEnums.name())) {
+                return repositoryEnums;
+            }
+        }
+        return null;
+    }
 
 }

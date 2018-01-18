@@ -68,6 +68,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public Page<ArticleEntity> getAllByTagAndCreateTime(Long tagId, Pageable pageable) {
+        return articleRepository.findAllByTagAndCreateTime(tagId, pageable);
+    }
+
+    @Override
     public ArticleEntity getArticle(Long id) {
         return articleRepository.findById(id);
     }
