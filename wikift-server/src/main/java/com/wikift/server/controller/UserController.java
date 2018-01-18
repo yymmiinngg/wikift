@@ -33,13 +33,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "${wikift.api.path}")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "user/register", method = RequestMethod.POST)
     CommonResult<UserEntity> register(@RequestBody @Validated UserParam param) {
         Assert.notNull(param, MessageEnums.PARAMS_NOT_NULL.getValue());
         if (!param.getPassword().equals(param.getRepassword())) {
@@ -54,14 +54,14 @@ public class UserController {
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
-    @RequestMapping(value = "/info/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "user/info/{username}", method = RequestMethod.GET)
     CommonResult<UserEntity> info(@PathVariable(value = "username") String username) {
         Assert.notNull(username, MessageEnums.PARAMS_NOT_NULL.getValue());
         return CommonResult.success(userService.getInfoByUsername(username));
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "user/update", method = RequestMethod.PUT)
     CommonResult<UserEntity> update(@RequestBody UserEntity entity) {
         Assert.notNull(entity, MessageEnums.PARAMS_NOT_NULL.getValue());
         UserEntity targetUserEntity = userService.getInfoByUsername(entity.getUsername());
@@ -69,34 +69,34 @@ public class UserController {
         return CommonResult.success(userService.update(entity));
     }
 
-    @RequestMapping(value = "/top", method = RequestMethod.GET)
+    @RequestMapping(value = "public/user/top", method = RequestMethod.GET)
     CommonResult<UserEntity> findTopByArticle() {
         return CommonResult.success(userService.findTopByArticle());
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
-    @RequestMapping(value = "/follow", method = RequestMethod.PUT)
+    @RequestMapping(value = "user//follow", method = RequestMethod.PUT)
     CommonResult follow(@RequestBody UserEntity entity) {
         Assert.notNull(entity, MessageEnums.PARAMS_NOT_NULL.getValue());
         return CommonResult.success(userService.follow(entity.getId(), entity.getFollows().get(0).getId()));
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
-    @RequestMapping(value = "/unfollow", method = RequestMethod.PUT)
+    @RequestMapping(value = "user//unfollow", method = RequestMethod.PUT)
     CommonResult unfollow(@RequestBody UserEntity entity) {
         Assert.notNull(entity, MessageEnums.PARAMS_NOT_NULL.getValue());
         return CommonResult.success(userService.unFollow(entity.getId(), entity.getFollows().get(0).getId()));
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
-    @RequestMapping(value = "/follows/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "user//follows/{userId}", method = RequestMethod.GET)
     CommonResult<UserEntity> getFollows(@PathVariable(value = "userId") Long userId) {
         Assert.notNull(userId, MessageEnums.PARAMS_NOT_NULL.getValue());
         return CommonResult.success(userService.findAllFollowersByUserId(userId));
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
-    @RequestMapping(value = "/follows/check", method = RequestMethod.GET)
+    @RequestMapping(value = "user//follows/check", method = RequestMethod.GET)
     CommonResult<UserEntity> checkFollow(@RequestParam(value = "followUserId") Long followUserId,
                                          @RequestParam(value = "coverUserId") Long coverUserId) {
         Assert.notNull(followUserId, MessageEnums.PARAMS_NOT_NULL.getValue());
@@ -105,7 +105,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
-    @RequestMapping(value = "/follows/count", method = RequestMethod.GET)
+    @RequestMapping(value = "user/follows/count", method = RequestMethod.GET)
     CommonResult<UserEntity> findFollowCount(@RequestParam(value = "followUserId") Long followUserId) {
         Assert.notNull(followUserId, MessageEnums.PARAMS_NOT_NULL.getValue());
         Map<String, Integer> count = new ConcurrentHashMap<>();

@@ -27,14 +27,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/article/type")
+@RequestMapping(value = "${wikift.api.path}")
 public class ArticleTypeController {
 
     @Autowired
     private ArticleTypeService articleTypeService;
 
     @PreAuthorize("hasAuthority(('USER'))")
-    @RequestMapping(value = "list", method = RequestMethod.GET)
+    @RequestMapping(value = "article/type/list", method = RequestMethod.GET)
     CommonResult<ArticleTypeEntity> list() {
         return CommonResult.success(articleTypeService.findAll());
     }

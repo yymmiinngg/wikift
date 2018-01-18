@@ -20,50 +20,51 @@ export class ApiConfig {
     public static AUTHORIZATION_API = '/oauth/token';
 
     private static V1_API_ROOT = '/api/v1/';
+    private static V1_API_ROOT_PUBLIC = ApiConfig.V1_API_ROOT + 'public';
 
-    public static API_USER_INFO = '/user/info/';
-    public static API_USER_UPDATE = '/user/update';
-    public static API_TOP_USER_BY_ACTIVE = '/user/top';
-    public static API_USER_FOLLOW = '/user/follow';
-    public static API_USER_REGISTER = '/user/register';
-    public static API_USER_UNFOLLOW = '/user/unfollow';
-    public static API_USER_FOLLOWS = '/user/follows/';
-    public static API_USER_FOLLOW_CHECK = '/user/follows/check';
-    public static API_USER_FOLLOW_COUNT = '/user/follows/count';
+    public static API_USER_INFO = ApiConfig.V1_API_ROOT + 'user/info/';
+    public static API_USER_UPDATE = ApiConfig.V1_API_ROOT + 'user/update';
+    public static API_TOP_USER_BY_ACTIVE = ApiConfig.V1_API_ROOT_PUBLIC + '/user/top';
+    public static API_USER_FOLLOW = ApiConfig.V1_API_ROOT + 'user/follow';
+    public static API_USER_REGISTER = ApiConfig.V1_API_ROOT + 'user/register';
+    public static API_USER_UNFOLLOW = ApiConfig.V1_API_ROOT + 'user/unfollow';
+    public static API_USER_FOLLOWS = ApiConfig.V1_API_ROOT + 'user/follows/';
+    public static API_USER_FOLLOW_CHECK = ApiConfig.V1_API_ROOT + 'user/follows/check';
+    public static API_USER_FOLLOW_COUNT = ApiConfig.V1_API_ROOT + 'user/follows/count';
 
-    public static API_ARTICLE_LIST = '/article/list';
-    public static API_ARTICLE_SAVE = '/article/create';
-    public static API_ARTICLE_INFO = '/article/info/';
-    public static API_ARTICLE_UPDATE = '/article/update';
-    public static API_ARTICLE_DELETE = '/article/delete/';
-    public static API_ARTICLE_TOP_BY_USER = '/article/top/by/user';
-    public static API_ARTICLE_FABULOUS = '/article/fabulous';
-    public static API_ARTICLE_FABULOUS_CHECK = '/article/fabulous/check';
-    public static API_ARTICLE_FABULOUS_COUNT = '/article/fabulous/count';
-    public static API_ARTICLE_UNFABULOUS = '/article/unfabulous/';
-    public static API_ARTICLE_VIEW = '/article/view';
-    public static API_ARTICLE_VIEW_COUNT = '/article/view/count';
-    public static API_ARTICLE_FOR_MY = '/article/my';
+    public static API_ARTICLE_LIST = ApiConfig.V1_API_ROOT_PUBLIC + '/article/list';
+    public static API_ARTICLE_SAVE = ApiConfig.V1_API_ROOT + 'article/create';
+    public static API_ARTICLE_INFO = ApiConfig.V1_API_ROOT_PUBLIC + '/article/info/';
+    public static API_ARTICLE_UPDATE = ApiConfig.V1_API_ROOT + 'article/update';
+    public static API_ARTICLE_DELETE = ApiConfig.V1_API_ROOT + 'article/delete/';
+    public static API_ARTICLE_TOP_BY_USER = ApiConfig.V1_API_ROOT + 'article/top/by/user';
+    public static API_ARTICLE_FABULOUS = ApiConfig.V1_API_ROOT + 'article/fabulous';
+    public static API_ARTICLE_FABULOUS_CHECK = ApiConfig.V1_API_ROOT + 'article/fabulous/check';
+    public static API_ARTICLE_FABULOUS_COUNT = ApiConfig.V1_API_ROOT + 'article/fabulous/count';
+    public static API_ARTICLE_UNFABULOUS = ApiConfig.V1_API_ROOT + 'article/unfabulous/';
+    public static API_ARTICLE_VIEW = ApiConfig.V1_API_ROOT_PUBLIC + '/article/view';
+    public static API_ARTICLE_VIEW_COUNT = ApiConfig.V1_API_ROOT + 'article/view/count';
+    public static API_ARTICLE_FOR_MY = ApiConfig.V1_API_ROOT + 'article/my';
 
-    public static API_ARTICLE_TYPE_LIST = '/article/type/list';
+    public static API_ARTICLE_TYPE_LIST = ApiConfig.V1_API_ROOT + 'article/type/list';
 
-    public static API_ARTICLE_TAG_LIST = '/article/tag/list';
-    public static API_ARTICLE_TAG_TOP = '/article/tag/top';
+    public static API_ARTICLE_TAG_LIST = ApiConfig.V1_API_ROOT + 'article/tag/list';
+    public static API_ARTICLE_TAG_TOP = ApiConfig.V1_API_ROOT_PUBLIC + '/article/tag/top';
 
-    public static API_REMIND_LIST_BY_USER = '/remind/list/user';
-    public static API_REMIND_INFO = '/remind/info/';
-    public static API_REMIND_READ = '/remind/read/';
+    public static API_REMIND_LIST_BY_USER = ApiConfig.V1_API_ROOT + 'remind/list/user';
+    public static API_REMIND_INFO = ApiConfig.V1_API_ROOT + 'remind/info/';
+    public static API_REMIND_READ = ApiConfig.V1_API_ROOT + 'remind/read/';
 
-    public static API_SPACE_LIST = '/space/list';
-    public static API_SPACE_CREATE = '/space/create';
-    public static API_SPACE_LIST_PUBLIC_USER = '/space/list/public/user';
-    public static API_SPACE_LIST_USER = '/space/list/user';
-    public static API_SPACE_ARTICLE = '/space/article';
-    public static API_SPACE_INFO_CODE = '/space/info/code/';
-    public static API_SPACE_INFO = '/space/info/';
+    public static API_SPACE_LIST = ApiConfig.V1_API_ROOT + 'space/list';
+    public static API_SPACE_CREATE = ApiConfig.V1_API_ROOT + 'space/create';
+    public static API_SPACE_LIST_PUBLIC_USER = ApiConfig.V1_API_ROOT + 'space/list/public/user';
+    public static API_SPACE_LIST_USER = ApiConfig.V1_API_ROOT + 'space/list/user';
+    public static API_SPACE_ARTICLE = ApiConfig.V1_API_ROOT + 'space/article';
+    public static API_SPACE_INFO_CODE = ApiConfig.V1_API_ROOT + 'space/info/code/';
+    public static API_SPACE_INFO = ApiConfig.V1_API_ROOT + 'space/info/';
 
-    public static API_COMMENT_CREATE = '/comment/create';
-    public static API_COMMENT_LIST = '/comment/list';
-    public static API_COMMENT_COUNTER_TOP_WEEK = '/comment/view/';
+    public static API_COMMENT_CREATE = ApiConfig.V1_API_ROOT + 'comment/create';
+    public static API_COMMENT_LIST = ApiConfig.V1_API_ROOT_PUBLIC + '/comment/list';
+    public static API_COMMENT_COUNTER_TOP_WEEK = ApiConfig.V1_API_ROOT + 'comment/view/';
 
 }

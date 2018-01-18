@@ -36,14 +36,14 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/comment")
+@RequestMapping(value = "${wikift.api.path}")
 public class CommentController {
 
     @Autowired
     private CommentService commentService;
 
     @PreAuthorize("hasAuthority(('USER'))")
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "comment/create", method = RequestMethod.POST)
     CommonResult<CommentEntity> createSpace(@RequestBody @Validated CommentParam param) {
         Assert.notNull(param, MessageUtils.getParamNotNull("param"));
         CommentEntity comment = new CommentEntity();
@@ -51,7 +51,7 @@ public class CommentController {
         return CommonResult.success(commentService.createComment(comment));
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "public/comment/list", method = RequestMethod.GET)
     CommonResult<SpaceEntity> getAllCommentByArticle(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                                      @RequestParam(value = "size", defaultValue = "10") Integer size,
                                                      @RequestParam(value = "articleId") Long articleId) {
@@ -63,7 +63,7 @@ public class CommentController {
         return CommonResult.success(commentService.getAllCommentByArticle(entity, PageAndSortUtils.getPage(page, size)));
     }
 
-    @RequestMapping(value = "/view/{articleId}", method = RequestMethod.GET)
+    @RequestMapping(value = "comment/view/{articleId}", method = RequestMethod.GET)
     CommonResult<List> getArticleCommentsByCreateTimeAndTop7(@PathVariable(value = "articleId") Long articleId) {
         Assert.notNull(articleId, MessageUtils.getParamNotNull("articleId"));
         return CommonResult.success(commentService.getArticleCommentsByCreateTimeAndTop7(articleId));

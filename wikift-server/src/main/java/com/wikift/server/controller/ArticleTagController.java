@@ -28,19 +28,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/article/tag")
+@RequestMapping(value = "${wikift.api.path}")
 public class ArticleTagController {
 
     @Autowired
     private ArticleTagService articleTagService;
 
     @PreAuthorize("hasAuthority(('USER'))")
-    @RequestMapping(value = "list", method = RequestMethod.GET)
+    @RequestMapping(value = "/article/tag/list", method = RequestMethod.GET)
     CommonResult<ArticleTagEntity> list() {
         return CommonResult.success(articleTagService.findAll(null));
     }
 
-    @RequestMapping(value = "top", method = RequestMethod.GET)
+    @RequestMapping(value = "public/article/tag/top", method = RequestMethod.GET)
     CommonResult<ArticleTagEntity> getAllByArticlesCounterAndTop(@RequestParam(value = "top", defaultValue = "20") Long top) {
         return CommonResult.success(articleTagService.getAllByArticlesCounterAndTop(top));
     }

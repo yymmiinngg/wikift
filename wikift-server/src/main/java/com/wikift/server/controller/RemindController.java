@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/remind")
+@RequestMapping(value = "${wikift.api.path}")
 public class RemindController {
 
     @Autowired
@@ -58,7 +58,7 @@ public class RemindController {
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
-    @RequestMapping(value = "list/user", method = RequestMethod.GET)
+    @RequestMapping(value = "remind/list/user", method = RequestMethod.GET)
     CommonResult<RemindEntity> getAllRemindByUsers(@RequestParam(value = "userId") Long userId,
                                                    @RequestParam(value = "type", defaultValue = "unread") String type) {
         Assert.notNull(userId, MessageEnums.PARAMS_NOT_NULL.getValue());
