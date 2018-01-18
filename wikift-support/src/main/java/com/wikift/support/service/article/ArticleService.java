@@ -36,6 +36,8 @@ public interface ArticleService {
 
     Page<ArticleEntity> getMyArticles(Long userId, Pageable pageable);
 
+    Page<ArticleEntity> getAllByTagAndCreateTime(Long tagId, Pageable pageable);
+
     /**
      * 根据文章ID查询文章信息
      *
