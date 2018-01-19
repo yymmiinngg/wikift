@@ -138,4 +138,10 @@ export class ArticleService {
         return this.http.get(ApiConfig.API_ARTICLE_VIEW_COUNT, options).map(ResultUtils.extractData);
     }
 
+    getCounterViewByWeekAndArticle(articleId) {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        return this.http.get(ApiConfig.API_ARTICLE_VIEW_TOP_WEEK + articleId, options)
+            .map(ResultUtils.extractData);
+    }
+
 }

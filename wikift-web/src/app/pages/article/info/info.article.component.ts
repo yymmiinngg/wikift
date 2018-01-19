@@ -69,7 +69,10 @@ export class InfoArticleComponent implements OnInit {
     maxSize: number = 5;
     // 评论趋势报表配置
     public showloading = true;
-    public linkoption;
+    // 文章一周评论趋势图
+    public commentArticleThrendChart;
+    // 文章一周浏览趋势图
+    public visitArticleThrendChart;
 
     constructor(private route: ActivatedRoute,
         private router: Router,
@@ -102,6 +105,7 @@ export class InfoArticleComponent implements OnInit {
                 if (this.currentUser) {
                     this.initCounter();
                 }
+                this.initViewsCounterByWeek();
             }
         );
     }
@@ -263,7 +267,22 @@ export class InfoArticleComponent implements OnInit {
                         xData.push(element.dataKey);
                         seriesData.push(element.dataValue);
                     });
-                    this.linkoption = ChartsUtils.gerenateLineChart(false, 'line', xData, seriesData);
+                    this.commentArticleThrendChart = ChartsUtils.gerenateLineChart(false, 'line', xData, seriesData);
+                }
+            }
+        );
+    }
+
+    initViewsCounterByWeek() {
+        this.articleService.getCounterViewByWeekAndArticle(this.article.id).subscribe(
+            result => {
+                if (result && result.code === CodeConfig.SUCCESS) {
+                    const xData = [], seriesData = [];
+                    result.data.forEach(element => {
+                        xData.push(element.dataKey);
+                        seriesData.push(element.dataValue);
+                    });
+                    this.visitArticleThrendChart = ChartsUtils.gerenateLineChart(false, 'line', xData, seriesData);
                 }
             }
         );
