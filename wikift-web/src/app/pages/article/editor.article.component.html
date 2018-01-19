@@ -55,31 +55,6 @@
                                 </div>
                             </div>
                         </wizard-step>
-                        <wizard-step stepTitle="文章类型" navigationSymbol="&#xf085;" navigationSymbolFontFamily="FontAwesome">
-                            <div class="card-block mr-center" style="margin-top: 10px;">
-                                <div class="clearfix mt-2">
-                                    <alert type="danger">
-                                        文章类型不支持修改
-                                    </alert>
-                                </div>
-                                <div *ngIf="articleType && articleType.length > 0">
-                                    <label *ngFor="let type of articleType" class="custom-control custom-radio">
-                                        <input type="radio" name="radio" [(ngModel)]="type.id === article.articleType.id" [value]="type.id === article.articleType.id"
-                                            disabled class="custom-control-input">
-                                        <span class="custom-control-indicator"></span>
-                                        <span class="custom-control-description">{{type.title}}</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="card-footer d-flex px-4 py-3">
-                                <div class="mr-auto">
-                                    <a class="btn btn-secondary" previousStep>上一步</a>
-                                </div>
-                                <div class="ml-4">
-                                    <a class="btn btn-info" [ngClass]="{'disabled': !article.articleType?.id}" nextStep>下一步</a>
-                                </div>
-                            </div>
-                        </wizard-step>
                         <wizard-step stepTitle="发布详情" navigationSymbol="&#xf00c;" navigationSymbolFontFamily="FontAwesome">
                             <div class="card-block" style="margin-top: 10px;">
                                 <table class="table mb-0">

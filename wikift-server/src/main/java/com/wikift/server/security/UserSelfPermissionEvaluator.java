@@ -87,7 +87,7 @@ public class UserSelfPermissionEvaluator implements PermissionEvaluator {
         switch (repository) {
             case ARTICLE:
                 ArticleEntity article = articleService.getArticle(primary);
-                if (ObjectUtils.isEmpty(article) && isSelfUser(auth, article.getUser())) {
+                if (!ObjectUtils.isEmpty(article) && isSelfUser(auth, article.getUser())) {
                     return true;
                 }
                 return false;
