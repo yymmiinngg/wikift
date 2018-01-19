@@ -20,6 +20,7 @@ package com.wikift.support.service.comment;
 import com.wikift.model.article.ArticleEntity;
 import com.wikift.model.comment.CommentEntity;
 import com.wikift.model.counter.CounterEntity;
+import com.wikift.model.result.CommonResult;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -30,8 +31,12 @@ public interface CommentService {
 
     CommentEntity createComment(CommentEntity entity);
 
+    CommentEntity getCommentById(Long id);
+
     Page<CommentEntity> getAllCommentByArticle(ArticleEntity entity, Pageable pageable);
 
     List<CounterEntity> getArticleCommentsByCreateTimeAndTop7(Long articleId);
+
+    Long deleteCommentById(Long id);
 
 }

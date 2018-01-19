@@ -23,7 +23,6 @@ import com.wikift.common.utils.PageAndSortUtils;
 import com.wikift.model.article.ArticleEntity;
 import com.wikift.model.comment.CommentEntity;
 import com.wikift.model.result.CommonResult;
-import com.wikift.model.space.SpaceEntity;
 import com.wikift.server.param.CommentParam;
 import com.wikift.support.service.comment.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "${wikift.api.path}")
@@ -41,6 +39,18 @@ public class CommentController {
 
     @Autowired
     private CommentService commentService;
+
+    @RequestMapping(value = "public/comment/list", method = RequestMethod.GET)
+    CommonResult getAllCommentByArticle(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                        @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                        @RequestParam(value = "articleId") Long articleId) {
+        Assert.notNull(page, MessageUtils.getParamNotNull("page"));
+        Assert.notNull(size, MessageUtils.getParamNotNull("size"));
+        Assert.notNull(articleId, MessageUtils.getParamNotNull("articleId"));
+        ArticleEntity entity = new ArticleEntity();
+        entity.setId(articleId);
+        return CommonResult.success(commentService.getAllCommentByArticle(entity, PageAndSortUtils.getPage(page, size)));
+    }
 
     @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "comment/create", method = RequestMethod.POST)
@@ -51,22 +61,17 @@ public class CommentController {
         return CommonResult.success(commentService.createComment(comment));
     }
 
-    @RequestMapping(value = "public/comment/list", method = RequestMethod.GET)
-    CommonResult<SpaceEntity> getAllCommentByArticle(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                     @RequestParam(value = "size", defaultValue = "10") Integer size,
-                                                     @RequestParam(value = "articleId") Long articleId) {
-        Assert.notNull(page, MessageUtils.getParamNotNull("page"));
-        Assert.notNull(size, MessageUtils.getParamNotNull("size"));
-        Assert.notNull(articleId, MessageUtils.getParamNotNull("articleId"));
-        ArticleEntity entity = new ArticleEntity();
-        entity.setId(articleId);
-        return CommonResult.success(commentService.getAllCommentByArticle(entity, PageAndSortUtils.getPage(page, size)));
-    }
-
     @RequestMapping(value = "comment/view/{articleId}", method = RequestMethod.GET)
     CommonResult<List> getArticleCommentsByCreateTimeAndTop7(@PathVariable(value = "articleId") Long articleId) {
         Assert.notNull(articleId, MessageUtils.getParamNotNull("articleId"));
         return CommonResult.success(commentService.getArticleCommentsByCreateTimeAndTop7(articleId));
+    }
+
+    @PreAuthorize("hasAuthority(('USER')) && hasPermission(#id, 'delete|comment')")
+    @RequestMapping(value = "comment/delete/{id}", method = RequestMethod.DELETE)
+    CommonResult delete(@PathVariable Long id) {
+        Assert.notNull(id, MessageUtils.getParamNotNull("id"));
+        return CommonResult.success(commentService.deleteCommentById(id));
     }
 
 }

@@ -160,7 +160,15 @@
                                 <wikift-editor id="wikift-comment-{{comment.id}}" markdown="{{comment.content}}" [tocId]="'#wikift-toc-container'" [preview]="'true'"></wikift-editor>
                             </p>
                             <small>
-                                <i class="zmdi zmdi-time"></i> {{ comment.createTime | date:'yyyy年MM月dd日HH:mm:ss' }} 评论</small>
+                                <i class="zmdi zmdi-time"></i> {{ comment.createTime | date:'yyyy年MM月dd日HH:mm:ss' }} 评论
+                                <!-- 评论操作工具 -->
+                                <div class="d-none d-sm-inline-block">
+                                    <a *ngIf="currentUser.id === comment.user.id" (click)="deleteArticleComment(comment.id)" tooltip="删除该评论" placement="top"
+                                        container="body">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </a>
+                                </div>
+                            </small>
                         </div>
                     </div>
                 </div>

@@ -20,6 +20,7 @@ package com.wikift.support.service.comment;
 import com.wikift.model.article.ArticleEntity;
 import com.wikift.model.comment.CommentEntity;
 import com.wikift.model.counter.CounterEntity;
+import com.wikift.model.result.CommonResult;
 import com.wikift.support.repository.comment.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,6 +42,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public CommentEntity getCommentById(Long id) {
+        return commentRepository.findOne(id);
+    }
+
+    @Override
     public Page<CommentEntity> getAllCommentByArticle(ArticleEntity entity, Pageable pageable) {
         return commentRepository.findAllByArticle(entity, pageable);
     }
@@ -52,6 +58,12 @@ public class CommentServiceImpl implements CommentService {
             counters.add(new CounterEntity(v[0], v[1]));
         });
         return counters;
+    }
+
+    @Override
+    public Long deleteCommentById(Long id) {
+        commentRepository.delete(id);
+        return id;
     }
 
 }

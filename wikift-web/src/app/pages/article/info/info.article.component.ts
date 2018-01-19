@@ -56,7 +56,7 @@ export class InfoArticleComponent implements OnInit {
     // 当前时间
     public currentDay = new Date().getTime();
     // 关注按钮显示状态
-    isFollow = true;
+    public isFollow = true;
     // 评论内容
     public commentContext;
     // 评论列表
@@ -65,8 +65,7 @@ export class InfoArticleComponent implements OnInit {
     public page: CommonPageModel;
     // 当前页数
     public currentPage: number;
-    numPages = 0;
-    maxSize: number = 5;
+    public numPages = 0;
     // 评论趋势报表配置
     public showloading = true;
     // 文章一周评论趋势图
@@ -283,6 +282,17 @@ export class InfoArticleComponent implements OnInit {
                         seriesData.push(element.dataValue);
                     });
                     this.visitArticleThrendChart = ChartsUtils.gerenateLineChart(false, 'line', xData, seriesData);
+                }
+            }
+        );
+    }
+
+    deleteArticleComment(commentId) {
+        this.commentService.deleteCommentById(commentId).subscribe(
+            result => {
+                if (result && result.code === CodeConfig.SUCCESS) {
+                    this.toastyService.success('评论已经删除');
+                    this.initComments();
                 }
             }
         );

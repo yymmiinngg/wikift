@@ -67,5 +67,6 @@ export class ApiConfig {
     public static API_COMMENT_CREATE = ApiConfig.V1_API_ROOT + 'comment/create';
     public static API_COMMENT_LIST = ApiConfig.V1_API_ROOT_PUBLIC + '/comment/list';
     public static API_COMMENT_COUNTER_TOP_WEEK = ApiConfig.V1_API_ROOT + 'comment/view/';
+    public static API_COMMENT_DELETE = ApiConfig.V1_API_ROOT + 'comment/delete/';
 
 }
