@@ -268,7 +268,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
      */
     @Modifying
     @Query(value = "UPDATE users_article_view_relation " +
-            "SET uavr_user_id = ?1, uavr_article_id = ?2, uavr_view_count = ?3, uavr_view_device = ?4 " +
+            "SET uavr_user_id = ?1, uavr_article_id = ?2, uavr_view_count = ?3, uavr_view_device = ?4, create_time = CURRENT_TIMESTAMP " +
             "WHERE uavr_user_id = ?1 " +
             "AND uavr_article_id = ?2 " +
             "AND uavr_view_device = ?4",
