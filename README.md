@@ -60,3 +60,7 @@ wikift是一套开源的易用的知识管理系统.
 #### 首页文章标签云
 
 [![首页文章标签云](https://github.com/qianmoQ/wikift/blob/master/wikift-design/snapshot/首页文章标签云.png?raw=true "首页文章标签云")](https://github.com/qianmoQ/wikift/blob/master/wikift-design/snapshot/首页文章标签云.png?raw=true "首页文章标签云")
+
+#### 用户文章浏览趋势
+
+[![用户文章浏览趋势](https://github.com/qianmoQ/wikift/blob/master/wikift-design/snapshot/用户文章浏览趋势.png?raw=true "用户文章浏览趋势")](https://github.com/qianmoQ/wikift/blob/master/wikift-design/snapshot/用户文章浏览趋势.png?raw=true "用户文章浏览趋势")

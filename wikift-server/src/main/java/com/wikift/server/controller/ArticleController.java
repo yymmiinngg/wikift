@@ -33,6 +33,8 @@ import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "${wikift.api.path}")
 public class ArticleController {
@@ -75,6 +77,11 @@ public class ArticleController {
                 param.getArticleId(),
                 param.getViewCount(),
                 param.getDevice()));
+    }
+
+    @RequestMapping(value = "public/article/view/{articleId}", method = RequestMethod.GET)
+    CommonResult<List> getArticleViewByCreateTimeAndTop7(@PathVariable(value = "articleId") Long articleId) {
+        return CommonResult.success(articleService.getArticleViewByCreateTimeAndTop7(articleId));
     }
 
     @PreAuthorize("hasAuthority(('USER'))")

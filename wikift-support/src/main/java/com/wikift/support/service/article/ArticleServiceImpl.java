@@ -19,6 +19,7 @@ package com.wikift.support.service.article;
 
 import com.wikift.common.enums.OrderEnums;
 import com.wikift.model.article.ArticleEntity;
+import com.wikift.model.counter.CounterEntity;
 import com.wikift.support.repository.article.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service(value = "articleService")
@@ -128,6 +130,13 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleEntity getArticleInfoById(Long id) {
         return articleRepository.findById(id);
+    }
+
+    @Override
+    public List<CounterEntity> getArticleViewByCreateTimeAndTop7(Long articleId) {
+        List<CounterEntity> counters = new ArrayList<>();
+        articleRepository.findArticleViewByCreateTimeAndTop7(articleId).forEach(v -> counters.add(new CounterEntity(v[0], v[1])));
+        return counters;
     }
 
 }

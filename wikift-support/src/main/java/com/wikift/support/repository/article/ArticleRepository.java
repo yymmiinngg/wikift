@@ -268,7 +268,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
      */
     @Modifying
     @Query(value = "UPDATE users_article_view_relation " +
-            "SET uavr_user_id = ?1, uavr_article_id = ?2, uavr_view_count = ?3, uavr_view_device = ?4 " +
+            "SET uavr_user_id = ?1, uavr_article_id = ?2, uavr_view_count = ?3, uavr_view_device = ?4, create_time = CURRENT_TIMESTAMP " +
             "WHERE uavr_user_id = ?1 " +
             "AND uavr_article_id = ?2 " +
             "AND uavr_view_device = ?4",
@@ -302,5 +302,30 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             "AND uavr_article_id = ?2",
             nativeQuery = true)
     Integer findViewArticle(Integer userId, Integer articleId);
+
+    /**
+     * 文章浏览趋势
+     * @param articleId 文章id
+     * @return 7天浏览趋势图
+     */
+    @Query(value = "SELECT a.formatDate AS dataKey, IFNULL(b.viewCount, 0) AS dataValue " +
+            "FROM ( " +
+            "SELECT curdate() AS formatDate UNION ALL " +
+            "SELECT date_sub( curdate( ), INTERVAL 1 DAY ) AS formatDate UNION ALL " +
+            "SELECT date_sub( curdate( ), INTERVAL 2 DAY ) AS formatDate UNION ALL " +
+            "SELECT date_sub( curdate( ), INTERVAL 3 DAY ) AS formatDate UNION ALL " +
+            "SELECT date_sub( curdate( ), INTERVAL 4 DAY ) AS formatDate UNION ALL " +
+            "SELECT date_sub( curdate( ), INTERVAL 5 DAY ) AS formatDate UNION ALL " +
+            "SELECT date_sub( curdate( ), INTERVAL 6 DAY ) AS formatDate " +
+            ") AS a LEFT JOIN ( " +
+            "SELECT a.a_id , DATE_FORMAT( uavr.create_time, '%Y-%m-%d' ) AS formatDate, IFNULL(SUM(uavr.uavr_view_count), 0) AS viewCount " +
+            "FROM article AS a " +
+            "LEFT OUTER JOIN users_article_view_relation AS uavr ON a.a_id = uavr.uavr_article_id " +
+            "WHERE a.a_id = ?1 " +
+            "GROUP BY formatDate " +
+            ") AS b ON a.formatDate = b.formatDate " +
+            "ORDER BY a.formatDate",
+            nativeQuery = true)
+    List<Object[]> findArticleViewByCreateTimeAndTop7(Long articleId);
 
 }

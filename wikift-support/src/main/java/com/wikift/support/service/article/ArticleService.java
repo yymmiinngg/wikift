@@ -2,6 +2,7 @@ package com.wikift.support.service.article;
 
 import com.wikift.common.enums.OrderEnums;
 import com.wikift.model.article.ArticleEntity;
+import com.wikift.model.counter.CounterEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -83,5 +84,7 @@ public interface ArticleService {
     Integer viewArticleCount(Integer userId, Integer articleId);
 
     ArticleEntity getArticleInfoById(Long id);
+
+    List<CounterEntity> getArticleViewByCreateTimeAndTop7(Long articleId);
 
 }

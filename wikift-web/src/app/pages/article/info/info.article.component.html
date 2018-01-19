@@ -173,6 +173,17 @@
         </div>
         <!-- 文章属性 -->
         <div class="col-md-3">
+            <!-- 浏览趋势 -->
+            <div class="card">
+                <div class="card-header border-b-1 px-4 py-3">
+                    <div class="card-block">
+                        <h2 class="card-title">浏览趋势</h2>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div echarts [options]="visitArticleThrendChart" class="comments-counter-chart"></div>
+                </div>
+            </div>
             <!-- 文章作者 -->
             <div class="card">
                 <div class="card-body">
@@ -246,7 +257,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div *ngIf="currentUser; else noLogin" echarts [options]="linkoption" [loading]="showloading" class="comments-counter-chart"></div>
+                    <div *ngIf="currentUser; else noLogin" echarts [options]="commentArticleThrendChart" class="comments-counter-chart"></div>
                     <ng-template #noLogin class="mr-center">
                         登录后才可使用本功能
                     </ng-template>

@@ -223,7 +223,7 @@ CREATE TABLE `users_article_view_relation` (
   `uavr_article_id` bigint(20) NOT NULL,
   `uavr_view_count` bigint(200) NOT NULL,
   `uavr_view_device` varchar(50) NOT NULL,
-  `uavr_create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   KEY `FK_uavr_users_view_relation_id` (`uavr_user_id`),
   KEY `FK_uavr_article_view_relation_id` (`uavr_article_id`),
   CONSTRAINT `FK_uavr_article_view_relation_id` FOREIGN KEY (`uavr_article_id`) REFERENCES `article` (`a_id`) ON DELETE CASCADE,
