@@ -102,7 +102,7 @@ public class ArticleController {
         return CommonResult.success(articleService.update(entity));
     }
 
-    @PreAuthorize("hasPermission(#id, 'update|delete')")
+    @PreAuthorize("hasPermission(#id, 'update|article')")
     @RequestMapping(value = "article/delete/{id}", method = RequestMethod.DELETE)
     CommonResult<ArticleEntity> delete(@PathVariable(value = "id") Long id) {
         Assert.notNull(id, MessageEnums.PARAMS_NOT_NULL.getValue());
