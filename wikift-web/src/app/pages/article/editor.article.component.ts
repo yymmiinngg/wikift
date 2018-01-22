@@ -34,10 +34,8 @@ import { ArticleTypeService } from '../../../services/article.type.service';
 export class EditorArticleComponent implements OnInit {
 
     // 文章id
-    id: number;
-    article: ArticleModel;
-    // 文章类型
-    public articleType;
+    public id: number;
+    public article: ArticleModel;
     @ViewChild('settingAritcleModel')
     public settingAritcleModel: ModalDirective;
 
@@ -63,15 +61,6 @@ export class EditorArticleComponent implements OnInit {
         params.id = this.id;
         this.articleService.info(params).subscribe(
             result => { this.article = result.data; }
-        );
-        this.initArticelType();
-    }
-
-    initArticelType() {
-        this.articleTypeService.list().subscribe(
-            result => {
-                this.articleType = result.data;
-            }
         );
     }
 

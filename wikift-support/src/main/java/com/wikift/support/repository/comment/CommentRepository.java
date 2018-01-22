@@ -25,9 +25,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 
+@Transactional
 public interface CommentRepository extends PagingAndSortingRepository<CommentEntity, Long> {
 
     /**

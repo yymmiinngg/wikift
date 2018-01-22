@@ -58,6 +58,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Integer updateEmail(UserEntity entity) {
+        return userRepository.updateByEmail(entity.getId(), entity.getEmail());
+    }
+
+    @Override
+    public Integer updatePassword(UserEntity entity) {
+        return userRepository.updateByPassword(entity.getId(), entity.getPassword());
+    }
+
+    @Override
+    public UserEntity getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
     public Long delete(Long id) {
         userRepository.delete(id);
         return id;

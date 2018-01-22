@@ -18,7 +18,6 @@
 package com.wikift.server.param;
 
 import com.wikift.support.validate.user.UserEmailExists;
-import com.wikift.support.validate.user.UserNameExists;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,29 +26,35 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
+/**
+ * UserParamForEmail <br/>
+ * 描述 : UserParamForEmail <br/>
+ * 作者 : qianmoQ <br/>
+ * 版本 : 1.0 <br/>
+ * 创建时间 : 2018-01-19 下午6:06 <br/>
+ * 联系作者 : <a href="mailTo:shichengoooo@163.com">qianmoQ</a>
+ */
 @Data
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserParam {
+public class UserParamForPassword {
 
-    @NotEmpty(message = "用户名不能为空")
-    @UserNameExists
-    private String username;
-
-    @NotEmpty(message = "用户密码不能为空")
-    @Size(min = 8, max = 20, message = "密码不能少于8位, 且不能大于20位")
-    private String password;
-
-    @NotNull(message = "用户确认密码不能为空")
-    @Size(min = 8, max = 20, message = "密码不能少于8位, 且不能大于20位")
-    private String repassword;
+    @NotNull(message = "用户不能为空")
+    private Long id;
 
     @NotNull(message = "用户邮箱不能为空")
+    @NotEmpty(message = "用户邮箱不能为空")
     @Email
-    @UserEmailExists
     private String email;
+
+    @NotNull(message = "用户原密码不能为空")
+    @NotEmpty(message = "用户原密码不能为空")
+    private String password;
+
+    @NotNull(message = "用户修改的密码不能为空")
+    @NotEmpty(message = "用户修改的密码不能为空")
+    private String repassword;
 
 }

@@ -189,4 +189,16 @@ export class UserService {
         return this.http.get(ApiConfig.API_USER_FOLLOW_COUNT, options).map(ResultUtils.extractData);
     }
 
+    updateEmail(param: UserModel): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
+        return this.http.put(ApiConfig.API_USER_UPDATE_EMAIL, JSON.stringify(param), options)
+            .map(ResultUtils.extractData);
+    }
+
+    updatePassword(param): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
+        return this.http.put(ApiConfig.API_USER_UPDATE_PASSWORD, JSON.stringify(param), options)
+            .map(ResultUtils.extractData);
+    }
+
 }

@@ -67,4 +67,10 @@ export class CommentService {
             .map(ResultUtils.extractData);
     }
 
+    deleteCommentById(id) {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        return this.http.delete(ApiConfig.API_COMMENT_DELETE + id, options)
+            .map(ResultUtils.extractData);
+    }
+
 }

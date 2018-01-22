@@ -21,6 +21,7 @@ import com.wikift.model.user.UserEntity;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -41,7 +42,7 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
      *
      * @return 用户排行榜
      */
-    @Query(value = "SELECT DISTINCT(uar.uar_user_id), COUNT(uar.uar_user_id) AS u_count, u.u_id, u.u_username, u.u_password, u.u_avatar, u.u_alias_name, u.u_signature " +
+    @Query(value = "SELECT DISTINCT(uar.uar_user_id), COUNT(uar.uar_user_id) AS u_count, u.u_id, u.u_username, u.u_password, u.u_avatar, u.u_alias_name, u.u_signature, u.u_email " +
             "FROM users_article_relation AS uar " +
             "LEFT JOIN users AS u " +
             "ON uar.uar_user_id = u.u_id " +
@@ -147,5 +148,41 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
             "WHERE ufr.ufr_user_id_cover = ?1",
             nativeQuery = true)
     Integer findFollowCoverCount(Long followUserId);
+
+    /**
+     * 根据邮箱查询用户
+     *
+     * @param email 邮箱
+     * @return 用户信息
+     */
+    UserEntity findByEmail(String email);
+
+    /**
+     * 修改邮箱
+     *
+     * @param id    用户标识
+     * @param email 邮箱
+     * @return
+     */
+    @Modifying
+    @Query(value = "update UserEntity as users " +
+            "set users.email = :email " +
+            "where users.id = :id")
+    Integer updateByEmail(@Param(value = "id") Long id,
+                          @Param(value = "email") String email);
+
+    /**
+     * 修改密码
+     *
+     * @param id       用户标识
+     * @param password 密码
+     * @return
+     */
+    @Modifying
+    @Query(value = "update UserEntity as users " +
+            "set users.password = :password " +
+            "where users.id = :id")
+    Integer updateByPassword(@Param(value = "id") Long id,
+                             @Param(value = "password") String password);
 
 }

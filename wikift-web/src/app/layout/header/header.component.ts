@@ -19,6 +19,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs/Subscription';
+import { FormGroup, FormControl } from '@angular/forms';
+
 import { CookieUtils } from '../../shared/utils/cookie.util';
 
 import { SharedService } from '../../shared/services/shared.service';
@@ -27,6 +29,10 @@ import { UserService } from '../../../services/user.service';
 import { UserParamModel } from '../../shared/model/param/user.param.model';
 import { CommonConfig } from '../../../config/common.config';
 import { RemindService } from '../../../services/remind.service';
+import { CodeConfig } from '../../../config/code.config';
+import { ToastyService } from '_ng2-toasty@4.0.3@ng2-toasty';
+import { ResultUtils } from '../../shared/utils/result.util';
+import { UserModel } from '../../shared/model/user/user.model';
 
 @Component({
   selector: 'app-header',
@@ -38,7 +44,7 @@ import { RemindService } from '../../../services/remind.service';
 export class HeaderComponent implements OnInit {
 
   token: String;
-  userInfo;
+  public userInfo;
   maThemeModel = 'green';
   // 用户未读消息, 提示框
   public unreadReminds;
@@ -51,6 +57,17 @@ export class HeaderComponent implements OnInit {
   public remindDetial: ModalDirective;
   // 提示消息详情
   public remind;
+  // 显示邮箱警告
+  public showEmailAlert = true;
+  // 用户邮箱
+  public userEmail;
+  @ViewChild('settingsEmail')
+  public settingsEmail: ModalDirective;
+  public form: FormGroup;
+  // 修改密码
+  @ViewChild('changerPassword')
+  public changerPassword: ModalDirective;
+  public changerPasswordUserInfo;
 
   setTheme() {
     this.sharedService.setTheme(this.maThemeModel);
@@ -59,7 +76,8 @@ export class HeaderComponent implements OnInit {
   constructor(private sharedService: SharedService,
     private router: Router,
     private userService: UserService,
-    private remindService: RemindService) {
+    private remindService: RemindService,
+    private toastyService: ToastyService) {
     sharedService.maThemeSubject.subscribe((value) => {
       this.maThemeModel = value;
     });
@@ -68,6 +86,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.token = CookieUtils.get();
     this.initUserInfo();
+    this.changerPasswordUserInfo = new UserParamModel();
   }
 
   initUserInfo() {
@@ -77,6 +96,9 @@ export class HeaderComponent implements OnInit {
       this.userService.info(param).subscribe(
         data => {
           this.userInfo = data.data;
+          if (this.userInfo.email) {
+            this.showEmailAlert = false;
+          }
           // 将用户信息存放到cookie中
           CookieUtils.setBy(CommonConfig.AUTH_USER_INFO, JSON.stringify(this.userInfo));
           // 加载用户通知信息
@@ -125,6 +147,47 @@ export class HeaderComponent implements OnInit {
   readRemind() {
     this.readReminds = new Array();
     this.initReadRemindByUser();
+  }
+
+  showSettingsEmial() {
+    this.changerPassword.hide();
+    this.settingsEmail.show();
+  }
+
+  settingEmail() {
+    this.userService.updateEmail(this.userInfo).subscribe(
+      result => {
+        if (result.data && result.code === CodeConfig.SUCCESS) {
+          this.toastyService.success('您的邮箱已经设置成功!!!');
+          this.settingsEmail.hide();
+          this.showEmailAlert = false;
+        } else {
+          this.toastyService.error(ResultUtils.getError(result));
+        }
+      }
+    );
+  }
+
+  showChangerPassword() {
+    this.changerPassword.show();
+  }
+
+  changerPasswordRevice() {
+    this.changerPasswordUserInfo.id = this.userInfo.id;
+    this.userService.updatePassword(this.changerPasswordUserInfo).subscribe(
+      result => {
+        if (result.data && result.code === CodeConfig.SUCCESS) {
+          this.toastyService.success('您的密码已经修改成功, 下次登录请使用新密码!!!');
+          this.changerPassword.hide();
+        } else {
+          if (result.code > CodeConfig.ERROR_5000) {
+            this.toastyService.error(result.msg);
+          } else {
+            this.toastyService.error(ResultUtils.getError(result));
+          }
+        }
+      }
+    );
   }
 
 }

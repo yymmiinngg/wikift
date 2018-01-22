@@ -154,13 +154,23 @@
                 <!-- 评论列表 -->
                 <div class="messages__content">
                     <div *ngFor="let comment of comments" class="messages__item">
-                        <img src="{{comment.user.avatar}}" class="messages__avatar" alt="{{comment.user.username}}">
+                        <a [routerLink]="['/account', article.user.username, 'info']">
+                            <img src="{{comment.user.avatar}}" class="messages__avatar" alt="{{comment.user.username}}">
+                        </a>
                         <div class="messages__details">
                             <p>
-                                <wikift-editor id="wikift-comment-{{comment.id}}" markdown="{{comment.content}}" [tocId]="'#wikift-toc-container'" [preview]="'true'"></wikift-editor>
+                                <wikift-editor id="wikift-comment-{{comment.id}}" [markdown]="comment.content" [tocId]="'#wikift-toc-container'" [preview]="'true'"></wikift-editor>
                             </p>
                             <small>
-                                <i class="zmdi zmdi-time"></i> {{ comment.createTime | date:'yyyy年MM月dd日HH:mm:ss' }} 评论</small>
+                                <i class="zmdi zmdi-time"></i> {{ comment.createTime | date:'yyyy年MM月dd日HH:mm:ss' }} 评论
+                                <!-- 评论操作工具 -->
+                                <div class="d-none d-sm-inline-block">
+                                    <a *ngIf="currentUser.id === comment.user.id" (click)="deleteArticleComment(comment.id)" tooltip="删除该评论" placement="top"
+                                        container="body">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </a>
+                                </div>
+                            </small>
                         </div>
                     </div>
                 </div>

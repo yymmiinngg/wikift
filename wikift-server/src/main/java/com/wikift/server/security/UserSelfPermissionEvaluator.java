@@ -19,12 +19,17 @@ package com.wikift.server.security;
 
 import com.wikift.common.enums.RepositoryEnums;
 import com.wikift.model.article.ArticleEntity;
+import com.wikift.model.comment.CommentEntity;
+import com.wikift.model.user.UserEntity;
 import com.wikift.support.service.article.ArticleService;
+import com.wikift.support.service.comment.CommentService;
+import com.wikift.support.service.user.UserService;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
@@ -44,6 +49,12 @@ public class UserSelfPermissionEvaluator implements PermissionEvaluator {
 
     @Resource
     private ArticleService articleService;
+
+    @Resource
+    private CommentService commentService;
+
+    @Resource
+    private UserService userService;
 
     @Override
     public boolean hasPermission(Authentication auth, Object data, Object permission) {
@@ -79,14 +90,30 @@ public class UserSelfPermissionEvaluator implements PermissionEvaluator {
         RepositoryEnums repository = RepositoryEnums.get(source1[1].toUpperCase());
         switch (repository) {
             case ARTICLE:
-                ArticleEntity entity = articleService.getArticle(primary);
-                if (entity != null && auth.getName().equals(entity.getUser().getUsername())) {
+                ArticleEntity article = articleService.getArticle(primary);
+                if (!ObjectUtils.isEmpty(article) && isSelfUser(auth, article.getUser())) {
+                    return true;
+                }
+                return false;
+            case COMMENT:
+                CommentEntity comment = commentService.getCommentById(primary);
+                if (!ObjectUtils.isEmpty(comment) && isSelfUser(auth, comment.getUser())) {
+                    return true;
+                }
+                return false;
+            case USER:
+                UserEntity entity = userService.getUserById(primary);
+                if (!ObjectUtils.isEmpty(entity) && isSelfUser(auth, entity)) {
                     return true;
                 }
                 return false;
             default:
                 return false;
         }
+    }
+
+    private boolean isSelfUser(Authentication auth, UserEntity user) {
+        return auth.getName().equals(user.getUsername());
     }
 
 }

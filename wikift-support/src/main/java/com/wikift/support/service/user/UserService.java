@@ -29,6 +29,12 @@ public interface UserService {
 
     UserEntity update(UserEntity entity);
 
+    Integer updateEmail(UserEntity entity);
+
+    Integer updatePassword(UserEntity entity);
+
+    UserEntity getUserByEmail(String email);
+
     Long delete(Long id);
 
     UserEntity getInfoByUsername(String username);

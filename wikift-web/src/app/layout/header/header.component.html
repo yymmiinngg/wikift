@@ -15,6 +15,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
+<ng2-toasty [position]="'top-center'"></ng2-toasty>
 <header class="header">
   <navigation-trigger></navigation-trigger>
   <div class="header__logo">
@@ -22,16 +23,15 @@
       <a [routerLink]="['/']">Wikift</a>
     </h1>
   </div>
-  <!-- 搜索框 -->
-  <header-search #search class="toggled" [class.toggled]="search.searchActive"></header-search>
+  <!-- 未设置邮箱警告 -->
+  <div class="search">
+    <div *ngIf="userInfo && showEmailAlert" class="alert alert-danger">
+      <strong>注意!</strong> 您的用户信息没有设置用户邮箱, 新版本系统中我们要求必须设置邮箱, 否则账号会被禁止使用!!!
+      <a (click)="showSettingsEmial()">立即设置</a>
+    </div>
+  </div>
   <!-- 工具栏 -->
   <ul class="top-nav">
-    <!-- 搜索框 -->
-    <li class="d-xl-none">
-      <a (click)="search.searchActive = true">
-        <i class="zmdi zmdi-search"></i>
-      </a>
-    </li>
     <ng-container *ngIf="token; else noAuth">
       <!-- 个人消息 -->
       <li dropdown [autoClose]="false" triggers="mouseover">
@@ -120,6 +120,16 @@
                   </div>
                 </div>
               </a>
+              <a (click)="showChangerPassword()" class="listview__item">
+                <div class="listview__content">
+                  <div class="listview__heading">
+                    <span>
+                      <i class="zmdi zmdi-lock zmdi-hc-fw"></i>
+                      <span>修改密码</span>
+                    </span>
+                  </div>
+                </div>
+              </a>
               <a href="#" (click)="logout()" class="listview__item">
                 <div class="listview__content">
                   <div class="listview__heading">
@@ -169,6 +179,81 @@
             </tbody>
           </table>
         </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<!-- 设置邮箱 -->
+<div *ngIf="userInfo && showEmailAlert" bsModal #settingsEmail="bs-modal" class="modal fade">
+  <ng-container>
+    <div class="modal-dialog modal-lg" style="width:350px;">
+      <div class="modal-content">
+        <div class="modal-header border-b-1">
+          <h5 class="modal-title pull-left">您正在设置 {{userInfo.username}} 的邮箱</h5>
+        </div>
+        <form #emailForm="ngForm" (ngSubmit)="settingEmail()">
+          <div class="modal-body">
+            <div class="form-group form-group--float form-group--centered">
+              <input type="text" disabled [(ngModel)]="userInfo.username" [ngModelOptions]="{standalone: true}" class="form-control" required
+                placeholder="请输入用户名" />
+            </div>
+            <div class="form-group form-group--float form-group--centered">
+              <input type="email" [(ngModel)]="userInfo.email" name="email" #email="ngModel" email class="form-control" required placeholder="请输入用户邮箱"
+              />
+              <p class="text-danger" *ngIf="email.errors?.email">邮箱地址不正确</p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button [disabled]="!emailForm.form.valid" class="btn btn--icon login__block__btn" type="submit">
+              <i class="zmdi zmdi-arrow-forward"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<!-- 修改密码 -->
+<div *ngIf="userInfo" bsModal #changerPassword="bs-modal" class="modal fade">
+  <ng-container>
+    <div class="modal-dialog modal-lg" style="width:350px;">
+      <div class="modal-content">
+        <div class="modal-header border-b-1">
+          <h5 class="modal-title pull-left">您正在修改 {{userInfo.username}} 的密码</h5>
+        </div>
+        <form *ngIf="!showEmailAlert; else pleaseSettingEmail" #passwordForm="ngForm" (ngSubmit)="changerPasswordRevice()">
+          <div class="modal-body">
+            <div class="form-group form-group--float form-group--centered">
+              <input type="text" disabled [(ngModel)]="userInfo.username" [ngModelOptions]="{standalone: true}" class="form-control" required
+                placeholder="请输入用户名" />
+            </div>
+            <div class="form-group form-group--float form-group--centered">
+              <input type="email" [(ngModel)]="changerPasswordUserInfo.email" name="email" #email="ngModel" email class="form-control"
+                required placeholder="请输入用户邮箱" />
+              <p class="text-danger" *ngIf="email.errors?.email">邮箱地址不正确</p>
+            </div>
+            <div class="form-group form-group--float form-group--centered">
+              <input type="password" [(ngModel)]="changerPasswordUserInfo.password" name="password" #password="ngModel" [rangeLength]="[8, 20]"
+                class="form-control" required placeholder="请输入用户原密码" />
+              <p class="text-danger" *ngIf="password.errors?.rangeLength">密码不能少于8位, 且不能大于20位</p>
+            </div>
+            <div class="form-group form-group--float form-group--centered">
+              <input type="password" [(ngModel)]="changerPasswordUserInfo.repassword" name="repassword" #repassword="ngModel" [rangeLength]="[8, 20]"
+                class="form-control" required placeholder="请输入用户需要修改的密码" />
+              <p class="text-danger" *ngIf="repassword.errors?.rangeLength">密码不能少于8位, 且不能大于20位</p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button [disabled]="!passwordForm.form.valid" class="btn btn--icon login__block__btn" type="submit">
+              <i class="zmdi zmdi-arrow-forward"></i>
+            </button>
+          </div>
+        </form>
+        <ng-template #pleaseSettingEmail>
+          <div class="mr-center">请先设置您的邮箱地址
+            <a (click)="showSettingsEmial()">立即设置</a>
+          </div>
+        </ng-template>
       </div>
     </div>
   </ng-container>

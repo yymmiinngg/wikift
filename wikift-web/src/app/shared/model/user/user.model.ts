@@ -23,5 +23,6 @@ export class UserModel {
     public aliasName: String;
     public signature: String;
     public follows: Array<UserModel>;
+    public email: String;
 
 }
