@@ -29,10 +29,10 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BusyModule, BusyConfig } from 'angular2-busy';
 import { ToastyModule, ToastyService } from 'ng2-toasty';
+import { CustomFormsModule } from 'ng2-validation';
 
 import { LayoutComponent } from './layout.component';
 import { HeaderComponent } from './header/header.component';
-import { SearchComponent } from './header/search/search.component';
 import { NavigationTriggerComponent } from './header/navigation-trigger/navigation-trigger.component';
 
 import { UserService } from '../../services/user.service';
@@ -54,7 +54,6 @@ export function busyConfigFactory() {
   declarations: [
     LayoutComponent,
     HeaderComponent,
-    SearchComponent,
     NavigationTriggerComponent
   ],
   imports: [
@@ -62,6 +61,7 @@ export function busyConfigFactory() {
     LayoutRouting,
     FormsModule,
     BusyModule,
+    CustomFormsModule,
     BsDropdownModule.forRoot(),
     ProgressbarModule.forRoot(),
     ButtonsModule.forRoot(),

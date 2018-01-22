@@ -15,14 +15,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export class UserModel {
+package com.wikift.support.validate.user;
 
-    public id: Number;
-    public username: String;
-    public avatar: String;
-    public aliasName: String;
-    public signature: String;
-    public follows: Array<UserModel>;
-    public email: String;
+import com.wikift.support.service.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
+public class UserEmailExistsValidator implements ConstraintValidator<UserEmailExists, String> {
+
+    @Autowired
+    private UserService userService;
+
+    @Override
+    public void initialize(UserEmailExists userNameExists) {
+
+    }
+
+    @Override
+    public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
+        return ObjectUtils.isEmpty(userService.getUserByEmail(s));
+    }
 
 }

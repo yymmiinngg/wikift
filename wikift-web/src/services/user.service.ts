@@ -189,4 +189,14 @@ export class UserService {
         return this.http.get(ApiConfig.API_USER_FOLLOW_COUNT, options).map(ResultUtils.extractData);
     }
 
+    /**
+     * 更新用户
+     * @param param 用户信息
+     */
+    updateEmail(param: UserModel): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByTokenAndJSON();
+        return this.http.put(ApiConfig.API_USER_UPDATE_EMAIL, JSON.stringify(param), options)
+            .map(ResultUtils.extractData);
+    }
+
 }

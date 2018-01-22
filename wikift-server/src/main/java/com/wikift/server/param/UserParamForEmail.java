@@ -15,27 +15,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Component, OnInit } from '@angular/core';
+package com.wikift.server.param;
 
-@Component({
-  selector: 'header-search',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
-})
+import com.wikift.support.validate.user.UserEmailExists;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.validator.constraints.Email;
 
-export class SearchComponent implements OnInit {
-  searchActive: boolean = false;
-  searchValue: string = '';
-  searchFocused: boolean = false;
+import javax.validation.constraints.NotNull;
 
-  closeSearch() {
-    this.searchActive = false; // Close the search block
-    this.searchValue = null; // Empty the search field
-    this.searchFocused = false;
-  }
+/**
+ * UserParamForEmail <br/>
+ * 描述 : UserParamForEmail <br/>
+ * 作者 : qianmoQ <br/>
+ * 版本 : 1.0 <br/>
+ * 创建时间 : 2018-01-19 下午6:06 <br/>
+ * 联系作者 : <a href="mailTo:shichengoooo@163.com">qianmoQ</a>
+ */
+@Data
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserParamForEmail {
 
-  constructor() { }
+    @NotNull(message = "用户不能为空")
+    private Long id;
 
-  ngOnInit() {
-  }
+    @NotNull(message = "用户邮箱不能为空")
+    @Email
+    @UserEmailExists
+    private String email;
+
 }

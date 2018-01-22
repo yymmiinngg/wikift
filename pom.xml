@@ -43,6 +43,7 @@
         <module>wikift-center</module>
         <module>wikift-job</module>
         <module>wikift-design</module>
+        <module>wikift-script</module>
     </modules>
 
     <!-- url -->

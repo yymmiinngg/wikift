@@ -31,9 +31,9 @@ import { UserService } from '../../../../services/user.service';
 
 export class UserLoginComponent implements OnInit {
 
-    form: FormGroup;
+    public form: FormGroup;
     // 页面登录用户
-    user: LoginParamModel;
+    public user: LoginParamModel;
 
     constructor(private router: Router,
         private userService: UserService) {

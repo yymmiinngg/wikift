@@ -17,11 +17,13 @@
  */
 package com.wikift.server.param;
 
+import com.wikift.support.validate.user.UserEmailExists;
 import com.wikift.support.validate.user.UserNameExists;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
@@ -44,5 +46,10 @@ public class UserParam {
     @NotNull(message = "用户确认密码不能为空")
     @Size(min = 8, max = 20, message = "密码不能少于8位, 且不能大于20位")
     private String repassword;
+
+    @NotNull(message = "用户邮箱不能为空")
+    @Email
+    @UserEmailExists
+    private String email;
 
 }

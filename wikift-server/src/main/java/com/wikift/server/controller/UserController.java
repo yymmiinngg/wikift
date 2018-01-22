@@ -18,10 +18,12 @@
 package com.wikift.server.controller;
 
 import com.wikift.common.enums.MessageEnums;
+import com.wikift.common.utils.BeanUtils;
 import com.wikift.common.utils.ShaUtils;
 import com.wikift.model.result.CommonResult;
 import com.wikift.model.user.UserEntity;
 import com.wikift.server.param.UserParam;
+import com.wikift.server.param.UserParamForEmail;
 import com.wikift.support.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -60,13 +62,22 @@ public class UserController {
         return CommonResult.success(userService.getInfoByUsername(username));
     }
 
-    @PreAuthorize("hasAuthority(('USER'))")
+    @PreAuthorize("hasAuthority(('USER')) && hasPermission(#entity.id, 'update|user')")
     @RequestMapping(value = "user/update", method = RequestMethod.PUT)
     CommonResult<UserEntity> update(@RequestBody UserEntity entity) {
         Assert.notNull(entity, MessageEnums.PARAMS_NOT_NULL.getValue());
-        UserEntity targetUserEntity = userService.getInfoByUsername(entity.getUsername());
+        UserEntity targetUserEntity = userService.getUserById(entity.getId());
         entity.setPassword(targetUserEntity.getPassword());
         return CommonResult.success(userService.update(entity));
+    }
+
+    @PreAuthorize("hasAuthority(('USER')) && hasPermission(#entity.id, 'update|user')")
+    @RequestMapping(value = "user/update/email", method = RequestMethod.PUT)
+    CommonResult<UserEntity> updateEmial(@RequestBody @Validated UserParamForEmail entity) {
+        Assert.notNull(entity, MessageEnums.PARAMS_NOT_NULL.getValue());
+        UserEntity user = new UserEntity();
+        BeanUtils.copy(entity, user);
+        return CommonResult.success(userService.updateEmail(user));
     }
 
     @RequestMapping(value = "public/user/top", method = RequestMethod.GET)
@@ -75,28 +86,28 @@ public class UserController {
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
-    @RequestMapping(value = "user//follow", method = RequestMethod.PUT)
+    @RequestMapping(value = "user/follow", method = RequestMethod.PUT)
     CommonResult follow(@RequestBody UserEntity entity) {
         Assert.notNull(entity, MessageEnums.PARAMS_NOT_NULL.getValue());
         return CommonResult.success(userService.follow(entity.getId(), entity.getFollows().get(0).getId()));
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
-    @RequestMapping(value = "user//unfollow", method = RequestMethod.PUT)
+    @RequestMapping(value = "user/unfollow", method = RequestMethod.PUT)
     CommonResult unfollow(@RequestBody UserEntity entity) {
         Assert.notNull(entity, MessageEnums.PARAMS_NOT_NULL.getValue());
         return CommonResult.success(userService.unFollow(entity.getId(), entity.getFollows().get(0).getId()));
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
-    @RequestMapping(value = "user//follows/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "user/follows/{userId}", method = RequestMethod.GET)
     CommonResult<UserEntity> getFollows(@PathVariable(value = "userId") Long userId) {
         Assert.notNull(userId, MessageEnums.PARAMS_NOT_NULL.getValue());
         return CommonResult.success(userService.findAllFollowersByUserId(userId));
     }
 
     @PreAuthorize("hasAuthority(('USER'))")
-    @RequestMapping(value = "user//follows/check", method = RequestMethod.GET)
+    @RequestMapping(value = "user/follows/check", method = RequestMethod.GET)
     CommonResult<UserEntity> checkFollow(@RequestParam(value = "followUserId") Long followUserId,
                                          @RequestParam(value = "coverUserId") Long coverUserId) {
         Assert.notNull(followUserId, MessageEnums.PARAMS_NOT_NULL.getValue());

@@ -24,6 +24,7 @@ export class ApiConfig {
 
     public static API_USER_INFO = ApiConfig.V1_API_ROOT + 'user/info/';
     public static API_USER_UPDATE = ApiConfig.V1_API_ROOT + 'user/update';
+    public static API_USER_UPDATE_EMAIL = ApiConfig.V1_API_ROOT + 'user/update/email';
     public static API_TOP_USER_BY_ACTIVE = ApiConfig.V1_API_ROOT_PUBLIC + '/user/top';
     public static API_USER_FOLLOW = ApiConfig.V1_API_ROOT + 'user/follow';
     public static API_USER_REGISTER = ApiConfig.V1_API_ROOT + 'user/register';

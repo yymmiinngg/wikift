@@ -23,6 +23,7 @@ import com.wikift.model.comment.CommentEntity;
 import com.wikift.model.user.UserEntity;
 import com.wikift.support.service.article.ArticleService;
 import com.wikift.support.service.comment.CommentService;
+import com.wikift.support.service.user.UserService;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -51,6 +52,9 @@ public class UserSelfPermissionEvaluator implements PermissionEvaluator {
 
     @Resource
     private CommentService commentService;
+
+    @Resource
+    private UserService userService;
 
     @Override
     public boolean hasPermission(Authentication auth, Object data, Object permission) {
@@ -94,6 +98,12 @@ public class UserSelfPermissionEvaluator implements PermissionEvaluator {
             case COMMENT:
                 CommentEntity comment = commentService.getCommentById(primary);
                 if (!ObjectUtils.isEmpty(comment) && isSelfUser(auth, comment.getUser())) {
+                    return true;
+                }
+                return false;
+            case USER:
+                UserEntity entity = userService.getUserById(primary);
+                if (!ObjectUtils.isEmpty(entity) && isSelfUser(auth, entity)) {
                     return true;
                 }
                 return false;

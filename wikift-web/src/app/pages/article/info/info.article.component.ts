@@ -293,6 +293,7 @@ export class InfoArticleComponent implements OnInit {
                 if (result && result.code === CodeConfig.SUCCESS) {
                     this.toastyService.success('评论已经删除');
                     this.initComments();
+                    this.initArticleInfo();
                 }
             }
         );

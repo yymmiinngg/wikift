@@ -61,6 +61,9 @@ public class UserEntity {
     @Column(name = "u_signature")
     private String signature;
 
+    @Column(name = "u_email")
+    private String email;
+
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_role_relation",
             joinColumns = @JoinColumn(name = "urr_user_id", referencedColumnName = "u_id"),
