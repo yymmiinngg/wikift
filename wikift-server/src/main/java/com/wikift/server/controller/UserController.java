@@ -24,6 +24,7 @@ import com.wikift.model.result.CommonResult;
 import com.wikift.model.user.UserEntity;
 import com.wikift.server.param.UserParam;
 import com.wikift.server.param.UserParamForEmail;
+import com.wikift.server.param.UserParamForPassword;
 import com.wikift.support.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -78,6 +79,29 @@ public class UserController {
         UserEntity user = new UserEntity();
         BeanUtils.copy(entity, user);
         return CommonResult.success(userService.updateEmail(user));
+    }
+
+    @PreAuthorize("hasAuthority(('USER')) && hasPermission(#param.id, 'update|user')")
+    @RequestMapping(value = "user/update/password", method = RequestMethod.PUT)
+    CommonResult<UserEntity> updatePassword(@RequestBody @Validated UserParamForPassword param) {
+        Assert.notNull(param, MessageEnums.PARAMS_NOT_NULL.getValue());
+        // 抽取邮箱是否为当前用户设置的邮箱地址
+        UserEntity user = userService.getUserById(param.getId());
+        if (!param.getEmail().equals(user.getEmail())) {
+            return CommonResult.validateError(MessageEnums.USER_EMAIL_NOT_AGREE);
+        }
+        // 抽取原密码是否正确
+        if (!ShaUtils.hash256(param.getPassword()).equals(user.getPassword())) {
+            return CommonResult.validateError(MessageEnums.USER_PASSWORD_INPUT_ERROR);
+        }
+        // 抽取修改后密码是否与原密码一致
+        if (param.getRepassword().equals(param.getPassword())) {
+            return CommonResult.validateError(MessageEnums.USER_PASSWORD_INPUT_SAME);
+        }
+        UserEntity entity = new UserEntity();
+        entity.setId(param.getId());
+        entity.setPassword(ShaUtils.hash256(param.getRepassword()));
+        return CommonResult.success(userService.updatePassword(entity));
     }
 
     @RequestMapping(value = "public/user/top", method = RequestMethod.GET)

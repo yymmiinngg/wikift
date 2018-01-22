@@ -19,5 +19,6 @@ export class CodeConfig {
 
     public static readonly SUCCESS = 0;
     public static readonly ERROR_PARAM = '4001';
+    public static readonly ERROR_5000 = 5000;
 
 }

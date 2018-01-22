@@ -20,6 +20,7 @@ export class UserParamModel {
     public username: string;
     public password: string;
     public repassword: string;
+    public email: string;
 
     constructor() { }
 

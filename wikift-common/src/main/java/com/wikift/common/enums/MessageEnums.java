@@ -28,6 +28,13 @@ public enum MessageEnums {
 
     CREDENTIALS_BAD(4100, "无效的认证凭据, 请检查输入的认证信息"),
 
+    /**
+     * 用户消息提示
+     */
+    USER_EMAIL_NOT_AGREE(5001, "当前邮箱地址不是该用户所有"),
+    USER_PASSWORD_INPUT_ERROR(5002, "用户原密码输入错误"),
+    USER_PASSWORD_INPUT_SAME(5003, "用户原密码不能与修改密码相同"),
+
     UNSUPPORT_MEDIA_TYPE(4415, "不支持的数据类型");
 
 

@@ -157,11 +157,32 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
      */
     UserEntity findByEmail(String email);
 
+    /**
+     * 修改邮箱
+     *
+     * @param id    用户标识
+     * @param email 邮箱
+     * @return
+     */
     @Modifying
     @Query(value = "update UserEntity as users " +
             "set users.email = :email " +
             "where users.id = :id")
     Integer updateByEmail(@Param(value = "id") Long id,
-                             @Param(value = "email") String email);
+                          @Param(value = "email") String email);
+
+    /**
+     * 修改密码
+     *
+     * @param id       用户标识
+     * @param password 密码
+     * @return
+     */
+    @Modifying
+    @Query(value = "update UserEntity as users " +
+            "set users.password = :password " +
+            "where users.id = :id")
+    Integer updateByPassword(@Param(value = "id") Long id,
+                             @Param(value = "password") String password);
 
 }

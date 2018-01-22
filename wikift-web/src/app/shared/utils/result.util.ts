@@ -26,7 +26,7 @@ export class ResultUtils {
         const commonResponseModel: CommonResultModel = new CommonResultModel();
         if (body) {
             commonResponseModel.code = body.code;
-            commonResponseModel.msg = body.msg;
+            commonResponseModel.msg = body.message;
             commonResponseModel.data = body.data;
         }
         return commonResponseModel;

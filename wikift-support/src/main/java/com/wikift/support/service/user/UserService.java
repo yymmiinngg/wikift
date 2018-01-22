@@ -31,6 +31,8 @@ public interface UserService {
 
     Integer updateEmail(UserEntity entity);
 
+    Integer updatePassword(UserEntity entity);
+
     UserEntity getUserByEmail(String email);
 
     Long delete(Long id);

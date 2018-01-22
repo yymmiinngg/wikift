@@ -32,6 +32,7 @@ import { RemindService } from '../../../services/remind.service';
 import { CodeConfig } from '../../../config/code.config';
 import { ToastyService } from '_ng2-toasty@4.0.3@ng2-toasty';
 import { ResultUtils } from '../../shared/utils/result.util';
+import { UserModel } from '../../shared/model/user/user.model';
 
 @Component({
   selector: 'app-header',
@@ -63,6 +64,10 @@ export class HeaderComponent implements OnInit {
   @ViewChild('settingsEmail')
   public settingsEmail: ModalDirective;
   public form: FormGroup;
+  // 修改密码
+  @ViewChild('changerPassword')
+  public changerPassword: ModalDirective;
+  public changerPasswordUserInfo;
 
   setTheme() {
     this.sharedService.setTheme(this.maThemeModel);
@@ -81,6 +86,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.token = CookieUtils.get();
     this.initUserInfo();
+    this.changerPasswordUserInfo = new UserParamModel();
   }
 
   initUserInfo() {
@@ -133,10 +139,6 @@ export class HeaderComponent implements OnInit {
     );
   }
 
-  showSettingsEmial() {
-    this.settingsEmail.show();
-  }
-
   unReadRemind() {
     this.unreadReminds = new Array();
     this.initUnreadRemindByUser();
@@ -145,6 +147,11 @@ export class HeaderComponent implements OnInit {
   readRemind() {
     this.readReminds = new Array();
     this.initReadRemindByUser();
+  }
+
+  showSettingsEmial() {
+    this.changerPassword.hide();
+    this.settingsEmail.show();
   }
 
   settingEmail() {
@@ -156,6 +163,27 @@ export class HeaderComponent implements OnInit {
           this.showEmailAlert = false;
         } else {
           this.toastyService.error(ResultUtils.getError(result));
+        }
+      }
+    );
+  }
+
+  showChangerPassword() {
+    this.changerPassword.show();
+  }
+
+  changerPasswordRevice() {
+    this.changerPasswordUserInfo.id = this.userInfo.id;
+    this.userService.updatePassword(this.changerPasswordUserInfo).subscribe(
+      result => {
+        if (result.data && result.code === CodeConfig.SUCCESS) {
+          this.toastyService.success('您的密码已经修改成功, 下次登录请使用新密码!!!');
+          this.changerPassword.hide();
+        } else {
+          if (result.code > CodeConfig.ERROR_5000) {
+            this.toastyService.error(result.msg);
+          }
+
         }
       }
     );
