@@ -154,7 +154,9 @@
                 <!-- 评论列表 -->
                 <div class="messages__content">
                     <div *ngFor="let comment of comments" class="messages__item">
-                        <img src="{{comment.user.avatar}}" class="messages__avatar" alt="{{comment.user.username}}">
+                        <a [routerLink]="['/account', article.user.username, 'info']">
+                            <img src="{{comment.user.avatar}}" class="messages__avatar" alt="{{comment.user.username}}">
+                        </a>
                         <div class="messages__details">
                             <p>
                                 <wikift-editor id="wikift-comment-{{comment.id}}" markdown="''" [tocId]="'#wikift-toc-container'" [preview]="'true'"></wikift-editor>
