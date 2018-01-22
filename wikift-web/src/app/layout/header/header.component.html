@@ -25,7 +25,7 @@
   </div>
   <!-- 搜索框 -->
   <div class="search">
-    <div *ngIf="showEmailAlert" class="alert alert-danger">
+    <div *ngIf="userInfo && showEmailAlert" class="alert alert-danger">
       <strong>注意!</strong> 您的用户信息没有设置用户邮箱, 新版本系统中我们要求必须设置邮箱, 否则账号会被禁止使用!!!
       <a (click)="showSettingsEmial()">立即设置</a>
     </div>
@@ -174,7 +174,7 @@
   </ng-container>
 </div>
 <!-- 设置邮箱 -->
-<div *ngIf="userInfo && !userEmail" bsModal #settingsEmail="bs-modal" class="modal fade">
+<div *ngIf="userInfo && showEmailAlert" bsModal #settingsEmail="bs-modal" class="modal fade">
   <ng-container>
     <div class="modal-dialog modal-lg" style="width:350px;">
       <div class="modal-content">
