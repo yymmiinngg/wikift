@@ -159,7 +159,7 @@
                         </a>
                         <div class="messages__details">
                             <p>
-                                <wikift-editor id="wikift-comment-{{comment.id}}" markdown="''" [tocId]="'#wikift-toc-container'" [preview]="'true'"></wikift-editor>
+                                <wikift-editor id="wikift-comment-{{comment.id}}" [markdown]="comment.content" [tocId]="'#wikift-toc-container'" [preview]="'true'"></wikift-editor>
                             </p>
                             <small>
                                 <i class="zmdi zmdi-time"></i> {{ comment.createTime | date:'yyyy年MM月dd日HH:mm:ss' }} 评论

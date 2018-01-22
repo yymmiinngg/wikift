@@ -182,8 +182,9 @@ export class HeaderComponent implements OnInit {
         } else {
           if (result.code > CodeConfig.ERROR_5000) {
             this.toastyService.error(result.msg);
+          } else {
+            this.toastyService.error(ResultUtils.getError(result));
           }
-
         }
       }
     );
