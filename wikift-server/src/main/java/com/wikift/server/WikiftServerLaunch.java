@@ -20,6 +20,7 @@ package com.wikift.server;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableAsync;
 
@@ -27,6 +28,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableJpaAuditing
 @EnableAsync
 @ComponentScan(value = "com.wikift")
+@PropertySource(value = { "file:/etc/wikift/wikift.conf" })
 public class WikiftServerLaunch {
 
     public static void main(String[] args) {

@@ -18,12 +18,11 @@
 package com.wikift.server.config;
 
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -32,7 +31,9 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.util.Assert;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
@@ -42,40 +43,35 @@ import java.beans.PropertyVetoException;
 @EnableJpaRepositories(basePackages = "com.wikift.support.repository")
 public class DataSourceConfig {
 
-    @Value(value = "${wikift.database.embedded.enable}")
-    private Boolean embeddedDatabase;
-
-    @Value(value = "${wikift.database.type}")
-    private String type;
-
-    @Value(value = "${wikift.database.mysql.class}")
-    private String mysqlClass;
-
-    @Value(value = "${wikift.database.mysql.url}")
-    private String mysqlUrl;
-
-    @Value(value = "${wikift.database.mysql.username}")
-    private String mysqlUserName;
-
-    @Value(value = "${wikift.database.mysql.password}")
-    private String mysqlPassword;
+    @Resource
+    private Environment environment;
 
     @Bean
     public DataSource dataSource() throws PropertyVetoException {
+        boolean embeddedDatabase = Boolean.valueOf(environment.getProperty("wikift.database.embedded.enable"));
         if (embeddedDatabase) {
             EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-            EmbeddedDatabase dataSource = builder.setType(EmbeddedDatabaseType.H2)
+            return builder.setType(EmbeddedDatabaseType.H2)
                     .addScripts("schema.sql", "data.sql")
                     .build();
-            return dataSource;
         } else {
             DriverManagerDataSource dataSource = new DriverManagerDataSource();
-            switch (type) {
+            String dbType = environment.getProperty("wikift.database.type");
+            Assert.notNull(dbType, "dababase type must not null");
+            switch (dbType) {
                 case "mysql":
-                    dataSource.setDriverClassName(mysqlClass);
-                    dataSource.setUrl(mysqlUrl);
-                    dataSource.setUsername(mysqlUserName);
-                    dataSource.setPassword(mysqlPassword);
+                    String dbMySQLClass = environment.getProperty("wikift.database.mysql.class");
+                    dataSource.setDriverClassName(dbMySQLClass);
+                    Assert.notNull(dbMySQLClass, "mysql driver class must not null");
+                    String dbMySQLUrl = environment.getProperty("wikift.database.mysql.url");
+                    Assert.notNull(dbMySQLUrl, "mysql connection url must not null");
+                    dataSource.setUrl(dbMySQLUrl);
+                    String dbMySQLUser = environment.getProperty("wikift.database.mysql.username");
+                    Assert.notNull(dbMySQLUser, "mysql connection user name must not null");
+                    dataSource.setUsername(dbMySQLUser);
+                    String dbMySQLUserPassword = environment.getProperty("wikift.database.mysql.password");
+                    Assert.notNull(dbMySQLClass, "mysql connection user password must not null");
+                    dataSource.setPassword(dbMySQLUserPassword);
             }
             return dataSource;
         }
