@@ -25,10 +25,14 @@ import com.wikift.model.user.UserEntity;
 import com.wikift.server.param.UserParam;
 import com.wikift.server.param.UserParamForEmail;
 import com.wikift.server.param.UserParamForPassword;
+import com.wikift.support.ldap.model.LdapUserModel;
+import com.wikift.support.ldap.service.LdapUserService;
 import com.wikift.support.service.user.UserService;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -147,6 +151,28 @@ public class UserController {
         count.put("followCount", userService.findFollowCount(followUserId));
         count.put("coverCount", userService.findFollowCoverCount(followUserId));
         return CommonResult.success(count);
+    }
+
+    @RequestMapping(value = "public/user/info/simple/{username}", method = RequestMethod.GET)
+    CommonResult impleInfo(@PathVariable(value = "username") String username) {
+        Assert.notNull(username, MessageEnums.PARAMS_NOT_NULL.getValue());
+        UserEntity userEntity = userService.getInfoByUsername(username);
+        if (ObjectUtils.isEmpty(userEntity)) {
+            return CommonResult.error(MessageEnums.USER_NOT_FOUND);
+        }
+        UserSimple userSimple = new UserSimple();
+        BeanUtils.copy(userEntity, userSimple);
+        userSimple.setType(userEntity.getUserType().getName());
+        return CommonResult.success(userSimple);
+    }
+
+    @Data
+    class UserSimple {
+        private Boolean active;
+        private String lock;
+        private String email;
+        private String username;
+        private String type;
     }
 
 }

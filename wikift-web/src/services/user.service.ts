@@ -201,4 +201,10 @@ export class UserService {
             .map(ResultUtils.extractData);
     }
 
+    getType(username): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptions();
+        const path = ApiConfig.API_USER_TYPE + username;
+        return this.http.get(path, options).map(ResultUtils.extractData);
+    }
+
 }

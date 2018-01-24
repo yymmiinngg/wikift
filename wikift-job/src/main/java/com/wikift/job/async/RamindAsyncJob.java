@@ -55,11 +55,11 @@ public class RamindAsyncJob {
         List<UserEntity> covers = userService.findAllCoversByUserId(entity.getUser().getId());
         if (covers != null && covers.size() > 0) {
             RemindEntity remind = new RemindEntity();
-            remind.setId(0l);
+            remind.setId(0L);
             remind.setArticle(entity);
             remind.setUsers(covers);
             RemindTypeEntity type = new RemindTypeEntity();
-            type.setId(2l);
+            type.setId(2L);
             remind.setRemindType(type);
             remind.setTitle("文章通知");
             remind.setContent(String.format("用户 %s 创建了 %s 文章", entity.getUser().getUsername(), entity.getTitle()));

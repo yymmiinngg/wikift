@@ -64,6 +64,12 @@ public class UserEntity {
     @Column(name = "u_email")
     private String email;
 
+    @Column(name = "u_active")
+    private Boolean active = false;
+
+    @Column(name = "u_lock")
+    private Boolean lock = false;
+
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_role_relation",
             joinColumns = @JoinColumn(name = "urr_user_id", referencedColumnName = "u_id"),
@@ -77,5 +83,11 @@ public class UserEntity {
     @JsonBackReference
     @Fetch(FetchMode.SUBSELECT)
     private List<UserEntity> follows;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_type_relation",
+            joinColumns = @JoinColumn(name = "utr_users_id", referencedColumnName = "u_id"),
+            inverseJoinColumns = @JoinColumn(name = "utr_users_type_id", referencedColumnName = "ut_id"))
+    private UserTypeEntity userType;
 
 }

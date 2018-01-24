@@ -19,10 +19,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
+import { ToastyService } from 'ng2-toasty';
 
 import { LoginParamModel } from '../../../shared/model/param/login.param.model';
 
 import { UserService } from '../../../../services/user.service';
+import { CodeConfig } from '../../../../config/code.config';
 
 @Component({
     selector: 'wikift-user-login',
@@ -34,9 +36,11 @@ export class UserLoginComponent implements OnInit {
     public form: FormGroup;
     // 页面登录用户
     public user: LoginParamModel;
+    public showAlertEmail = false;
 
     constructor(private router: Router,
-        private userService: UserService) {
+        private userService: UserService,
+        private toastyService: ToastyService) {
         this.form = new FormGroup({
             username: new FormControl('', CustomValidators.range([5, 9])),
             password: new FormControl('', CustomValidators.number)
@@ -49,7 +53,22 @@ export class UserLoginComponent implements OnInit {
     }
 
     login() {
-        this.userService.login(this.user);
+        this.userService.getType(this.user.username).subscribe(
+            result => {
+                if (result && result.code === CodeConfig.SUCCESS) {
+                    if (result.data) {
+                        if (result.data.type === 'LDAP' && !result.data.email) {
+                            this.showAlertEmail = true;
+                            return;
+                        }
+                        this.showAlertEmail = false;
+                        this.userService.login(this.user);
+                    }
+                } else {
+                    this.toastyService.error(result.msg);
+                }
+            }
+        );
     }
 
 }

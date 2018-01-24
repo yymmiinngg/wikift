@@ -27,6 +27,9 @@
             </a>
         </div>
         <div class="login__block__body">
+            <div *ngIf="showAlertEmail" class="alert alert-danger">
+                您是LDAP同步的用户, 并且您没有设置任何邮箱, 请联系系统管理员设置邮箱地址.
+            </div>
             <form #loginForm="ngForm" (ngSubmit)="login()">
                 <div class="form-group form-group--float form-group--centered">
                     <input type="text" [(ngModel)]="user.username" name="username" #username="ngModel" class="form-control" required placeholder="请输入用户名"

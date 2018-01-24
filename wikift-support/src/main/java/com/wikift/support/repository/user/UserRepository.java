@@ -42,11 +42,11 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
      *
      * @return 用户排行榜
      */
-    @Query(value = "SELECT DISTINCT(uar.uar_user_id), COUNT(uar.uar_user_id) AS u_count, u.u_id, u.u_username, u.u_password, u.u_avatar, u.u_alias_name, u.u_signature, u.u_email " +
+    @Query(value = "SELECT DISTINCT(uar.uar_user_id), COUNT(uar.uar_user_id) AS u_count, u.u_id, u.u_username, u.u_password, u.u_avatar, u.u_alias_name, u.u_signature, u.u_email, u_active, u_lock, utr.utr_users_type_id " +
             "FROM users_article_relation AS uar " +
-            "LEFT JOIN users AS u " +
-            "ON uar.uar_user_id = u.u_id " +
-            "GROUP BY uar.uar_user_id " +
+            "LEFT JOIN users AS u ON uar.uar_user_id = u.u_id " +
+            "LEFT OUTER JOIN users_type_relation AS utr ON uar.uar_user_id = utr.utr_users_id " +
+            "GROUP BY uar.uar_user_id, utr.utr_users_type_id " +
             "ORDER BY u_count DESC LIMIT 5",
             nativeQuery = true)
     List<UserEntity> findTopByArticle();

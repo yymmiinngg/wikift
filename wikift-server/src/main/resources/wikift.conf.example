@@ -1,0 +1,26 @@
+# 改配置用于标识优先级, 必须配置该属性
+security.oauth2.resource.filter-order=3
+# 启用内置数据库, 启用内置数据库后, 后期配置的所有数据库项将不会生效
+wikift.database.embedded.enable=false
+#################### 外部数据库配置 ####################
+# 数据库类型
+wikift.database.type=mysql
+# mysql数据库配置
+wikift.database.mysql.class=com.mysql.jdbc.Driver
+wikift.database.mysql.url=jdbc:mysql://localhost:3306/wikift?useUnicode=true&characterEncoding=UTF-8
+wikift.database.mysql.username=root
+wikift.database.mysql.password=123456
+#################### 系统RestAPI配置 ####################
+wikift.api.version=v1
+wikift.api.path=/api/${wikift.api.version}
+#################### LDAP系统配置 ####################
+wikift.com.wikift.support.ldap.enable=true
+# LDAP配置只有wikift.system.ldap.enable配置为true后边的LDAP配置才会生效
+wikift.ldap.enable=true
+wikift.ldap.url=ldap://192.168.250.129:389
+wikift.ldap.partition-suffix=dc=ho1ho,dc=com
+wikift.ldap.principal=cn=Manager,${wikift.ldap.partition-suffix}
+wikift.ldap.principal.password=111111
+# 在LDAP中映射的字段属性
+wikift.ldap.reflect.attributes.email=email
+wikift.ldap.reflect.attributes.username=name
