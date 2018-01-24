@@ -32,6 +32,11 @@
             <groupId>com.wikift</groupId>
             <artifactId>wikift-model</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-ldap</artifactId>
+            <version>1.0.6.RELEASE</version>
+        </dependency>
     </dependencies>
 
 </project>

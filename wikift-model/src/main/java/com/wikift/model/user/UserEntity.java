@@ -65,10 +65,10 @@ public class UserEntity {
     private String email;
 
     @Column(name = "u_active")
-    private Boolean active;
+    private Boolean active = false;
 
     @Column(name = "u_lock")
-    private String lock;
+    private Boolean lock = false;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_role_relation",

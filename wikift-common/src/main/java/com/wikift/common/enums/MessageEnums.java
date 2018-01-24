@@ -34,6 +34,7 @@ public enum MessageEnums {
     USER_EMAIL_NOT_AGREE(5001, "当前邮箱地址不是该用户所有"),
     USER_PASSWORD_INPUT_ERROR(5002, "用户原密码输入错误"),
     USER_PASSWORD_INPUT_SAME(5003, "用户原密码不能与修改密码相同"),
+    USER_NOT_FOUND(5004, "用户不存在"),
 
     UNSUPPORT_MEDIA_TYPE(4415, "不支持的数据类型");
 

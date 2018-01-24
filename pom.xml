@@ -106,6 +106,7 @@
         <mysql.version>5.1.42</mysql.version>
         <google.collections.version>1.0-rc2</google.collections.version>
         <apacheds.server.jndi.version>1.5.5</apacheds.server.jndi.version>
+        <spring.data.commons.version>1.13.9.RELEASE</spring.data.commons.version>
     </properties>
 
     <!-- dependencyManagement -->
@@ -129,6 +130,11 @@
             <dependency>
                 <groupId>com.wikift</groupId>
                 <artifactId>wikift-job</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wikift</groupId>
+                <artifactId>wikift-support-com.wikift.support.ldap</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- spring boot -->
@@ -183,6 +189,11 @@
                 <groupId>org.apache.directory.server</groupId>
                 <artifactId>apacheds-server-jndi</artifactId>
                 <version>${apacheds.server.jndi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-commons</artifactId>
+                <version>${spring.data.commons.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

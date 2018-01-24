@@ -15,26 +15,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wikift.server;
+package com.wikift.support.ldap.service;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import com.wikift.support.ldap.model.LdapUserModel;
+import com.wikift.support.ldap.repository.LdapUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@SpringBootApplication
-@EnableJpaAuditing
-@EnableAsync
-@EnableScheduling
-@ComponentScan(value = "com.wikift")
-@PropertySource(value = { "file:/etc/wikift/wikift.conf" })
-public class WikiftServerLaunch {
+/**
+ * LdapUserServiceImpl <br/>
+ * 描述 : LdapUserServiceImpl <br/>
+ * 作者 : qianmoQ <br/>
+ * 版本 : 1.0 <br/>
+ * 创建时间 : 2018-01-23 下午4:01 <br/>
+ * 联系作者 : <a href="mailTo:shichengoooo@163.com">qianmoQ</a>
+ */
+@Service
+public class LdapUserServiceImpl implements LdapUserService {
 
-    public static void main(String[] args) {
-        SpringApplication.run(WikiftServerLaunch.class, args);
+    @Autowired
+    private LdapUserRepository ldapUserRepository;
+
+    @Override
+    public Iterable<LdapUserModel> findAll() {
+        return ldapUserRepository.findAll();
     }
 
 }
