@@ -30,7 +30,7 @@
     <packaging>pom</packaging>
 
     <name>wikift</name>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <description>WikiFT is a wiki system</description>
 
     <!-- modules -->

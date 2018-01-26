@@ -20,7 +20,7 @@
     <parent>
         <artifactId>wikift</artifactId>
         <groupId>com.wikift</groupId>
-        <version>1.0.0</version>
+        <version>1.1.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -42,6 +42,9 @@
               <directory>${project.build.directory}</directory>
             </resource>
           </resources>
+          <!-- 以下两行是为了docker push到DockerHub使用的。 -->
+          <serverId>docker-hub</serverId>
+          <registryUrl>https://index.docker.io/v1/</registryUrl>
         </configuration>
       </plugin>
     </plugins>
