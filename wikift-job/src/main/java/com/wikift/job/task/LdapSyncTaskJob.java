@@ -54,47 +54,50 @@ public class LdapSyncTaskJob {
     private UserService userService;
 
     private final String default_email = "email";
-    private final String[] default_username = new String[] {"name", "cn", "sn"};
+    private final String[] default_username = new String[]{"name", "cn", "sn"};
 
     @Scheduled(fixedRate = 300000)
     public void syncLdapToSystem() {
-        SimpleDateFormat format = new SimpleDateFormat("YYYY-mm-DD HH:mm:ss");
-        String emailField = environment.getProperty("wikift.ldap.reflect.attributes.email");
-        String usernameField = environment.getProperty("wikift.ldap.reflect.attributes.username");
-        ldapUserService.findAll().forEach(v -> {
-            UserEntity user = new UserEntity();
-            UserTypeEntity userType = new UserTypeEntity();
-            userType.setId(2L);
-            user.setUserType(userType);
-            // 如果没有配置email映射使用默认
-            if (ObjectUtils.isEmpty(emailField) || emailField.equalsIgnoreCase(default_email)) {
-                user.setEmail(v.getEmail());
-            } else {
-                user.setEmail(String.valueOf(ReflectUtils.getFieldValue(emailField, v)));
-            }
-            // 如果没有配置name映射使用默认
-            if (ObjectUtils.isEmpty(usernameField) || constain(usernameField)) {
-                user.setUsername(getUserName(v));
-            } else {
-                user.setUsername(String.valueOf(ReflectUtils.getFieldValue(usernameField, v)));
-            }
-            // 如果同步的username为空的话, 不做数据入库操作
-            if (!StringUtils.isEmpty(user.getUsername())) {
-                UserEntity source = userService.getInfoByUsername(user.getUsername());
-                // 当前用户不存在数据库中, 进行入库操作
-                if (ObjectUtils.isEmpty(source)) {
-                    userService.save(user);
-                    // TODO: 记录入库数据
+        Boolean ldapEnable = Boolean.valueOf(environment.getProperty("wikift.ldap.enable"));
+        if (ldapEnable) {
+            SimpleDateFormat format = new SimpleDateFormat("YYYY-mm-DD HH:mm:ss");
+            String emailField = environment.getProperty("wikift.ldap.reflect.attributes.email");
+            String usernameField = environment.getProperty("wikift.ldap.reflect.attributes.username");
+            ldapUserService.findAll().forEach(v -> {
+                UserEntity user = new UserEntity();
+                UserTypeEntity userType = new UserTypeEntity();
+                userType.setId(2L);
+                user.setUserType(userType);
+                // 如果没有配置email映射使用默认
+                if (ObjectUtils.isEmpty(emailField) || emailField.equalsIgnoreCase(default_email)) {
+                    user.setEmail(v.getEmail());
                 } else {
-                    // 如果用户存在数据库中抽取数据不一致的email(如果原email为空)
-                    if (StringUtils.isEmpty(source.getEmail()) && !StringUtils.isEmpty(user.getEmail())) {
-                        source.setEmail(user.getEmail());
-                        userService.save(user);
-                    }
+                    user.setEmail(String.valueOf(ReflectUtils.getFieldValue(emailField, v)));
                 }
-                // TODO: 记录未入库数据
-            }
-        });
+                // 如果没有配置name映射使用默认
+                if (ObjectUtils.isEmpty(usernameField) || constain(usernameField)) {
+                    user.setUsername(getUserName(v));
+                } else {
+                    user.setUsername(String.valueOf(ReflectUtils.getFieldValue(usernameField, v)));
+                }
+                // 如果同步的username为空的话, 不做数据入库操作
+                if (!StringUtils.isEmpty(user.getUsername())) {
+                    UserEntity source = userService.getInfoByUsername(user.getUsername());
+                    // 当前用户不存在数据库中, 进行入库操作
+                    if (ObjectUtils.isEmpty(source)) {
+                        userService.save(user);
+                        // TODO: 记录入库数据
+                    } else {
+                        // 如果用户存在数据库中抽取数据不一致的email(如果原email为空)
+                        if (StringUtils.isEmpty(source.getEmail()) && !StringUtils.isEmpty(user.getEmail())) {
+                            source.setEmail(user.getEmail());
+                            userService.save(user);
+                        }
+                    }
+                    // TODO: 记录未入库数据
+                }
+            });
+        }
     }
 
     private Boolean constain(String filed) {

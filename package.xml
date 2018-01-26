@@ -1,0 +1,60 @@
+<assembly xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/assembly-1.0.0.xsd">
+    <id>package</id>
+    <formats>
+        <format>tar.gz</format>
+    </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <directory>wikift-web/e2e</directory>
+            <outputDirectory>e2e</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>wikift-web/src</directory>
+            <outputDirectory>src</outputDirectory>
+        </fileSet>
+        <!-- <fileSet>
+            <directory>wikift-web/node_modules</directory>
+            <outputDirectory>node_modules</outputDirectory>
+        </fileSet> -->
+    </fileSets>
+    <files>
+        <file>
+            <source>wikift-web/.angular-cli.json</source>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>wikift-web/.editorconfig</source>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>wikift-web/.gitignore</source>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>wikift-web/karma.conf.js</source>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>wikift-web/package.json</source>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>wikift-web/protractor.conf.js</source>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>wikift-web/proxy.conf.json</source>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>wikift-web/tsconfig.json</source>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>wikift-web/tslint.json</source>
+            <filtered>true</filtered>
+        </file>
+    </files>
+</assembly>

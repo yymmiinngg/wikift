@@ -2,6 +2,43 @@
 
 wikift是一套开源的易用的知识管理系统.
 
+## 编译源码
+
+```bash
+mvn clean package -X
+```
+
+## 打包docker镜像
+
+```bash
+mvn package assembly:assembly docker:build -X
+```
+
+## 提交docker镜像到中心仓库
+
+```bash
+
+```
+
+## 运行在docker
+
+ - 运行mysql容器
+
+	```bash
+	docker run --name wikift-mysql -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=wikift mysql
+	```
+	
+ - 运行wikift server
+
+	```bash
+	docker run -p 8080:8080 --name wikift-server --link wikift-mysql:mysql wikift/wikift-server
+	```
+	
+ - 运行wikift server
+
+	```bash
+	docker run -p 4200:4200 --name wikift-web --link wikift-server:wikift-server wikift/wikift-web
+	```
 
 ## wikift系统设计快照
 

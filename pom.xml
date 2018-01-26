@@ -96,6 +96,7 @@
         <plugin.maven.compiler.version>3.2</plugin.maven.compiler.version>
         <plugin.frontend.version>1.6</plugin.frontend.version>
         <plugin.springboot.version>1.1.8.RELEASE</plugin.springboot.version>
+        <plugin.docker.version>0.23.0</plugin.docker.version>
         <!-- dependencie version -->
         <spring.boot.version>1.5.6.RELEASE</spring.boot.version>
         <spring.security.version>1.5.9.RELEASE</spring.security.version>
@@ -107,6 +108,7 @@
         <google.collections.version>1.0-rc2</google.collections.version>
         <apacheds.server.jndi.version>1.5.5</apacheds.server.jndi.version>
         <spring.data.commons.version>1.13.9.RELEASE</spring.data.commons.version>
+        <docker.image.prefix>wikift</docker.image.prefix>
     </properties>
 
     <!-- dependencyManagement -->
@@ -208,14 +210,6 @@
 
     <!-- repositories -->
     <repositories>
-        <repository>
-            <id>nexus-ttxit</id>
-            <name>ttxit maven center</name>
-            <url>http://mooc.ttxit.com:8081/repository/maven/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
     </repositories>
 
     <!-- build -->
@@ -235,6 +229,12 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!-- docker -->
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${plugin.docker.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -246,6 +246,19 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.5.5</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <outputDirectory>wikift-web/docker</outputDirectory>
+                    <descriptors>
+                        <descriptor>package.xml</descriptor>
+                    </descriptors>
                 </configuration>
             </plugin>
         </plugins>

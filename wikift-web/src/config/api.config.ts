@@ -28,7 +28,7 @@ export class ApiConfig {
     public static API_USER_UPDATE_PASSWORD = ApiConfig.V1_API_ROOT + 'user/update/password';
     public static API_TOP_USER_BY_ACTIVE = ApiConfig.V1_API_ROOT_PUBLIC + '/user/top';
     public static API_USER_FOLLOW = ApiConfig.V1_API_ROOT + 'user/follow';
-    public static API_USER_REGISTER = ApiConfig.V1_API_ROOT + 'user/register';
+    public static API_USER_REGISTER = ApiConfig.V1_API_ROOT_PUBLIC + '/user/register';
     public static API_USER_UNFOLLOW = ApiConfig.V1_API_ROOT + 'user/unfollow';
     public static API_USER_FOLLOWS = ApiConfig.V1_API_ROOT + 'user/follows/';
     public static API_USER_FOLLOW_CHECK = ApiConfig.V1_API_ROOT + 'user/follows/check';

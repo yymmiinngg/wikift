@@ -72,7 +72,7 @@ public class LdapConfig {
         if (!ObjectUtils.isEmpty(contextSource())) {
             return new LdapTemplate(contextSource());
         }
-        return null;
+        return new LdapTemplate(new LdapContextSource());
     }
 
 }
