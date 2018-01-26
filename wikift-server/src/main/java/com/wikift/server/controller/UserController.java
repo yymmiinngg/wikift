@@ -22,6 +22,7 @@ import com.wikift.common.utils.BeanUtils;
 import com.wikift.common.utils.ShaUtils;
 import com.wikift.model.result.CommonResult;
 import com.wikift.model.user.UserEntity;
+import com.wikift.model.user.UserTypeEntity;
 import com.wikift.server.param.UserParam;
 import com.wikift.server.param.UserParamForEmail;
 import com.wikift.server.param.UserParamForPassword;
@@ -46,7 +47,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "user/register", method = RequestMethod.POST)
+    @RequestMapping(value = "public/user/register", method = RequestMethod.POST)
     CommonResult<UserEntity> register(@RequestBody @Validated UserParam param) {
         Assert.notNull(param, MessageEnums.PARAMS_NOT_NULL.getValue());
         if (!param.getPassword().equals(param.getRepassword())) {
@@ -57,6 +58,9 @@ public class UserController {
         entity.setId(0l);
         entity.setUsername(param.getUsername());
         entity.setPassword(ShaUtils.hash256(param.getPassword()));
+        UserTypeEntity userType = new UserTypeEntity();
+        userType.setId(1L);
+        entity.setUserType(userType);
         return CommonResult.success(userService.save(entity));
     }
 
