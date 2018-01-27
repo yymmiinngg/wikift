@@ -15,133 +15,76 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import "../node_modules/bootstrap/scss/functions";
-// Site, Bootstrap Variable, Mixins
-@import "./assets/scss/variables";
-@import "../node_modules/bootstrap/scss/variables";
-@import "./assets/scss/mixins";
-@import "./assets/scss/bootstrap-overrides/mixins";
-@import "./assets/scss/bootstrap-imports";
-@import  "../node_modules/animate.css/animate.min.css";
-@import "./assets/scss/_background";
-
+// bootstrap 必要依赖
+@import "./assets/scss/_wikift-bootstrap-imports";
+// 全局使用样式参数
+@import "./assets/scss/_wikift-variables";
+// CSS 动画
+@import "../node_modules/animate.css/animate.min.css";
+@import "./assets/scss/_wikift-mixins";
+// bootstrap 样式
+@import "./assets/scss/_wikift-bootstrap-imports-other";
+// 布局样式
+@import "./assets/scss/_wikift-layout";
+// 页面加载样式
+@import "./assets/scss/_wikift-loader";
+// 背景样式
+@import "./assets/scss/_wikift-background";
 // 用户样式
-@import "./assets/scss/_user";
+@import "./assets/scss/_wikift-user";
 // 登录样式
-@import "./assets/scss/_login";
-// 页脚样式
-@import "./assets/scss/_footer";
+@import "./assets/scss/_wikift-login";
 // 文章样式
-@import "./assets/scss/_article";
+@import "./assets/scss/_wikift-article";
 // 个人信息样式
-@import "./assets/scss/_profile";
-@import "./assets/scss/_widget";
-@import "./assets/scss/_navbar-nav";
-@import "./assets/scss/_busy";
-@import "./assets/scss/_contacts";
-@import "./assets/scss/_toolbar";
-@import "./assets/scss/_messages.scss";
-
+@import "./assets/scss/_wikift-profile";
+// 用户关注小部件
+@import "./assets/scss/_wikift-widget";
+// busy 提示样式
+@import "./assets/scss/_wikift-busy";
+// tooltip 提示样式
+@import "./assets/scss/_wikift-tooltip";
+// 主题样式
+@import "./assets/scss/_wikift-theme";
+// 图标样式
+@import "./assets/scss/_wikift-fonts";
+// 下拉菜单样式
+@import "./assets/scss/_wikift-dropdown";
+// 卡片样式
+@import "./assets/scss/_wikift-card";
+// 视图样式
+@import "./assets/scss/_wikift-listview";
+// 报表样式
+@import "./assets/scss/_wikift-charts";
+// 分页样式
+@import "./assets/scss/_wikift-pagination";
+// 按钮样式
+@import "./assets/scss/_wikift-buttons";
+// 工具条样式
+@import "./assets/scss/_wikift-toolbar";
+// 联系人样式
+@import "./assets/scss/_wikift-contacts";
+// tabs 样式
+@import "./assets/scss/_wikift-tabs";
+// 弹出框样式
+@import "./assets/scss/_wikift-modal";
+// 表单样式
+@import "./assets/scss/_wikift-forms";
+// 自定义表单样式
+@import "./assets/scss/_wikift-custom-forms";
+// 评论样式
+@import "./assets/scss/_wikift-messages";
+// 页脚样式
+@import "./assets/scss/_wikift-footer";
+// 警告样式
+@import "./assets/scss/_wikift-alerts";
+// 全站基本样式
+@import "./assets/scss/_wikift-base";
+// popovers 样式
+@import "./assets/scss/_wikift-popovers";
+// 编辑器样式
 @import "./assets/css/wikift-editor/editormd.css";
-
-// Site Styles
-@import "./assets/scss/fonts";
-@import "./assets/scss/generics";
-@import "./assets/scss/base";
-@import "./assets/scss/layout";
-@import "./assets/scss/charts";
-@import "./assets/scss/toggle-switch";
-@import "./assets/scss/listview";
-@import "./assets/scss/page-loader";
-@import "./assets/scss/theme";
-
-
-// Bootstrap Overrides
-@import "./assets/scss/bootstrap-overrides/dropdown";
-@import "./assets/scss/bootstrap-overrides/media";
-@import "./assets/scss/bootstrap-overrides/progress";
-@import "./assets/scss/bootstrap-overrides/card";
-@import "./assets/scss/bootstrap-overrides/buttons";
-@import "./assets/scss/bootstrap-overrides/tables";
-@import "./assets/scss/bootstrap-overrides/forms";
-@import "./assets/scss/bootstrap-overrides/input-groups";
-@import "./assets/scss/bootstrap-overrides/custom-forms";
-@import "./assets/scss/bootstrap-overrides/pagination";
-@import "./assets/scss/bootstrap-overrides/datepicker";
-@import "./assets/scss/bootstrap-overrides/timepicker";
-@import "./assets/scss/bootstrap-overrides/alerts";
-@import "./assets/scss/bootstrap-overrides/close";
-@import "./assets/scss/bootstrap-overrides/breadcrumbs";
-@import "./assets/scss/bootstrap-overrides/accordion";
-@import "./assets/scss/bootstrap-overrides/carousel";
-@import "./assets/scss/bootstrap-overrides/modal";
-@import "./assets/scss/bootstrap-overrides/popovers";
-@import "./assets/scss/bootstrap-overrides/ratings";
-@import "./assets/scss/bootstrap-overrides/sortable";
-@import "./assets/scss/bootstrap-overrides/tabs";
-@import "./assets/scss/bootstrap-overrides/tooltip";
-
-
-// Vendor Overrides
-@import "./assets/scss/vendor-overrides/flot";
-@import "./assets/scss/vendor-overrides/sparklines";
-@import "./assets/scss/vendor-overrides/select2";
-@import "./assets/scss/vendor-overrides/dropzone";
-@import "./assets/scss/vendor-overrides/angular2-color-picker";
-@import "./assets/scss/vendor-overrides/nouislider";
-@import "./assets/scss/vendor-overrides/easypiecharts";
-@import "./assets/scss/vendor-overrides/perfect-scrollbar";
-
-// App Global Styles
-@import "./assets/scss/misc";
-
-@import "../node_modules/material-design-iconic-font/dist/css/material-design-iconic-font.min.css";
+// toasty 样式
 @import '../node_modules/ng2-toasty/bundles/style.css';
-
-input[type="file"] {
-    width: 10px;
-    height: 20px;
-    position: absolute;
-    float: left;
-}
-input[type="file"]:after {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    background-color: #03A9F4;
-    content: "请选择需要上传的图像文件";
-    color: #FFFFFF;
-    display: block;
-    width: 200px;
-    height: 28px;
-    padding: 5px;
-    border-radius: 3px;
-    cursor: pointer;
-    text-align: center;
-}
-canvas {
-    display: block;
-    width: 100%;
-}
-.result {
-    position: absolute;
-    top: 50px;
-    left: 50px;
-}
-.result > img {
-    border-radius: 50%;
-}
-
-.cropper > img {
-    border-radius: 100px;
-    border: 1px dashed;
-}
-
-.cropper {
-    width: 100%;
-    background-color: rgba(0,0,0,0.05);
-}
-.comments-counter-chart {
-    height: 150px;
-    margin-top: -30px; 
-}
+// cropper 样式
+@import './assets/scss/_wikift-cropper';
