@@ -23,13 +23,16 @@ import com.wikift.common.utils.MessageUtils;
 import com.wikift.common.utils.PageAndSortUtils;
 import com.wikift.job.async.RamindAsyncJob;
 import com.wikift.model.article.ArticleEntity;
+import com.wikift.model.article.ArticleTagEntity;
 import com.wikift.model.result.CommonResult;
 import com.wikift.server.param.ArticleFabulousParam;
 import com.wikift.server.param.ArticleViewParam;
 import com.wikift.support.service.article.ArticleService;
+import com.wikift.support.service.article.ArticleTagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +44,9 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private ArticleTagService articleTagService;
 
     @Autowired
     private RamindAsyncJob ramindAsyncJob;
@@ -60,14 +66,18 @@ public class ArticleController {
         return CommonResult.success(articleService.findAll(order, PageAndSortUtils.getPage(page, size)));
     }
 
-    @RequestMapping(value = "public/article/list/tag/{tagId}", method = RequestMethod.GET)
-    CommonResult<ArticleEntity> getListByTag(@PathVariable(value = "tagId") Long tagId,
-                                             @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                             @RequestParam(value = "size", defaultValue = "10") Integer size) {
+    @RequestMapping(value = "public/article/list/tag/{tag}", method = RequestMethod.GET)
+    CommonResult getListByTag(@PathVariable(value = "tag") String tag,
+                              @RequestParam(value = "page", defaultValue = "0") Integer page,
+                              @RequestParam(value = "size", defaultValue = "10") Integer size) {
         Assert.notNull(page, MessageUtils.getParamNotNull("page"));
         Assert.notNull(size, MessageUtils.getParamNotNull("size"));
-        Assert.notNull(tagId, MessageUtils.getParamNotNull("tagId"));
-        return CommonResult.success(articleService.getAllByTagAndCreateTime(tagId, PageAndSortUtils.getPage(page, size)));
+        Assert.notNull(tag, MessageUtils.getParamNotNull("tag"));
+        ArticleTagEntity articleTag = articleTagService.getByTitle(tag);
+        if (ObjectUtils.isEmpty(articleTag)) {
+            return CommonResult.error(MessageEnums.DATA_NOT_FOUND_OR_PARAM_ERROR);
+        }
+        return CommonResult.success(articleService.getAllByTagAndCreateTime(articleTag.getId(), PageAndSortUtils.getPage(page, size)));
     }
 
     @RequestMapping(value = "public/article/view", method = RequestMethod.POST)

@@ -63,7 +63,9 @@
                                     </div>
                                     <!-- 文章标签 -->
                                     <div class="card-block ml-10">
-                                        <span *ngFor="let articleTag of article.articleTags" class="badge badge-success ml-2">{{articleTag.title}}</span>
+                                        <span *ngFor="let articleTag of article.articleTags" class="badge badge-gray ml-2">
+                                            <a [routerLink]="'/article/search'" [queryParams]="{'tag': articleTag.title}">{{articleTag.title}}</a>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

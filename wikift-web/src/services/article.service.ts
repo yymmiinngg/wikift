@@ -139,9 +139,18 @@ export class ArticleService {
     }
 
     getCounterViewByWeekAndArticle(articleId) {
-        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        const options = HttpUtils.getDefaultRequestOptions();
         return this.http.get(ApiConfig.API_ARTICLE_VIEW_TOP_WEEK + articleId, options)
             .map(ResultUtils.extractData);
+    }
+
+    filterByTag(page: CommonPageModel, tag: string): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptions();
+        const params = HttpUtils.getParams();
+        params.append('page', page.number.toString());
+        params.append('size', page.size.toString());
+        options.params = params;
+        return this.http.get(ApiConfig.API_ARTICLE_FILTER_TAG + tag, options).map(ResultUtils.extractData);
     }
 
 }

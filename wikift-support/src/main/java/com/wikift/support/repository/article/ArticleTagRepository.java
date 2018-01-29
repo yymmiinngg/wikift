@@ -42,4 +42,12 @@ public interface ArticleTagRepository extends PagingAndSortingRepository<Article
             nativeQuery = true)
     List<Object[]> findAllByArticlesCounterAndTop(Long top);
 
+    /**
+     * 根据标签名称查询标签信息
+     *
+     * @param title 标签名称
+     * @return 标签信息
+     */
+    ArticleTagEntity findByTitle(String title);
+
 }
