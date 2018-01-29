@@ -18,7 +18,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { Select2OptionData, Select2Component } from 'ng2-select2';
+import { IOption } from 'ng-select';
 import { ToastyService } from 'ng2-toasty';
 
 import { ArticleModel } from '../../../../app/shared/model/article/article.model';
@@ -33,6 +33,7 @@ import { ArticleTagModel } from '../../../shared/model/article/article.tag.model
 import { CodeConfig } from '../../../../config/code.config';
 import { SpaceService } from '../../../../services/space.service';
 import { CommonPageModel } from '../../../shared/model/result/page.model';
+import { ResultUtils } from '../../../shared/utils/result.util';
 
 @Component({
     selector: 'wikift-article-create',
@@ -41,32 +42,20 @@ import { CommonPageModel } from '../../../shared/model/result/page.model';
 
 export class CreateArticleComponent implements OnInit {
 
-    // 选择标签配置
-    public multipleOptions: any = {
-        multiple: true,
-        dropdownAutoWidth: true,
-        placeholder: '请选择文章标签',
-        width: '100%',
-        containerCssClass: 'select2-selection--alt',
-        dropdownCssClass: 'select2-dropdown--alt'
-    };
-    public articleModel: ArticleModel;
+    public article: ArticleModel;
     // 文章类型
     public articleType;
     // 文章标签, 加载框
-    public articleTags: Array<Select2OptionData>;
+    public articleTags: Array<IOption>;
     public articleTagsBusy: Subscription;
-    @ViewChild('articleTagFields')
-    public articleTagFields: Select2Component;
-    public tagsValue: any = [];
-    public articleTagsValue: any = [];
+    public articleTagFields;
+    public articleTagValues = new Array();
     // 空间列表
     public spaces;
     // 分页数据
     public page: CommonPageModel;
     // 当前页数
     public currentPage: number;
-
     // 文章属性框
     @ViewChild('settingAritcleModel')
     public settingAritcleModel: ModalDirective;
@@ -83,7 +72,7 @@ export class CreateArticleComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.articleModel = new ArticleModel();
+        this.article = new ArticleModel();
         this.initArticelType();
     }
 
@@ -102,8 +91,8 @@ export class CreateArticleComponent implements OnInit {
                     const tags = [];
                     result.data.content.forEach(element => {
                         const tag = {
-                            'id': element.id,
-                            'text': element.title
+                            'value': element.id,
+                            'label': element.title
                         };
                         tags.push(tag);
                     });
@@ -125,7 +114,7 @@ export class CreateArticleComponent implements OnInit {
 
     // 获取编辑器内容
     getData(value) {
-        this.articleModel.content = value;
+        this.article.content = value;
     }
 
     showSettingModel() {
@@ -136,22 +125,22 @@ export class CreateArticleComponent implements OnInit {
         const userModel = new UserModel();
         const user = JSON.parse(CookieUtils.getBy(CommonConfig.AUTH_USER_INFO));
         userModel.id = user.id;
-        this.articleModel.user = userModel;
-        this.articleModel.articleTags = new Array();
-        this.articleTagsValue.value.forEach(e => {
+        this.article.user = userModel;
+        this.article.articleTags = new Array();
+        this.articleTagFields.forEach(e => {
             const articleTag = new ArticleTagModel();
             articleTag.id = e;
-            this.articleModel.articleTags.push(articleTag);
+            this.article.articleTags.push(articleTag);
         });
-        this.articleService.save(this.articleModel).subscribe(
+        this.articleService.save(this.article).subscribe(
             result => {
                 if (result.code === CodeConfig.SUCCESS) {
                     this.settingAritcleModel.hide();
-                    this.toastyService.info('创建文章' + this.articleModel.title + '成功!!!');
+                    this.toastyService.info('创建文章' + this.article.title + '成功!!!');
                     // 跳转到首页
                     this.router.navigate(['/']);
                 } else {
-                    this.toastyService.info('参数填写错误');
+                    this.toastyService.error(ResultUtils.getError(result));
                 }
             }
         );
@@ -165,10 +154,6 @@ export class CreateArticleComponent implements OnInit {
         this.initSpace(this.page);
     }
 
-    tagChanged(data: { value: string[] }) {
-        this.articleTagsValue = data;
-    }
-
     pageChanged(event: any) {
         this.page.number = event.page - 1;
         this.spaceService.getAllSpacesByPublicOrUser(CookieUtils.getUser().id, this.page).subscribe(
@@ -177,6 +162,10 @@ export class CreateArticleComponent implements OnInit {
                 this.page = CommonPageModel.getPage(result.data);
             }
         );
+    }
+
+    onSelected(event: any) {
+        this.articleTagValues.push(event.label);
     }
 
 }

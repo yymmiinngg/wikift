@@ -23,7 +23,7 @@
   <div class="mr-auto"></div>
   <div>
     <ul class="nav footer__nav">
-      <a class="btn btn-primary waves-effect" [ngClass]="{'disabled': articleModel.content == ''}" (click)="showSettingModel()">发布文章</a>
+      <a class="btn btn-primary waves-effect" [ngClass]="{'disabled': article.content == ''}" (click)="showSettingModel()">发布文章</a>
     </ul>
   </div>
 </footer>
@@ -36,119 +36,125 @@
           <h5 class="modal-title pull-left">设置文章相关属性</h5>
         </div>
         <div class="modal-body">
-          <wizard navBarLayout="large-empty-symbols">
-            <div [ngBusy]="articleTagsBusy"></div>
-            <wizard-step stepTitle="文章标题" navigationSymbol="&#xf0b1;" navigationSymbolFontFamily="FontAwesome">
-              <div style="margin-top: 10px;">
-                <div class="form-group form-group--centered">
-                  <input type="text" [(ngModel)]="articleModel.title" name="articleModel.title" class="form-control" placeholder="请输入文章标题">
-                  <i class="form-group__bar"></i>
-                </div>
-              </div>
-              <div class="card-footer d-flex px-4 py-3">
-                <div class="mr-auto"></div>
-                <div class="ml-4">
-                  <a class="btn btn-info" [ngClass]="{'disabled': articleModel.title == ''}" nextStep>下一步</a>
-                </div>
-              </div>
-            </wizard-step>
-            <wizard-step stepTitle="文章类型" navigationSymbol="&#xf085;" navigationSymbolFontFamily="FontAwesome">
-              <div class="card-block mr-center" style="margin-top: 10px;">
-                <div class="clearfix mt-2">
-                  <alert type="danger">
-                    请谨慎选择文章类型, 不支持修改
-                  </alert>
-                </div>
-                <label *ngFor="let type of articleType" class="custom-control custom-radio">
-                  <input type="radio" [(ngModel)]="articleModel.articleType" [value]="type" name="articleModel.articleType" class="custom-control-input">
-                  <span class="custom-control-indicator"></span>
-                  <span class="custom-control-description">{{type.title}}</span>
-                </label>
-              </div>
-              <div class="card-footer d-flex px-4 py-3">
-                <div class="mr-auto">
-                  <a class="btn btn-secondary" previousStep>上一步</a>
-                </div>
-                <div class="ml-4">
-                  <a class="btn btn-info" [ngClass]="{'disabled': !articleModel.articleType?.id}" nextStep>下一步</a>
-                </div>
-              </div>
-            </wizard-step>
-            <wizard-step stepTitle="文章标签" (stepEnter)="showArticleTagsStep($event)" navigationSymbol="&#xf085;" navigationSymbolFontFamily="FontAwesome">
-              <div class="card-block mr-center mt-10">
-                <div class="col-10 ma">
-                  <select2 #articleTagFields [data]="articleTags" [options]="multipleOptions" [value]="tagsValue" (valueChanged)="tagChanged($event)"></select2>
-                </div>
-              </div>
-              <div class="card-footer d-flex px-4 py-3">
-                <div class="mr-auto">
-                  <a class="btn btn-secondary" previousStep>上一步</a>
-                </div>
-                <div class="ml-4">
-                  <a class="btn btn-info" [ngClass]="{'disabled': !articleModel.articleType?.id}" nextStep>下一步</a>
-                </div>
-              </div>
-            </wizard-step>
-            <wizard-step stepTitle="文章空间" (stepEnter)="showSpaceStep($event)" navigationSymbol="&#xf085;" navigationSymbolFontFamily="FontAwesome">
-              <div class="card-block mr-center" style="margin-top: 10px;">
-                <div class="contacts row">
-                  <div *ngFor="let space of spaces" class="col-xl-4 col-lg-3 col-sm-4 col-6">
-                    <div class="contacts__item">
-                      <a class="contacts__img">
-                        <img src="{{space.avatar}}" alt="{{space.name}}">
-                      </a>
-                      <div class="contacts__info">
-                        <strong>{{space.name}}</strong>
-                        <small>{{space.description? space.description: '该空间还没有任何描述'}}</small>
-                      </div>
-                      <label class="custom-control custom-radio">
-                        <input type="radio" [(ngModel)]="articleModel.space" [value]="space" name="articleModel.space" class="custom-control-input">
-                        <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description">选择该空间</span>
-                      </label>
+          <div class="contacts row">
+            <div class="col-xl-8">
+              <wizard navBarLayout="large-empty-symbols">
+                <div [ngBusy]="articleTagsBusy"></div>
+                <wizard-step stepTitle="文章标题" navigationSymbol="&#xf0b1;" navigationSymbolFontFamily="FontAwesome">
+                  <div style="margin-top: 10px;">
+                    <div class="form-group form-group--centered">
+                      <input type="text" [(ngModel)]="article.title" name="article.title" class="form-control" placeholder="请输入文章标题">
+                      <i class="form-group__bar"></i>
                     </div>
                   </div>
-                </div>
-                <div class="mr-center ">
-                  <pagination *ngIf="spaces?.length && page " [itemsPerPage]="page.size " [(ngModel)]="currentPage" totalItems="{{page.totalElements}} "
-                    (pageChanged)="pageChanged($event) " [boundaryLinks]="true ">
-                  </pagination>
-                </div>
-              </div>
-              <div class="card-footer d-flex px-4 py-3">
-                <div class="mr-auto">
-                  <a class="btn btn-secondary" previousStep>上一步</a>
-                </div>
-                <div class="ml-4">
-                  <a class="btn btn-info" [ngClass]="{'disabled': !articleModel.space?.id}" nextStep>下一步</a>
-                </div>
-              </div>
-            </wizard-step>
-            <wizard-step stepTitle="发布详情" navigationSymbol="&#xf00c;" navigationSymbolFontFamily="FontAwesome">
-              <div class="card-block" style="margin-top: 10px;">
-                <table class="table mb-0">
-                  <tbody>
-                    <tr *ngIf="articleModel">
-                      <th scope="row">文章标题:</th>
-                      <td>{{articleModel.title}}</td>
-                    </tr>
-                    <tr *ngIf="articleModel.articleType">
-                      <th scope="row">文章类型</th>
-                      <td>{{articleModel.articleType.title}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="card-footer d-flex px-4 py-3">
-                <div class="mr-auto">
-                  <a class="btn btn-secondary" previousStep>上一步</a>
-                </div>
+                  <div class="card-footer d-flex px-4 py-3">
+                    <div class="mr-auto"></div>
+                    <div class="ml-4">
+                      <a class="btn btn-info" [ngClass]="{'disabled': article.title == ''}" nextStep>下一步</a>
+                    </div>
+                  </div>
+                </wizard-step>
+                <wizard-step stepTitle="文章类型" navigationSymbol="&#xf085;" navigationSymbolFontFamily="FontAwesome">
+                  <div class="card-block mr-center" style="margin-top: 10px;">
+                    <div class="clearfix mt-2">
+                      <alert type="danger">
+                        请谨慎选择文章类型, 不支持修改
+                      </alert>
+                    </div>
+                    <label *ngFor="let type of articleType" class="custom-control custom-radio">
+                      <input type="radio" [(ngModel)]="article.articleType" [value]="type" name="article.articleType" class="custom-control-input">
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">{{type.title}}</span>
+                    </label>
+                  </div>
+                  <div class="card-footer d-flex px-4 py-3">
+                    <div class="mr-auto">
+                      <a class="btn btn-secondary" previousStep>上一步</a>
+                    </div>
+                    <div class="ml-4">
+                      <a class="btn btn-info" [ngClass]="{'disabled': !article.articleType?.id}" nextStep>下一步</a>
+                    </div>
+                  </div>
+                </wizard-step>
+                <wizard-step stepTitle="文章标签" (stepEnter)="showArticleTagsStep($event)" navigationSymbol="&#xf085;" navigationSymbolFontFamily="FontAwesome">
+                  <div class="card-block mr-center mt-10">
+                    <div class="col-10 ma">
+                      <ng-select [(ngModel)]="articleTagFields" [options]="articleTags" [multiple]="true" (selected)="onSelected($event)"></ng-select>
+                    </div>
+                  </div>
+                  <div class="card-footer d-flex px-4 py-3">
+                    <div class="mr-auto">
+                      <a class="btn btn-secondary" previousStep>上一步</a>
+                    </div>
+                    <div class="ml-4">
+                      <a class="btn btn-info" [ngClass]="{'disabled': !articleTagValues.length > 0}" nextStep>下一步</a>
+                    </div>
+                  </div>
+                </wizard-step>
+                <wizard-step stepTitle="文章空间" (stepEnter)="showSpaceStep($event)" navigationSymbol="&#xf085;" navigationSymbolFontFamily="FontAwesome">
+                  <div class="card-block mr-center" style="margin-top: 10px;">
+                    <div class="contacts row">
+                      <div *ngFor="let space of spaces" class="col-xl-4 col-lg-3 col-sm-4 col-6">
+                        <div class="contacts__item">
+                          <a class="contacts__img-not">
+                            <img src="{{space.avatar}}" alt="{{space.name}}">
+                          </a>
+                          <div class="contacts__info">
+                            <strong>{{space.name}}</strong>
+                          </div>
+                          <label class="custom-control custom-radio">
+                            <input type="radio" [(ngModel)]="article.space" [value]="space" name="article.space" class="custom-control-input">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">选择</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mr-center ">
+                      <pagination *ngIf="spaces?.length && page" [itemsPerPage]="page.size " [(ngModel)]="currentPage" totalItems="{{page.totalElements}} "
+                        (pageChanged)="pageChanged($event) " [boundaryLinks]="true ">
+                      </pagination>
+                    </div>
+                  </div>
+                  <div class="card-footer d-flex px-4 py-3">
+                    <div class="mr-auto">
+                      <a class="btn btn-secondary" previousStep>上一步</a>
+                    </div>
+                  </div>
+                </wizard-step>
+              </wizard>
+            </div>
+            <!-- 信息预览 -->
+            <div class="col-xl-4">
+              <h6>信息预览</h6>
+              <table class="table table-condensed table-bordered table-hover table-fixed">
+                <tbody>
+                  <tr *ngIf="article.title" class="row mx-0" tooltip="{{article.title}}" placement="bottom" container="body">
+                    <th class="col-5">标题</th>
+                    <td class="col-7 td-ellipsis">{{article.title}}</td>
+                  </tr>
+                  <tr *ngIf="article.articleType" class="row mx-0" tooltip="{{article.articleType.title}}">
+                    <th class="col-5">类型</th>
+                    <td class="col-7 td-ellipsis">{{article.articleType.title}}</td>
+                  </tr>
+                  <tr *ngIf="articleTagValues.length > 0" class="row mx-0" tooltip="{{articleTagValues}}">
+                    <th class="col-5">标签</th>
+                    <td class="col-7 td-ellipsis">鼠标移向我</td>
+                  </tr>
+                  <tr *ngIf="article.space" class="row mx-0" tooltip="{{article.space}}">
+                    <th class="col-5">空间</th>
+                    <td class="col-7 td-ellipsis">{{article.space.name}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div *ngIf="article.space" class="card-footer d-flex px-4 py-3">
+                <div class="mr-auto"></div>
                 <div class="ml-4">
                   <a class="btn btn-primary" (click)="published()">发布</a>
                 </div>
               </div>
-            </wizard-step>
-          </wizard>
+            </div>
+          </div>
         </div>
       </div>
     </div>

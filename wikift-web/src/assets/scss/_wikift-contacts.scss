@@ -59,6 +59,19 @@
   }
 }
 
+.contacts__img-not {
+  display: block;
+  margin-bottom: 1.1rem;
+
+  & > img {
+    max-width: 120px;
+    max-height: 120px;
+    width: 100%;
+    border-radius: 50%;
+    @include transition(transform 300ms);
+  }
+}
+
 .contacts__info {
   strong,
   small {

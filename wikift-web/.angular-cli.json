@@ -23,7 +23,6 @@
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
-        "../node_modules/select2/dist/js/select2.full.min.js",
         "../src/assets/js/wikift-editor/editormd.min.js",
         "../src/assets/js/wikift-editor/lib/marked.min.js",
         "../src/assets/js/wikift-editor/lib/prettify.min.js",
