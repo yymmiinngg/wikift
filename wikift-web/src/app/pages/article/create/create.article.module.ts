@@ -23,9 +23,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ArchwizardModule } from 'ng2-archwizard';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { BusyModule, BusyConfig } from 'angular2-busy';
-import { Select2Module } from 'ng2-select2';
+import { SelectModule } from 'angular2-select';
 import { ToastyModule } from 'ng2-toasty';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { CreateArticleComponent } from './create.article.component';
 
@@ -54,10 +55,11 @@ export function busyConfigFactory() {
         ArchwizardModule,
         FormsModule,
         BusyModule,
-        Select2Module,
+        SelectModule,
         ToastyModule.forRoot(),
         ModalModule.forRoot(),
         AlertModule.forRoot(),
+        TooltipModule.forRoot(),
         PaginationModule.forRoot(),
         RouterModule.forChild(CREATE_ARTICLE_ROUTES)
     ],
