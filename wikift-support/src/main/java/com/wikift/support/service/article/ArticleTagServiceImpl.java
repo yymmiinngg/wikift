@@ -48,4 +48,9 @@ public class ArticleTagServiceImpl implements ArticleTagService {
         return counters;
     }
 
+    @Override
+    public ArticleTagEntity getByTitle(String title) {
+        return articleTagRepository.findByTitle(title);
+    }
+
 }

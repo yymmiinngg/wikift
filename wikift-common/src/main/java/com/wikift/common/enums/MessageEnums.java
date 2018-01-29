@@ -22,6 +22,9 @@ public enum MessageEnums {
     // 系统提示信息
     SUCCESS(0000, "成功"),
 
+    // 数据提示
+    DATA_NOT_FOUND_OR_PARAM_ERROR(1001, "查询的数据不存在, 或传递参数有误"),
+
     PARAMS_NOT_NULL(4000, "参数不能为空"),
     PARAMS_VALIDATE_ERROR(4001, "参数输入错误"),
     PARAMS_CONTRAST_VALIDATE_ERROR(4002, "两次输入的数据不一致"),

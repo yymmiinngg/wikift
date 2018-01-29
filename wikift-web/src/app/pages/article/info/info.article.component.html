@@ -268,8 +268,11 @@
                 </div>
                 <div class="card-body">
                     <div *ngIf="currentUser; else noLogin" echarts [options]="commentArticleThrendChart" class="comments-counter-chart"></div>
-                    <ng-template #noLogin class="mr-center">
-                        登录后才可使用本功能
+                    <ng-template #noLogin>
+                        <div class="mr-center">
+                            该功能需要用户登录才可使用,请
+                            <a [routerLink]="['/user/login']">登录</a>
+                        </div>
                     </ng-template>
                 </div>
             </div>
