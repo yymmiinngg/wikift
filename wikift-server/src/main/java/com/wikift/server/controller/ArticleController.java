@@ -178,4 +178,16 @@ public class ArticleController {
         return CommonResult.success(articleService.viewArticleCount(userId, articleId));
     }
 
+
+    @RequestMapping(value = "public/article/search", method = RequestMethod.GET)
+    CommonResult<ArticleEntity> search(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "size", defaultValue = "10") Integer size,
+            @RequestParam(value = "tagId", required = false) Long tagId,
+            @RequestParam(value = "articleTitle", required = false) String articleTitle,
+            @RequestParam(value = "spaceId", required = false) Long spaceId,
+            @RequestParam(value = "userId", required = false) Long userId) {
+        return CommonResult.success(articleService.search(tagId, articleTitle, spaceId, userId, PageAndSortUtils.getPage(page, size)));
+    }
+
 }

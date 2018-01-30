@@ -87,4 +87,6 @@ public interface ArticleService {
 
     List<CounterEntity> getArticleViewByCreateTimeAndTop7(Long articleId);
 
+    Page<ArticleEntity> search(Long tagId, String articleTitle, Long spaceId, Long userId, Pageable pageable);
+
 }
