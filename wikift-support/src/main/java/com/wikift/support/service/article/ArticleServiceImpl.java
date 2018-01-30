@@ -21,6 +21,7 @@ import com.wikift.common.enums.OrderEnums;
 import com.wikift.model.article.ArticleEntity;
 import com.wikift.model.counter.CounterEntity;
 import com.wikift.support.repository.article.ArticleRepository;
+import com.wikift.support.repository.article.ArticleRepositorySenior;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -137,6 +138,14 @@ public class ArticleServiceImpl implements ArticleService {
         List<CounterEntity> counters = new ArrayList<>();
         articleRepository.findArticleViewByCreateTimeAndTop7(articleId).forEach(v -> counters.add(new CounterEntity(v[0], v[1])));
         return counters;
+    }
+
+    @Autowired
+    private ArticleRepositorySenior articleRepositorySenior;
+
+    @Override
+    public Page<ArticleEntity> search(Long tagId, String articleTitle, Long spaceId, Long userId, Pageable pageable) {
+        return articleRepositorySenior.findAllByTagAndCreateTime(tagId, articleTitle, spaceId, userId, pageable);
     }
 
 }
