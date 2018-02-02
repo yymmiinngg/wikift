@@ -34,8 +34,7 @@ public class ArticleTagController {
     @Autowired
     private ArticleTagService articleTagService;
 
-    @PreAuthorize("hasAuthority(('USER'))")
-    @RequestMapping(value = "/article/tag/list", method = RequestMethod.GET)
+    @RequestMapping(value = "public/article/tag/list", method = RequestMethod.GET)
     CommonResult<ArticleTagEntity> list() {
         return CommonResult.success(articleTagService.findAll(null));
     }

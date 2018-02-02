@@ -123,4 +123,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.findFollowCoverCount(followUserId);
     }
 
+    @Override
+    public List<UserEntity> getAllUsers() {
+        return (List<UserEntity>) userRepository.findAll();
+    }
+
 }

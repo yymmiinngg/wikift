@@ -21,7 +21,8 @@
         <div class="col-md-9">
             <div class="card">
                 <div class="card-header border-b-1 px-4 py-3">
-                    <div class="card-block d-flex">
+                    <!-- 普通搜索 -->
+                    <div *ngIf="!showSeniorSettings; else seniorSetting" class="card-block d-flex">
                         <div class="input-group">
                             <a class="input-group-addon" tooltip="鼠标点击我进行搜索" container="body" placement="top" (click)="searchContent()">
                                 <i class="zmdi zmdi-search zmdi-hc-fw"></i>
@@ -32,13 +33,48 @@
                             </div>
                         </div>
                         <div class="ml-4">
-                            <button type="button" class="btn btn-success disabled" tooltip="该功能正在努力研发中..." container="body" placement="top">
+                            <button type="button" class="btn btn-success" (click)="seniorSettings()" tooltip="点击我可以进行高级搜索" container="body" placement="top">
                                 <i class="zmdi zmdi-search-for zmdi-hc-fw"></i>
                             </button>
                         </div>
                     </div>
+                    <!-- 高级搜索 -->
+                    <ng-template #seniorSetting>
+                        <div class="card-block d-flex mt-10">
+                            <div class="row col-11">
+                                <div class="col-sm-3">
+                                    <div class="form-group mb-0">
+                                        <input type="text" [(ngModel)]="searchArticleTitle" (blur)="onSearchArticleTitle()" class="form-control" tooltip="使用内容名称进行筛选内容"
+                                            container="body" placeholder="请输入搜索的内容名称">
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group mb-0">
+                                        <ng-select tooltip="使用标签进行筛选内容" container="body" [(ngModel)]="searchArticleTag" [options]="articleTags" (selected)="onSearchArticleTagSelected($event)"></ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group mb-0">
+                                        <ng-select tooltip="使用空间进行筛选内容" container="body" [(ngModel)]="searchArticleSpace" [options]="articleSpaces" (selected)="onSearchArticleSpaceSelected($event)"></ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group mb-0">
+                                        <ng-select tooltip="使用用户进行筛选内容" container="body" [(ngModel)]="searchArticleUser" [options]="articleUsers" (selected)="onSearchArticleUserSelected($event)"></ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ml-4 col-9">
+                                <button type="button" class="btn btn-success" (click)="seniorSettings()" tooltip="点击我可以进行普通搜索" container="body" placement="top">
+                                    <i class="zmdi zmdi-search-for zmdi-hc-fw"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
                 </div>
             </div>
+            <!-- 搜索结果 -->
             <div *ngIf="searchData; else searchError">
                 <h4>共找到 {{searchData.totalElements}} 条结果数据</h4>
                 <div *ngFor="let article of searchData.content" class="card">
@@ -123,38 +159,6 @@
         </div>
         <!-- 其他功能 -->
         <div class="col-md-3">
-            <!-- 用户排行榜 -->
-            <div class="card">
-                <div class="card-header border-b-1 mr-center">
-                    <div class="card-block">
-                        <h2 class="card-title">活跃用户</h2>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="messages__sidebar">
-                        <div class="listview listview--hover">
-                            <a *ngFor="let user of activeUsers" class="listview__item" [routerLink]="['/account', user.username, 'info']">
-                                <img src="{{ user.avatar }}" alt="{{ user.username }}" class="listview__img">
-                                <div class="listview__content">
-                                    <div class="listview__heading">{{ user.username }}</div>
-                                    <p>{{ user.signature }}</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 标签排行榜 -->
-            <div class="card">
-                <div class="card-header border-b-1 mr-center">
-                    <div class="card-block">
-                        <h2 class="card-title">活跃标签</h2>
-                    </div>
-                </div>
-                <div class="card-body" style="margin-top: 20px;">
-                    <div echarts [options]="wordCloudChart" class="comments-counter-chart"></div>
-                </div>
-            </div>
         </div>
     </div>
 </section>

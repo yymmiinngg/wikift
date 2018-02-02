@@ -18,6 +18,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Router, ActivatedRoute } from '@angular/router';
+import { IOption } from 'ng-select';
 
 import { ArticleModel } from '../../shared/model/article/article.model';
 import { UserModel } from '../../shared/model/user/user.model';
@@ -35,6 +36,7 @@ import { ChartsUtils } from '../../shared/utils/chart.echarts.utils';
 import { ChartWordCloudModel } from '../../shared/model/chart/chart.wordcloud.model';
 import { ArticleTagService } from '../../../services/article.tag.service';
 import { CodeConfig } from '../../../config/code.config';
+import { SpaceService } from '../../../services/space.service';
 
 @Component({
     selector: 'wikift-search',
@@ -53,11 +55,28 @@ export class SearchComponent implements OnInit {
     public userInfo;
     // 搜索的关键词
     public searchValue;
+    // 显示高级搜索
+    public showSeniorSettings = false;
+    // 文章标签
+    public articleTags;
+    // 文章空间
+    public articleSpaces;
+    // 文章用户
+    public articleUsers;
+    // 搜索的文章名称
+    public searchArticleTitle;
+    // 搜索的文章标签
+    public searchArticleTag;
+    // 搜索的文章空间
+    public searchArticleSpace;
+    // 搜索的文章用户
+    public searchArticleUser;
 
     constructor(private route: ActivatedRoute,
         private articleService: ArticleService,
         private userService: UserService,
-        private articleTagService: ArticleTagService) {
+        private articleTagService: ArticleTagService,
+        private spaceService: SpaceService) {
         this.page = new CommonPageModel();
         this.userInfo = CookieUtils.getUser();
     }
@@ -104,6 +123,99 @@ export class SearchComponent implements OnInit {
             result => {
                 this.searchValue = result.data;
                 this.page = CommonPageModel.getPage(result.data);
+            }
+        );
+    }
+
+    seniorSettings() {
+        if (this.showSeniorSettings) {
+            this.showSeniorSettings = false;
+        } else {
+            this.showSeniorSettings = true;
+            this.initArticleTag();
+            this.initSpace();
+            this.initUser();
+        }
+    }
+
+    generateOptions(any) {
+        const options = [];
+        any.forEach(element => {
+            let title = element.title;
+            if (!title) {
+                title = element.name;
+            }
+            if (!title) {
+                title = element.username;
+            }
+            const option = {
+                'value': element.id,
+                'label': title
+            };
+            options.push(option);
+        });
+        return options;
+    }
+
+    initArticleTag() {
+        this.articleTagService.list().subscribe(
+            result => {
+                if (result.data) {
+                    this.articleTags = this.generateOptions(result.data.content);
+                }
+            }
+        );
+    }
+
+    initSpace() {
+        this.spaceService.getAllPublicSpaces().subscribe(
+            result => {
+                if (result.data) {
+                    this.articleSpaces = this.generateOptions(result.data.content);
+                }
+            }
+        );
+    }
+
+    initUser() {
+        this.userService.list().subscribe(
+            result => {
+                if (result.data) {
+                    this.articleUsers = this.generateOptions(result.data);
+                }
+            }
+        );
+    }
+
+    onSearchArticleTitle() {
+        this.globalSearch(this.searchArticleTag, this.searchArticleTitle, this.searchArticleSpace, this.searchArticleUser);
+    }
+
+    onSearchArticleTagSelected(option: IOption) {
+        this.searchArticleTag = option.value;
+        this.globalSearch(this.searchArticleTag, this.searchArticleTitle, this.searchArticleSpace, this.searchArticleUser);
+    }
+
+    onSearchArticleSpaceSelected(option: IOption) {
+        this.searchArticleSpace = option.value;
+        this.globalSearch(this.searchArticleTag, this.searchArticleTitle, this.searchArticleSpace, this.searchArticleUser);
+    }
+
+    onSearchArticleUserSelected(option: IOption) {
+        console.log(option);
+        this.searchArticleUser = option.value;
+        this.globalSearch(this.searchArticleTag, this.searchArticleTitle, this.searchArticleSpace, this.searchArticleUser);
+    }
+
+
+    globalSearch(articleTag: number, articleTitle: string, articleSpace: number, articleUser: number) {
+        this.loadArticleBusy = this.articleService.search(this.page, articleTag, articleTitle, articleSpace, articleUser).subscribe(
+            result => {
+                this.searchData = result.data;
+                if (result.code === CodeConfig.SUCCESS) {
+                    this.page = CommonPageModel.getPage(result.data);
+                    this.currentPage = this.page.number;
+                }
             }
         );
     }

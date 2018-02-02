@@ -43,7 +43,7 @@ public class ArticleRepositorySenior {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public Page<ArticleEntity> findAllByTagAndCreateTime(Long tagId, String articleTitle, Long spaceId, Long userId, Pageable pageable) {
+    public Page<ArticleEntity> search(Long tagId, String articleTitle, Long spaceId, Long userId, Pageable pageable) {
         StringBuffer bufferPrefix = new StringBuffer();
         // 默认查询的数据信息
         bufferPrefix.append("SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(SUM(uavr.uavr_view_count) , 0) AS view_count, IFNULL(COUNT(DISTINCT uafr.uafr_user_id), 0) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id, IFNULL(c.comments_count, 0) AS comments_count ");
@@ -65,7 +65,7 @@ public class ArticleRepositorySenior {
         }
         // 根据文章名称查询
         if (!StringUtils.isEmpty(articleTitle)) {
-            bufferJoin.append("AND a.a_title = :articleTitle ");
+            bufferJoin.append("AND a.a_title LIKE :articleTitle ");
         }
         // 根据空间查询
         if (!ObjectUtils.isEmpty(spaceId) && spaceId > 0) {
@@ -113,7 +113,7 @@ public class ArticleRepositorySenior {
         }
         // 根据文章名称查询
         if (!StringUtils.isEmpty(articleTitle)) {
-            query.setParameter("articleTitle", articleTitle);
+            query.setParameter("articleTitle", "%" + articleTitle + "%");
         }
         // 根据空间查询
         if (!ObjectUtils.isEmpty(spaceId) && spaceId > 0) {

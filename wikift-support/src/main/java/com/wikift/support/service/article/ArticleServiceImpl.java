@@ -145,7 +145,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Page<ArticleEntity> search(Long tagId, String articleTitle, Long spaceId, Long userId, Pageable pageable) {
-        return articleRepositorySenior.findAllByTagAndCreateTime(tagId, articleTitle, spaceId, userId, pageable);
+        return articleRepositorySenior.search(tagId, articleTitle, spaceId, userId, pageable);
     }
 
 }
