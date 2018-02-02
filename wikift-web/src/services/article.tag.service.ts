@@ -43,7 +43,7 @@ export class ArticleTagService {
     }
 
     list(): Observable<CommonResultModel> {
-        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        const options = HttpUtils.getDefaultRequestOptions();
         return this.http.get(ApiConfig.API_ARTICLE_TAG_LIST, options).map(ResultUtils.extractData);
     }
 

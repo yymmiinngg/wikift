@@ -55,4 +55,6 @@ public interface UserService {
 
     Integer findFollowCoverCount(Long followUserId);
 
+    List<UserEntity> getAllUsers();
+
 }

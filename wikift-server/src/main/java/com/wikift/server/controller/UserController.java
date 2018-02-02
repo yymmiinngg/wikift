@@ -64,6 +64,11 @@ public class UserController {
         return CommonResult.success(userService.save(entity));
     }
 
+    @RequestMapping(value = "public/user/list", method = RequestMethod.GET)
+    CommonResult<UserEntity> list() {
+        return CommonResult.success(userService.getAllUsers());
+    }
+
     @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "user/info/{username}", method = RequestMethod.GET)
     CommonResult<UserEntity> info(@PathVariable(value = "username") String username) {

@@ -153,4 +153,25 @@ export class ArticleService {
         return this.http.get(ApiConfig.API_ARTICLE_FILTER_TAG + tag, options).map(ResultUtils.extractData);
     }
 
+    search(page: CommonPageModel, tag?: number, articleTitle?: string, spaceId?: number, userId?: number): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptions();
+        const params = HttpUtils.getParams();
+        params.append('page', page.number.toString());
+        params.append('size', page.size.toString());
+        if (tag) {
+            params.append('tagId', tag.toString());
+        }
+        if (articleTitle) {
+            params.append('articleTitle', articleTitle);
+        }
+        if (spaceId) {
+            params.append('spaceId', spaceId.toString());
+        }
+        if (userId) {
+            params.append('userId', userId.toString());
+        }
+        options.params = params;
+        return this.http.get(ApiConfig.API_ARTICLE_SEARCH, options).map(ResultUtils.extractData);
+    }
+
 }

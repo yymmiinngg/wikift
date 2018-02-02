@@ -144,4 +144,12 @@ public class SpaceController {
         return CommonResult.success(spaceService.getSpaceInfoByCode(code));
     }
 
+    @RequestMapping(value = "public/space/list", method = RequestMethod.GET)
+    CommonResult<SpaceEntity> list(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                           @RequestParam(value = "size", defaultValue = "1000") Integer size) {
+        Assert.notNull(page, MessageUtils.getParamNotNull("page"));
+        Assert.notNull(page, MessageUtils.getParamNotNull("size"));
+        return CommonResult.success(spaceService.getAllPublicSpace(PageAndSortUtils.getPage(page, size)));
+    }
+
 }

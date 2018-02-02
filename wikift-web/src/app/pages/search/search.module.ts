@@ -25,6 +25,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BusyModule, BusyConfig } from 'angular2-busy';
 import { AngularEchartsModule } from 'ngx-echarts';
+import { SelectModule } from 'angular2-select';
 
 import { SearchComponent } from './search.component';
 
@@ -32,6 +33,7 @@ import { ArticleService } from '../../../services/article.service';
 import { WikiftEditorModule } from '../../shared/directives/wikift-editor/wikift-editor.module';
 import { UserService } from '../../../services/user.service';
 import { ArticleTagService } from '../../../services/article.tag.service';
+import { SpaceService } from '../../../services/space.service';
 
 export function busyConfigFactory() {
     return new BusyConfig({
@@ -50,6 +52,7 @@ const HOME_ROUTES: Routes = [
         CommonModule,
         FormsModule,
         BusyModule,
+        SelectModule,
         AngularEchartsModule,
         TooltipModule.forRoot(),
         TabsModule.forRoot(),
@@ -64,6 +67,7 @@ const HOME_ROUTES: Routes = [
         ArticleService,
         UserService,
         ArticleTagService,
+        SpaceService,
         {
             provide: BusyConfig,
             useFactory: busyConfigFactory

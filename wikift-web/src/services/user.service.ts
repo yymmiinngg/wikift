@@ -207,4 +207,9 @@ export class UserService {
         return this.http.get(path, options).map(ResultUtils.extractData);
     }
 
+    list(): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptions();
+        return this.http.get(ApiConfig.API_USER_PUBLIC_LIST, options).map(ResultUtils.extractData);
+    }
+
 }
