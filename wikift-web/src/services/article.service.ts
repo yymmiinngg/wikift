@@ -174,4 +174,9 @@ export class ArticleService {
         return this.http.get(ApiConfig.API_ARTICLE_SEARCH, options).map(ResultUtils.extractData);
     }
 
+    getHistory(articleId) {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        return this.http.get(ApiConfig.API_ARTICLE_HISTORY + articleId, options).map(ResultUtils.extractData);
+    }
+
 }

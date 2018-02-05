@@ -19,7 +19,9 @@ package com.wikift.support.service.article;
 
 import com.wikift.common.enums.OrderEnums;
 import com.wikift.model.article.ArticleEntity;
+import com.wikift.model.article.ArticleHistoryEntity;
 import com.wikift.model.counter.CounterEntity;
+import com.wikift.support.repository.article.ArticleHistoryRepository;
 import com.wikift.support.repository.article.ArticleRepository;
 import com.wikift.support.repository.article.ArticleRepositorySenior;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service(value = "articleService")
@@ -37,6 +40,9 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ArticleRepository articleRepository;
 
+    @Autowired
+    private ArticleHistoryRepository articleHistoryRepository;
+
     @Override
     public ArticleEntity save(ArticleEntity entity) {
         return articleRepository.save(entity);
@@ -44,6 +50,15 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleEntity update(ArticleEntity entity) {
+        ArticleHistoryEntity historyEntity = new ArticleHistoryEntity();
+        ArticleEntity source = this.getArticle(entity.getId());
+        historyEntity.setId(0L);
+        historyEntity.setContent(source.getContent());
+        historyEntity.setUser(entity.getUser());
+        historyEntity.setArticle(source);
+        historyEntity.setVersion(String.valueOf(new Date().getTime()));
+        // 存储文章的修改历史
+        articleHistoryRepository.save(historyEntity);
         return articleRepository.save(entity);
     }
 

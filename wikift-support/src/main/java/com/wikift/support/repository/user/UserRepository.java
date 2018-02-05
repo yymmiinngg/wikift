@@ -86,10 +86,10 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
      * @param coverUserId  被关注者用户id
      * @return 用户信息
      */
-    @Query(value = "SELECT u.u_id, u.u_username, u.u_password, u.u_avatar, u.u_alias_name, u.u_signature " +
+    @Query(value = "SELECT u.u_id, u.u_username, u.u_password, u.u_avatar, u.u_alias_name, u.u_signature, u.u_active, u.u_email, u.u_lock, utr.utr_users_type_id " +
             "FROM users_follow_relation AS ufr " +
-            "LEFT JOIN users AS u " +
-            "ON ufr.ufr_user_id_follw = u.u_id " +
+            "LEFT JOIN users AS u ON ufr.ufr_user_id_follw = u.u_id " +
+            "LEFT JOIN users_type_relation AS utr ON utr.utr_users_type_id = u.u_id " +
             "WHERE u.u_id = ?1 " +
             "AND ufr.ufr_user_id_cover = ?2", nativeQuery = true)
     UserEntity findUserEntityByFollowsExists(Long followUserId, Long coverUserId);

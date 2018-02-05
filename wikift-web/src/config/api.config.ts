@@ -50,6 +50,7 @@ export class ApiConfig {
     public static API_ARTICLE_VIEW_COUNT = ApiConfig.V1_API_ROOT + 'article/view/count';
     public static API_ARTICLE_VIEW_TOP_WEEK = ApiConfig.V1_API_ROOT_PUBLIC + '/article/view/';
     public static API_ARTICLE_FOR_MY = ApiConfig.V1_API_ROOT + 'article/my';
+    public static API_ARTICLE_HISTORY = ApiConfig.V1_API_ROOT + 'article/history/';
     public static API_ARTICLE_FILTER_TAG = ApiConfig.V1_API_ROOT_PUBLIC + '/article/list/tag/';
     public static API_ARTICLE_SEARCH = ApiConfig.V1_API_ROOT_PUBLIC + '/article/search';
 
