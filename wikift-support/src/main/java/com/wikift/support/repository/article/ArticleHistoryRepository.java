@@ -15,57 +15,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// 报表样式
-// Pie Charts
-.chart-pie {
-  display: inline-block;
-  position: relative;
-}
+package com.wikift.support.repository.article;
 
-.chart-pie__value {
-  position: absolute;
-  color: $white;
-  left: 0;
-  top: 0;
-  text-align: center;
-  width: 100%;
-  height: 100%;
+import com.wikift.model.article.ArticleEntity;
+import com.wikift.model.article.ArticleHistoryEntity;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-  &:after {
-    content: "%";
-    font-size: 12px;
-  }
-}
+import java.util.List;
 
-.chart-pie__title {
-  margin-top: -2px;
-  line-height: 15px;
-  font-size: 11px;
-}
+/**
+ * ArticleHistoryRepository <br/>
+ * 描述 : ArticleHistoryRepository <br/>
+ * 作者 : qianmoQ <br/>
+ * 版本 : 1.0 <br/>
+ * 创建时间 : 2018-02-02 下午3:16 <br/>
+ * 联系作者 : <a href="mailTo:shichengoooo@163.com">qianmoQ</a>
+ */
+public interface ArticleHistoryRepository extends PagingAndSortingRepository<ArticleHistoryEntity, Long> {
 
-// Flot Chart Legends
-.flot-chart-legends {
-  text-align: center;
-  margin: 30px 0 -10px;
+    /**
+     * 根据文章查询改文章的修改历史
+     *
+     * @param entity 修改的文章
+     * @return 文章修改历史
+     */
+    List<ArticleHistoryEntity> findByArticle(ArticleEntity entity);
 
-  table {
-    display: inline-block;
-  }
-
-  .legendColorBox {
-    & > div {
-      & > div {
-        border-radius: 50%;
-      }
-    }
-  }
-
-  .legendLabel {
-    padding: 0 8px 0 3px;
-  }
-}
-
-.comments-counter-chart {
-  height: 200px;
-  margin-top: -30px;
 }

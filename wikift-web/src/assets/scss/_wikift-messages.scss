@@ -25,11 +25,13 @@ $message-sidebar-width: 23rem;
 }
 
 .messages__sidebar {
-  width: $message-sidebar-width;
+  // width: $message-sidebar-width;
+  width: 100%;
   overflow: hidden;
 
   @include media-breakpoint-up(md) {
-    border-right: 1px solid #f1f1f1;
+    // 去除右侧边框
+    // border-right: 1px solid #f1f1f1;
   }
 
   @include media-breakpoint-down(md) {

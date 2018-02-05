@@ -26,6 +26,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastyModule } from 'ng2-toasty';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { AngularEchartsModule } from 'ngx-echarts';
+import { SelectModule } from 'angular2-select';
 
 import { InfoArticleComponent } from './info.article.component';
 
@@ -43,6 +44,7 @@ const INFO_ARTICLE_ROUTES: Routes = [
         WikiftEditorModule,
         CommonModule,
         FormsModule,
+        SelectModule,
         AngularEchartsModule,
         TooltipModule.forRoot(),
         BsDropdownModule.forRoot(),

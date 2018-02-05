@@ -72,6 +72,8 @@ export class InfoArticleComponent implements OnInit {
     public commentArticleThrendChart;
     // 文章一周浏览趋势图
     public visitArticleThrendChart;
+    // 修改历史
+    public history;
 
     constructor(private route: ActivatedRoute,
         private router: Router,
@@ -294,6 +296,16 @@ export class InfoArticleComponent implements OnInit {
                     this.toastyService.success('评论已经删除');
                     this.initComments();
                     this.initArticleInfo();
+                }
+            }
+        );
+    }
+
+    showArticleHistory() {
+        this.articleService.getHistory(this.article.id).subscribe(
+            result => {
+                if (result && result.code === CodeConfig.SUCCESS) {
+                    this.history = result.data;
                 }
             }
         );

@@ -32,6 +32,19 @@
                                 <span *ngIf="article.articleType.id === 2" class="badge badge-pill badge-info">转</span>
                             </h5>
                         </div>
+                        <!--修改历史 -->
+                        <div class="ml-4">
+                            <div *ngIf="currentUser?.id === article?.user.id" dropdown class="d-none d-sm-inline-block">
+                                <div class="btn-group" dropdown container="body" (onShown)="showArticleHistory()">
+                                    <button dropdownToggle class="btn btn-outline-info btn-sm top-nav__notify">修改历史</button>
+                                    <ul *dropdownMenu class="dropdown-menu">
+                                        <li *ngFor="let h of history">
+                                            <span class="dropdown-item">{{h.version}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                         <!-- 赞功能 -->
                         <div class="ml-4">
                             <div *ngIf="currentUser && currentUser?.id !== article?.user.id; else showfabulousNotCLick">
@@ -116,7 +129,7 @@
                         该文章由用户
                         <a *ngIf="article?.user" [routerLink]="['/account', article.user.username, 'info']">{{ article.user.username }}</a> 于 {{ article?.createTime | date:'yyyy年MM月dd日HH:mm:ss' }} 发布&nbsp;
                         <div *ngIf="currentUser?.id === article?.user.id" dropdown class="d-none d-sm-inline-block">
-                            <a dropdownToggle class="top-nav__notify">
+                            <a dropdownToggle>
                                 <i class="zmdi zmdi-more"></i>
                             </a>
                             <!-- 文章操作工具 -->
@@ -127,7 +140,7 @@
                                 </a>
                                 <a (click)="deleteArticle()" class="dropdown-item">
                                     <i class="zmdi zmdi-delete"></i>
-                                    <small> 删除该文章</small>
+                                    <small> &nbsp;删除该文章</small>
                                 </a>
                             </div>
                         </div>

@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import "../../../assets/scss/wikift-inner-imports";
+@import "./_wikift-inner-imports";
 
 .header {
   width: 100%;
@@ -35,6 +35,7 @@
     position: absolute;
   }
 }
+
 .header-fixed {
   position: fixed;
   width: 100%;
@@ -55,7 +56,6 @@
   }
 }
 
-// Logo
 .header__logo {
   @include media-breakpoint-up(xl) {
     min-width: calc(#{$sidebar-width} - 2rem);
@@ -77,8 +77,6 @@
   }
 }
 
-
-// Nav
 .top-nav {
   list-style: none;
   margin: 0 0 0 auto;
@@ -186,8 +184,6 @@
   }
 }
 
-
-// App shortcuts
 .app-shortcuts {
   margin: 0;
   padding: 1rem;
@@ -225,8 +221,6 @@
   }
 }
 
-
-// Top Navigation
 .top-menu {
   position: absolute;
   background-color: $white;
