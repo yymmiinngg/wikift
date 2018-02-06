@@ -157,7 +157,6 @@ public class UserServiceImpl implements UserService {
                 userContributionDetials.add(userContributionDetial);
             } else {
                 // 查询当天数据, 封装明细数据
-                System.out.println(format.format(v));
                 List<ArticleEntity> articles = articleRepository.findAllByUserAndCreateTimeRanger(username, format.format(v));
 //                articles.forEach(a -> {
 //                    UserContributionEntity.UserContributionDetialEntity userContributionDetial = userContribution.buildDetail();
