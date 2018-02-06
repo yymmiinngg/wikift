@@ -18,15 +18,22 @@
 package com.wikift.support.service.user;
 
 import com.wikift.common.enums.RoleEnums;
+import com.wikift.common.utils.CalendarUtils;
+import com.wikift.model.article.ArticleEntity;
 import com.wikift.model.role.RoleEntity;
+import com.wikift.model.user.UserContributionEntity;
 import com.wikift.model.user.UserEntity;
+import com.wikift.support.repository.article.ArticleRepository;
 import com.wikift.support.repository.role.RoleRepository;
 import com.wikift.support.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 @Service(value = "userService")
 public class UserServiceImpl implements UserService {
@@ -36,6 +43,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private ArticleRepository articleRepository;
 
     @Override
     public UserEntity getUserById(Long id) {
@@ -126,6 +136,45 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserEntity> getAllUsers() {
         return (List<UserEntity>) userRepository.findAll();
+    }
+
+    @Override
+    public List<UserContributionEntity> getUserContribution(String username) {
+        List<Date> days = CalendarUtils.getRangerAllDays();
+        List<UserContributionEntity> userContributions = new ArrayList<>();
+        List<UserContributionEntity.UserContributionDetialEntity> userContributionDetials = new ArrayList<>();
+        Long current = new Date().getTime();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        days.forEach(v -> {
+            UserContributionEntity userContribution = new UserContributionEntity();
+            userContribution.setDate(v);
+            userContributionDetials.clear();
+            UserContributionEntity.UserContributionDetialEntity userContributionDetial = userContribution.buildDetail();
+            // 如果时间超出了当前时间范围填充空数据到集合中
+            if (v.getTime() > current) {
+                userContributionDetial.setDate(v);
+                userContributionDetial.setValue(0L);
+                userContributionDetials.add(userContributionDetial);
+            } else {
+                // 查询当天数据, 封装明细数据
+                System.out.println(format.format(v));
+                List<ArticleEntity> articles = articleRepository.findAllByUserAndCreateTimeRanger(username, format.format(v));
+//                articles.forEach(a -> {
+//                    UserContributionEntity.UserContributionDetialEntity userContributionDetial = userContribution.buildDetail();
+//                    userContributionDetial.setDate(a.getCreateTime());
+//                    userContributionDetial.setName(a.getTitle());
+//                    userContributionDetial.setValue(1L);
+//                    userContributionDetials.add(userContributionDetial);
+//                });
+                userContributionDetial.setDate(v);
+                userContributionDetial.setValue(Integer.valueOf(articles.size()).longValue());
+                userContributionDetials.add(userContributionDetial);
+            }
+            userContribution.setDetails(userContributionDetials);
+            userContribution.setTotal(userContributionDetial.getValue());
+            userContributions.add(userContribution);
+        });
+        return userContributions;
     }
 
 }

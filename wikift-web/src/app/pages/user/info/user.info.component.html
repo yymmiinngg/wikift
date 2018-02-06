@@ -18,6 +18,12 @@
 <section class="content--row">
   <div class="row">
     <div class="site-content col-12">
+      <div class="card">
+        <div class="card-header border-b-1 px-4 py-3">
+          <h2 class="card-title">最近一年贡献</h2>
+        </div>
+        <wikift-contribution [data]="data"></wikift-contribution>
+      </div>
       <div class="profile-wrapper">
         <!-- 个人信息 -->
         <div *ngIf="user" class="profile-section-user col-3">

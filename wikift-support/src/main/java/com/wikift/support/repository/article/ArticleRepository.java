@@ -23,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -44,7 +45,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             "LEFT OUTER JOIN users_article_fabulous_relation AS uafr ON a.a_id = uafr.uafr_article_id " +
             "LEFT OUTER JOIN space_article_relation AS sar ON a.a_id = sar.sar_article_id " +
             "LEFT OUTER JOIN space AS s ON s.s_id = sar.sar_space_id " +
-            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count from comments_article_relation as car group by car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
+            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count FROM comments_article_relation AS car GROUP BY car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
             "WHERE s.s_private = FALSE " +
             "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
 //            "ORDER BY ?#{#pageable}",
@@ -67,7 +68,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             "LEFT OUTER JOIN users_article_fabulous_relation AS uafr ON a.a_id = uafr.uafr_article_id " +
             "LEFT OUTER JOIN space_article_relation AS sar ON a.a_id = sar.sar_article_id " +
             "LEFT OUTER JOIN space AS s ON s.s_id = sar.sar_space_id " +
-            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count from comments_article_relation as car group by car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
+            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count FROM comments_article_relation AS car GROUP BY car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
             "WHERE s.s_private = FALSE " +
             "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
             "ORDER BY COUNT(uafr.uafr_user_id) DESC \n#pageable\n",
@@ -89,7 +90,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             "LEFT OUTER JOIN users_article_fabulous_relation AS uafr ON a.a_id = uafr.uafr_article_id " +
             "LEFT OUTER JOIN space_article_relation AS sar ON a.a_id = sar.sar_article_id " +
             "LEFT OUTER JOIN space AS s ON s.s_id = sar.sar_space_id " +
-            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count from comments_article_relation as car group by car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
+            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count FROM comments_article_relation AS car GROUP BY car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
             "WHERE s.s_private = FALSE " +
             "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
             "ORDER BY a.a_create_time DESC \n#pageable\n",
@@ -111,7 +112,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             "LEFT OUTER JOIN users_article_fabulous_relation AS uafr ON a.a_id = uafr.uafr_article_id " +
             "LEFT OUTER JOIN space_article_relation AS sar ON a.a_id = sar.sar_article_id " +
             "LEFT OUTER JOIN space AS s ON s.s_id = sar.sar_space_id " +
-            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count from comments_article_relation as car group by car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
+            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count FROM comments_article_relation AS car GROUP BY car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
             "LEFT OUTER JOIN article_tag_relation AS atr1 ON a.a_id = atr1.atr_article_id " +
             "WHERE s.s_private = FALSE " +
             "AND atr1.atr_article_tag_id = ?1 " +
@@ -129,7 +130,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             "LEFT OUTER JOIN users_article_fabulous_relation AS uafr ON a.a_id = uafr.uafr_article_id " +
             "LEFT OUTER JOIN space_article_relation AS sar ON a.a_id = sar.sar_article_id " +
             "LEFT OUTER JOIN space AS s ON s.s_id = sar.sar_space_id " +
-            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count from comments_article_relation as car group by car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
+            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count FROM comments_article_relation AS car GROUP BY car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
             "WHERE uar.uar_user_id = ?1 " +
             "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
             "ORDER BY a.a_create_time DESC \n#pageable\n",
@@ -145,7 +146,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             "LEFT OUTER JOIN users_article_fabulous_relation AS uafr ON a.a_id = uafr.uafr_article_id " +
             "LEFT OUTER JOIN space_article_relation AS sar ON a.a_id = sar.sar_article_id " +
             "LEFT OUTER JOIN space AS s ON s.s_id = sar.sar_space_id " +
-            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count from comments_article_relation as car group by car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
+            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count FROM comments_article_relation AS car GROUP BY car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
             "WHERE a.a_id = ?1 " +
             "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
             "ORDER BY SUM(uavr.uavr_view_count) DESC \n#pageable\n",
@@ -167,13 +168,13 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             "LEFT OUTER JOIN users_article_fabulous_relation AS uafr ON a.a_id = uafr.uafr_article_id " +
             "LEFT OUTER JOIN space_article_relation AS sar ON a.a_id = sar.sar_article_id " +
             "LEFT OUTER JOIN space AS s ON s.s_id = sar.sar_space_id " +
-            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count from comments_article_relation as car group by car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
-            "WHERE sar.sar_space_id = ?1 " +
+            "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count FROM comments_article_relation AS car GROUP BY car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
+            "WHERE sar.sar_space_id = :spaceId " +
             "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
             "ORDER BY SUM(uavr.uavr_view_count) DESC \n#pageable\n",
             countQuery = "SELECT COUNT(a.a_id) FROM article AS a",
             nativeQuery = true)
-    Page<ArticleEntity> findAllBySpace(Long spaceId, Pageable pageable);
+    Page<ArticleEntity> findAllBySpace(@Param(value = "spaceId") Long spaceId, Pageable pageable);
 
     /**
      * 根据用户和时间查询文章信息
@@ -188,7 +189,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             "AND uar.uar_article_id = a.a_id " +
             "AND a.a_id = sar.sar_article_id " +
             "AND DATE_SUB(CURDATE() , INTERVAL 7 DAY) <= date(a.a_create_time) " +
-            "AND u.u_username = ?1", nativeQuery = true)
+            "AND u.u_username = ?1 LIMIT 5", nativeQuery = true)
     List<ArticleEntity> findTopByUserEntityAndCreateTime(String username);
 
     /**
@@ -305,6 +306,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
 
     /**
      * 文章浏览趋势
+     *
      * @param articleId 文章id
      * @return 7天浏览趋势图
      */
@@ -327,5 +329,22 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             "ORDER BY a.formatDate",
             nativeQuery = true)
     List<Object[]> findArticleViewByCreateTimeAndTop7(Long articleId);
+
+    /**
+     * 根据用户和时间查询?天数据
+     *
+     * @param username 用户名称
+     * @return 文章列表
+     */
+    @Query(value = "SELECT * FROM users_article_relation AS uar, article AS a, users AS u, article_type AS at, article_type_relation AS atr, space_article_relation AS sar " +
+            "WHERE uar.uar_user_id = u.u_id " +
+            "AND atr.atr_article_id = a.a_id " +
+            "AND atr.atr_article_type_id = at.at_id " +
+            "AND uar.uar_article_id = a.a_id " +
+            "AND a.a_id = sar.sar_article_id " +
+            "AND u.u_username = :username " +
+            "AND date_format(a.a_create_time,'%Y-%m-%d') = :timeline ", nativeQuery = true)
+    List<ArticleEntity> findAllByUserAndCreateTimeRanger(@Param(value = "username") String username,
+                                                         @Param(value = "timeline") String timeline);
 
 }
