@@ -212,4 +212,10 @@ export class UserService {
         return this.http.get(ApiConfig.API_USER_PUBLIC_LIST, options).map(ResultUtils.extractData);
     }
 
+    getContribution(username): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptions();
+        return this.http.get(ApiConfig.API_USER_CONTRIBUTION + username, options).map(ResultUtils.extractData);
+    }
+
+
 }

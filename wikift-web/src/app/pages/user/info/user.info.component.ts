@@ -25,12 +25,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ArticleService } from '../../../../services/article.service';
 import { CommonPageModel } from '../../../shared/model/result/page.model';
-
+import * as moment from 'moment';
+import * as d3 from 'd3';
 @Component({
     selector: 'wikift-user-info',
     templateUrl: 'user.info.component.html'
 })
-
 export class UserInfoComponent implements OnInit {
 
     // 当前登录的用户
@@ -50,6 +50,8 @@ export class UserInfoComponent implements OnInit {
     page: CommonPageModel;
     // 关注/被关注用户总数
     followCounter;
+    // 用户贡献
+    public data;
 
     constructor(private route: ActivatedRoute,
         private userService: UserService,
@@ -74,6 +76,12 @@ export class UserInfoComponent implements OnInit {
                 Object.assign(this.commitUser, this.user);
                 this.initUserFollowStatus();
                 this.initFollowCounter();
+            }
+        );
+        this.userService.getContribution(this.username).subscribe(
+            result => {
+                this.data = result.data;
+                console.log(this.data);
             }
         );
     }

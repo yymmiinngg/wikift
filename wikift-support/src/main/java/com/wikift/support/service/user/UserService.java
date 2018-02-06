@@ -17,6 +17,7 @@
  */
 package com.wikift.support.service.user;
 
+import com.wikift.model.user.UserContributionEntity;
 import com.wikift.model.user.UserEntity;
 
 import java.util.List;
@@ -56,5 +57,7 @@ public interface UserService {
     Integer findFollowCoverCount(Long followUserId);
 
     List<UserEntity> getAllUsers();
+
+    List<UserContributionEntity> getUserContribution(String username);
 
 }

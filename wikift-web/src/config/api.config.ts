@@ -35,6 +35,7 @@ export class ApiConfig {
     public static API_USER_FOLLOW_COUNT = ApiConfig.V1_API_ROOT + 'user/follows/count';
     public static API_USER_TYPE = ApiConfig.V1_API_ROOT_PUBLIC + '/user/info/simple/';
     public static API_USER_PUBLIC_LIST = ApiConfig.V1_API_ROOT_PUBLIC + '/user/list';
+    public static API_USER_CONTRIBUTION = ApiConfig.V1_API_ROOT_PUBLIC + '/user/contribution/';
 
     public static API_ARTICLE_LIST = ApiConfig.V1_API_ROOT_PUBLIC + '/article/list';
     public static API_ARTICLE_SAVE = ApiConfig.V1_API_ROOT + 'article/create';

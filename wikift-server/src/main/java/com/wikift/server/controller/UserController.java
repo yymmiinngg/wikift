@@ -184,4 +184,10 @@ public class UserController {
         private String type;
     }
 
+    @RequestMapping(value = "public/user/contribution/{username}", method = RequestMethod.GET)
+    CommonResult getContribution(@PathVariable(value = "username") String username) {
+        Assert.notNull(username, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(userService.getUserContribution(username));
+    }
+
 }

@@ -26,6 +26,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { UserInfoComponent } from './user.info.component';
 import { ArticleService } from '../../../../services/article.service';
+import { WikiftContributionModule } from '../../../shared/directives/wikift-contribution/wikift-contribution.module';
 
 const USER_INFO_ROUTES: Routes = [
     { path: '', component: UserInfoComponent }
@@ -36,12 +37,15 @@ const USER_INFO_ROUTES: Routes = [
         CommonModule,
         FormsModule,
         ArchwizardModule,
+        WikiftContributionModule,
         ModalModule.forRoot(),
         BsDropdownModule.forRoot(),
         RouterModule.forChild(USER_INFO_ROUTES)
     ],
     exports: [],
-    declarations: [UserInfoComponent],
+    declarations: [
+        UserInfoComponent
+    ],
     providers: [
         ArticleService
     ],

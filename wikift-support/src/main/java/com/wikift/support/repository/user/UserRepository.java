@@ -17,6 +17,7 @@
  */
 package com.wikift.support.repository.user;
 
+import com.wikift.model.user.UserContributionEntity;
 import com.wikift.model.user.UserEntity;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
