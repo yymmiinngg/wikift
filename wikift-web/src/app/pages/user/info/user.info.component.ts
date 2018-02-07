@@ -81,7 +81,6 @@ export class UserInfoComponent implements OnInit {
         this.userService.getContribution(this.username).subscribe(
             result => {
                 this.data = result.data;
-                console.log(this.data);
             }
         );
     }
