@@ -164,9 +164,11 @@
                         </div>
                     </div>
                 </div>
-                <!-- 评论列表 -->
+            </div>
+            <!-- 评论列表 -->
+            <div class="card">
                 <div class="messages__content">
-                    <div *ngFor="let comment of comments" class="messages__item">
+                    <div *ngFor="let comment of comments" class="messages__item border-b-1">
                         <a [routerLink]="['/account', article.user.username, 'info']">
                             <img src="{{comment.user.avatar}}" class="messages__avatar" alt="{{comment.user.username}}">
                         </a>
@@ -176,10 +178,14 @@
                             </p>
                             <small>
                                 <i class="zmdi zmdi-time"></i> {{ comment.createTime | date:'yyyy年MM月dd日HH:mm:ss' }} 评论
-                                <!-- 评论操作工具 -->
                                 <div class="d-none d-sm-inline-block">
-                                    <a *ngIf="currentUser.id === comment.user.id" (click)="deleteArticleComment(comment.id)" tooltip="删除该评论" placement="top"
-                                        container="body">
+                                    <ng-template #deleteCommentTemplate>
+                                        评论删除后无法还原? 确定删除当前评论?
+                                        <div align="right" style="margin-top: 15px;">
+                                            <button type="button" class="btn btn-sm btn-outline-info" (click)="deleteArticleComment(comment.id)">删除评论</button>
+                                        </div>
+                                    </ng-template>
+                                    <a *ngIf="currentUser.id === comment.user.id" [popover]="deleteCommentTemplate" popoverTitle="删除该评论" container="body">
                                         <i class="zmdi zmdi-delete"></i>
                                     </a>
                                 </div>

@@ -23,6 +23,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Ng2DeviceDetectorModule } from 'ng2-device-detector';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 import { ToastyModule } from 'ng2-toasty';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { AngularEchartsModule } from 'ngx-echarts';
@@ -50,6 +51,7 @@ const INFO_ARTICLE_ROUTES: Routes = [
         BsDropdownModule.forRoot(),
         ModalModule.forRoot(),
         ToastyModule.forRoot(),
+        PopoverModule.forRoot(),
         PaginationModule.forRoot(),
         Ng2DeviceDetectorModule.forRoot(),
         RouterModule.forChild(INFO_ARTICLE_ROUTES)
