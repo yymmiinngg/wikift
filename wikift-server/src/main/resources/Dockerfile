@@ -13,7 +13,7 @@ VOLUME /wikift
 ADD wikift.example.conf /etc/wikift/wikift.conf
 
 # rename wikift server file
-ADD wikift-server-1.0.0.jar /wikift/wikift-server.jar
+ADD wikift-server-1.3.0.jar /wikift/wikift-server.jar
 
 RUN sh -c 'touch /wikift-server.jar'
 

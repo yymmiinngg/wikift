@@ -122,6 +122,10 @@
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
+                    <imageTags>
+                        <imageTag>${project.version}</imageTag>
+                        <imageTag>latest</imageTag>
+                    </imageTags>
                     <!-- 以下两行是为了docker push到DockerHub使用的。 -->
                     <serverId>docker-hub</serverId>
                     <registryUrl>https://index.docker.io/v1/</registryUrl>

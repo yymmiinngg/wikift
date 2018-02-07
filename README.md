@@ -17,7 +17,7 @@ mvn package assembly:assembly docker:build -X
 ## 提交docker镜像到中心仓库
 
 ```bash
-
+mvn clean package assembly:assembly docker:push -X
 ```
 
 ## 运行在docker

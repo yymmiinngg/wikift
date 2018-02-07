@@ -39,7 +39,7 @@
                                     <button dropdownToggle class="btn btn-outline-info btn-sm top-nav__notify">修改历史</button>
                                     <ul *dropdownMenu class="dropdown-menu">
                                         <li *ngFor="let h of history">
-                                            <span class="dropdown-item">{{h.version}}</span>
+                                            <span class="dropdown-item">{{ h.version | date:'yyyy年MM月dd日HH:mm:ss'}}</span>
                                         </li>
                                     </ul>
                                 </div>
