@@ -137,6 +137,19 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
     Integer findFollowCount(Long followUserId);
 
     /**
+     * 查询关注的用户
+     * @param followUserId
+     * @return
+     */
+    @Query(value = "SELECT * " +
+            "FROM users_follow_relation AS ufr " +
+            "LEFT JOIN users AS u " +
+            "ON ufr.ufr_user_id_cover = u.u_id " +
+            "WHERE ufr.ufr_user_id_follw = ?1",
+            nativeQuery = true)
+    List<UserEntity> findUserFollowed(Long followUserId);
+
+    /**
      * 关注者被关注用户总数
      *
      * @param followUserId 关注者用户id

@@ -217,5 +217,12 @@ export class UserService {
         return this.http.get(ApiConfig.API_USER_CONTRIBUTION + username, options).map(ResultUtils.extractData);
     }
 
+    getUserFollwing(username): Observable<CommonResultModel> {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        const params = HttpUtils.getParams();
+        params.append('userName', username);
+        options.params = params;
+        return this.http.get(ApiConfig.API_USER_FOLLOWING, options).map(ResultUtils.extractData);
+    }
 
 }

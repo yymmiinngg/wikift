@@ -60,4 +60,6 @@ public interface UserService {
 
     List<UserContributionEntity> getUserContribution(String username);
 
+    List<UserEntity> getUserFollowed(Long userId);
+
 }

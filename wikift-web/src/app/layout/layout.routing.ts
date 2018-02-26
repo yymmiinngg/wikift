@@ -34,6 +34,7 @@ const LAYOUT_ROUTES: Routes = [
             { path: 'article/create', loadChildren: '../pages/article/create/create.article.module#CreateArticleModule' },
             { path: 'article/:id/editor', loadChildren: '../pages/article/editor.article.module#EditorArticleModule' },
             { path: 'account/:username/info', loadChildren: '../pages/user/info/user.info.module#UserInfoModule' },
+            { path: 'account/:username/users/following', loadChildren: '../pages/user/followed/user.followed.module#UserFollowedModule' },
             { path: 'space', loadChildren: '../pages/space/space.module#SpaceModule' },
             { path: 'space/create', loadChildren: '../pages/space/create/space.create.module#SpaceCreateModule' },
             { path: 'space/:code/display', loadChildren: '../pages/space/info/space.info.module#SpaceInfoModule' },

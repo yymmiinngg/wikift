@@ -19,6 +19,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AfterViewInit, OnChanges, ViewChild } from '@angular/core';
 import { WikiftGroupConfig } from './model/wikift-group.model';
 import { WikiftTypeModel } from './model/wikift-group.enum.model';
+import { CookieUtils } from '../../utils/cookie.util';
+import { CommonConfig } from '../../../../config/common.config';
+import { UserService } from '../../../../services/user.service';
 
 declare var jQuery: any;
 declare var editormd: any;
@@ -40,11 +43,31 @@ export class WikiftGroupComponent implements OnInit {
     @Input()
     config: WikiftGroupConfig;
 
+    constructor(private userService: UserService) {
+    }
+
     ngOnInit(): void {
         // use default config
         if (!this.config) {
             this.config = new WikiftGroupConfig();
         }
+    }
+
+    unfollow(following) {
+        const follows = new Array();
+        follows.push(following);
+        let currentUser;
+        if (CookieUtils.getBy(CommonConfig.AUTH_USER_INFO)) {
+            currentUser = JSON.parse(CookieUtils.getBy(CommonConfig.AUTH_USER_INFO));
+        }
+        currentUser.follows = follows;
+        this.userService.unfollow(currentUser).subscribe(
+            result => {
+                if (result.data) {
+                    window.location.reload();
+                }
+            }
+        );
     }
 
 }

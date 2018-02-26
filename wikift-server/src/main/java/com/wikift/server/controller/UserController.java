@@ -26,8 +26,6 @@ import com.wikift.model.user.UserTypeEntity;
 import com.wikift.server.param.UserParam;
 import com.wikift.server.param.UserParamForEmail;
 import com.wikift.server.param.UserParamForPassword;
-import com.wikift.support.ldap.model.LdapUserModel;
-import com.wikift.support.ldap.service.LdapUserService;
 import com.wikift.support.service.user.UserService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -162,6 +160,17 @@ public class UserController {
         return CommonResult.success(count);
     }
 
+    @PreAuthorize("hasAuthority(('USER'))")
+    @RequestMapping(value = "user/following", method = RequestMethod.GET)
+    CommonResult userFollowed(@RequestParam(value = "userName") String userName) {
+        Assert.notNull(userName, MessageEnums.PARAMS_NOT_NULL.getValue());
+        UserEntity user = userService.getInfoByUsername(userName);
+        if (ObjectUtils.isEmpty(user)) {
+            return CommonResult.error(MessageEnums.DATA_NOT_FOUND_OR_PARAM_ERROR);
+        }
+        return CommonResult.success(userService.getUserFollowed(user.getId()));
+    }
+
     @RequestMapping(value = "public/user/info/simple/{username}", method = RequestMethod.GET)
     CommonResult impleInfo(@PathVariable(value = "username") String username) {
         Assert.notNull(username, MessageEnums.PARAMS_NOT_NULL.getValue());
@@ -175,6 +184,12 @@ public class UserController {
         return CommonResult.success(userSimple);
     }
 
+    @RequestMapping(value = "public/user/contribution/{username}", method = RequestMethod.GET)
+    CommonResult getContribution(@PathVariable(value = "username") String username) {
+        Assert.notNull(username, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(userService.getUserContribution(username));
+    }
+
     @Data
     class UserSimple {
         private Boolean active;
@@ -182,12 +197,6 @@ public class UserController {
         private String email;
         private String username;
         private String type;
-    }
-
-    @RequestMapping(value = "public/user/contribution/{username}", method = RequestMethod.GET)
-    CommonResult getContribution(@PathVariable(value = "username") String username) {
-        Assert.notNull(username, MessageEnums.PARAMS_NOT_NULL.getValue());
-        return CommonResult.success(userService.getUserContribution(username));
     }
 
 }

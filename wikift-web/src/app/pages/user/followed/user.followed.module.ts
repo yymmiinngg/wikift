@@ -16,28 +16,33 @@
  * limitations under the License.
  */
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit, ViewChild, NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Routes, RouterModule } from '@angular/router';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
-import { PaginationModule } from 'ngx-bootstrap/pagination';
-
-import { WikiftGroupComponent } from './wikift-group.component';
+import { UserInfoComponent } from './user.followed.component';
+import { WikiftGroupModule } from '../../../shared/directives/wikift-group/wikift-group.module';
 import { UserService } from '../../../../services/user.service';
+
+const USER_FOLLOWED_ROUTES: Routes = [
+    { path: '', component: UserInfoComponent }
+];
 
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule,
-        PaginationModule.forRoot(),
+        FormsModule,
+        WikiftGroupModule,
+        BsDropdownModule.forRoot(),
+        RouterModule.forChild(USER_FOLLOWED_ROUTES)
     ],
+    exports: [],
     declarations: [
-        WikiftGroupComponent
-    ],
-    exports: [
-        WikiftGroupComponent
+        UserInfoComponent
     ],
     providers: [
         UserService
     ],
 })
-export class WikiftGroupModule { }
+export class UserFollowedModule { }

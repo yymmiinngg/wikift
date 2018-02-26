@@ -31,6 +31,7 @@ export class ApiConfig {
     public static API_USER_REGISTER = ApiConfig.V1_API_ROOT_PUBLIC + '/user/register';
     public static API_USER_UNFOLLOW = ApiConfig.V1_API_ROOT + 'user/unfollow';
     public static API_USER_FOLLOWS = ApiConfig.V1_API_ROOT + 'user/follows/';
+    public static API_USER_FOLLOWING = ApiConfig.V1_API_ROOT + 'user/following';
     public static API_USER_FOLLOW_CHECK = ApiConfig.V1_API_ROOT + 'user/follows/check';
     public static API_USER_FOLLOW_COUNT = ApiConfig.V1_API_ROOT + 'user/follows/count';
     public static API_USER_TYPE = ApiConfig.V1_API_ROOT_PUBLIC + '/user/info/simple/';
