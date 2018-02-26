@@ -30,6 +30,7 @@ import { SpaceComponent } from './space.component';
 import { ArticleService } from '../../../services/article.service';
 import { UserService } from '../../../services/user.service';
 import { SpaceService } from '../../../services/space.service';
+import { WikiftGroupModule } from '../../shared/directives/wikift-group/wikift-group.module';
 
 export function busyConfigFactory() {
     return new BusyConfig({
@@ -50,7 +51,8 @@ const HOME_ROUTES: Routes = [
         TooltipModule.forRoot(),
         TabsModule.forRoot(),
         PaginationModule.forRoot(),
-        RouterModule.forChild(HOME_ROUTES)
+        RouterModule.forChild(HOME_ROUTES),
+        WikiftGroupModule
     ],
     exports: [],
     declarations: [
