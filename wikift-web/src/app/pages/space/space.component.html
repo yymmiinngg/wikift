@@ -31,20 +31,7 @@
             </div>
         </div>
         <!-- 专栏/空间列表 -->
-        <div class="contacts row ">
-            <div *ngFor="let space of spaces " class="col-xl-2 col-lg-3 col-sm-4 col-6 ">
-                <div class="contacts__item ">
-                    <a [routerLink]="[ '/space/', space.code, 'display']" class="contacts__img ">
-                        <img src="{{space.avatar}} " alt="{{space.name}} ">
-                    </a>
-                    <div class="contacts__info ">
-                        <strong>{{space.name}}</strong>
-                        <small>{{space.description? space.description: '该空间还没有任何描述'}}</small>
-                    </div>
-                    <button [routerLink]="[ '/space/', space.code, 'display']" class="contacts__btn ">进入空间</button>
-                </div>
-            </div>
-        </div>
+        <wikift-group [eachData]="spaces"></wikift-group>
         <div class="mr-center ">
             <pagination *ngIf="spaces?.length && page " [itemsPerPage]="page.size " [(ngModel)]="currentPage
                 " totalItems="{{page.totalElements}} " [maxSize]="maxSize " (pageChanged)="pageChanged($event) " [boundaryLinks]="true ">

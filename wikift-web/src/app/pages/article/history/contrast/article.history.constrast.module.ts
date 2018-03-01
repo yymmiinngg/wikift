@@ -19,53 +19,34 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-import { PaginationModule } from 'ngx-bootstrap/pagination';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { BusyModule, BusyConfig } from 'angular2-busy';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
-import { SpaceComponent } from './space.component';
+import { ArticleHistoryConstrastComponent } from './article.history.constrast.component';
+import { WikiftEditorConstrastModule } from '../../../../shared/directives/wikift-editor-constrast/wikift-editor-constrast.module';
+import { ArticleService } from '../../../../../services/article.service';
+import { ArticleHistoryService } from '../../../../../services/article.history.service';
 
-import { ArticleService } from '../../../services/article.service';
-import { UserService } from '../../../services/user.service';
-import { SpaceService } from '../../../services/space.service';
-import { WikiftGroupModule } from '../../shared/directives/wikift-group/wikift-group.module';
-
-export function busyConfigFactory() {
-    return new BusyConfig({
-        message: '数据加载中, 请稍候...',
-        backdrop: true,
-    });
-}
-
-const HOME_ROUTES: Routes = [
-    { path: '', component: SpaceComponent }
+const ARTICLE_HISTORY_CONSTRAST_ROUTES: Routes = [
+    { path: '', component: ArticleHistoryConstrastComponent }
 ];
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
-        BusyModule,
-        TooltipModule.forRoot(),
-        TabsModule.forRoot(),
-        PaginationModule.forRoot(),
-        RouterModule.forChild(HOME_ROUTES),
-        WikiftGroupModule
+        WikiftEditorConstrastModule,
+        ModalModule.forRoot(),
+        AlertModule.forRoot(),
+        RouterModule.forChild(ARTICLE_HISTORY_CONSTRAST_ROUTES)
     ],
     exports: [],
     declarations: [
-        SpaceComponent
+        ArticleHistoryConstrastComponent
     ],
     providers: [
         ArticleService,
-        UserService,
-        SpaceService,
-        {
-            provide: BusyConfig,
-            useFactory: busyConfigFactory
-        }
+        ArticleHistoryService
     ],
 })
-export class SpaceModule { }
+export class ArticleHistoryConstrastModule { }

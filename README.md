@@ -2,6 +2,14 @@
 
 wikift是一套开源的易用的知识管理系统.
 
+## 更多关于 wikift 的文档
+
+[wikift 文档](http://wiki.ttxit.com/display/WIKIFT)
+
+## bug 提交
+
+在使用该系统时, 出现bug请提交到 [bug提交](http://jira.ttxit.com/projects/WIKIFT)
+
 ## 编译源码
 
 ```bash

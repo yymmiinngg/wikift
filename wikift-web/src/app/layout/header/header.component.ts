@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs/Subscription';
 import { FormGroup, FormControl } from '@angular/forms';
+import { ToastyService } from 'ng2-toasty';
 
 import { CookieUtils } from '../../shared/utils/cookie.util';
 
@@ -30,7 +31,6 @@ import { UserParamModel } from '../../shared/model/param/user.param.model';
 import { CommonConfig } from '../../../config/common.config';
 import { RemindService } from '../../../services/remind.service';
 import { CodeConfig } from '../../../config/code.config';
-import { ToastyService } from '_ng2-toasty@4.0.3@ng2-toasty';
 import { ResultUtils } from '../../shared/utils/result.util';
 import { UserModel } from '../../shared/model/user/user.model';
 

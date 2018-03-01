@@ -41,4 +41,12 @@ public interface ArticleHistoryRepository extends PagingAndSortingRepository<Art
      */
     List<ArticleHistoryEntity> findByArticle(ArticleEntity entity);
 
+    /**
+     * 根据修改历史版本查找文章历史修改内容
+     *
+     * @param version 文章修改历史
+     * @return 文章内容
+     */
+    ArticleHistoryEntity findByVersionAndArticle(String version, ArticleEntity entity);
+
 }

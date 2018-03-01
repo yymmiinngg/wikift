@@ -53,4 +53,13 @@ public class ArticleHistoryController {
         return CommonResult.success(articleHistoryService.getByArticle(entity));
     }
 
+    @PreAuthorize("hasAuthority(('USER')) && hasPermission(#articleId, 'update|article')")
+    @RequestMapping(value = "article/history/{articleId}/{version}", method = RequestMethod.GET)
+    CommonResult getArticleHistoryInfomation(@PathVariable(value = "articleId") Long articleId,
+                              @PathVariable(value = "version") String version) {
+        Assert.notNull(articleId, MessageEnums.PARAMS_NOT_NULL.getValue());
+        Assert.notNull(version, MessageEnums.PARAMS_NOT_NULL.getValue());
+        return CommonResult.success(articleHistoryService.getByVersionAndArticleId(version, articleId));
+    }
+
 }

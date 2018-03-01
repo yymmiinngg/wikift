@@ -28,6 +28,7 @@ import com.wikift.support.repository.role.RoleRepository;
 import com.wikift.support.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -174,6 +175,11 @@ public class UserServiceImpl implements UserService {
             userContributions.add(userContribution);
         });
         return userContributions;
+    }
+
+    @Override
+    public List<UserEntity> getUserFollowed(Long userId) {
+        return userRepository.findUserFollowed(userId);
     }
 
 }

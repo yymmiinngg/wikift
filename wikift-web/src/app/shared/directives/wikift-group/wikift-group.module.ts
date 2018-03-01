@@ -15,37 +15,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 
-import { AppComponent } from './app.component';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
-import { SharedService } from './shared/services/shared.service';
-import { routing } from './app.routing';
-
-import { AuthModule } from './auth/auth.module';
+import { WikiftGroupComponent } from './wikift-group.component';
+import { UserService } from '../../../../services/user.service';
 
 @NgModule({
-  imports: [
-    AuthModule,
-    BrowserModule,
-    HttpModule,
-    BrowserAnimationsModule,
-    routing
-  ],
-  declarations: [
-    AppComponent
-  ],
-  providers: [
-    SharedService,
-    // {
-    //   provide: LocationStrategy,
-    //   useClass: HashLocationStrategy
-    // }
-  ],
-  bootstrap: [AppComponent]
+    imports: [
+        CommonModule,
+        RouterModule,
+        PaginationModule.forRoot(),
+    ],
+    declarations: [
+        WikiftGroupComponent
+    ],
+    exports: [
+        WikiftGroupComponent
+    ],
+    providers: [
+        UserService
+    ],
 })
-export class AppModule { }
+export class WikiftGroupModule { }
