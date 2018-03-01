@@ -24,4 +24,11 @@ public class ArticleHistoryServiceImpl implements ArticleHistoryService {
         return articleHistoryRepository.findByArticle(entity);
     }
 
+    @Override
+    public ArticleHistoryEntity getByVersionAndArticleId(String version, Long articleId) {
+        ArticleEntity entity = new ArticleEntity();
+        entity.setId(articleId);
+        return articleHistoryRepository.findByVersionAndArticle(version, entity);
+    }
+
 }

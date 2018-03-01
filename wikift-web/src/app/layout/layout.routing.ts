@@ -33,6 +33,10 @@ const LAYOUT_ROUTES: Routes = [
         path: '', component: LayoutComponent, canActivate: [AuthGuard], children: [
             { path: 'article/create', loadChildren: '../pages/article/create/create.article.module#CreateArticleModule' },
             { path: 'article/:id/editor', loadChildren: '../pages/article/editor.article.module#EditorArticleModule' },
+            {
+                path: 'article/:id/history/:articleHistoryVersion/contrast',
+                loadChildren: '../pages/article/history/contrast/article.history.constrast.module#ArticleHistoryConstrastModule'
+            },
             { path: 'account/:username/info', loadChildren: '../pages/user/info/user.info.module#UserInfoModule' },
             { path: 'account/:username/users/following', loadChildren: '../pages/user/followed/user.followed.module#UserFollowedModule' },
             { path: 'space', loadChildren: '../pages/space/space.module#SpaceModule' },

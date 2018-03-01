@@ -11,4 +11,6 @@ public interface ArticleHistoryService {
 
     List<ArticleHistoryEntity> getByArticle(ArticleEntity entity);
 
+    ArticleHistoryEntity getByVersionAndArticleId(String version, Long articleId);
+
 }

@@ -38,9 +38,16 @@
                                 <div class="btn-group" dropdown container="body" (onShown)="showArticleHistory()">
                                     <button dropdownToggle class="btn btn-outline-info btn-sm top-nav__notify">修改历史</button>
                                     <ul *dropdownMenu class="dropdown-menu">
-                                        <li *ngFor="let h of history">
-                                            <span class="dropdown-item">{{ h.version | date:'yyyy年MM月dd日HH:mm:ss'}}</span>
+                                        <li *ngIf="history?.length <= 0; else showHistory">
+                                            <span class="dropdown-item">该文章没有任何修改历史</span>
                                         </li>
+                                        <ng-template #showHistory>
+                                            <li *ngFor="let h of history">
+                                                <span class="dropdown-item">{{h.version | date:'yyyy年MM月dd日HH:mm:ss'}}
+                                                    <a [routerLink]="['/article/', article.id, 'history', h.version, 'contrast']" class="btn btn-info btn-sm">对比</a>
+                                                </span>
+                                            </li>
+                                        </ng-template>
                                     </ul>
                                 </div>
                             </div>
