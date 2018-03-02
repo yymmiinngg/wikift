@@ -42,16 +42,25 @@ export class WikiftEditorConstrastComponent implements OnInit {
             throw new Error('source and target must not null');
         }
         const panes = 2;
-        CodeMirror.MergeView(document.getElementById('wikiftEditorConstrast'), {
-            value: this.source,
-            origLeft: panes >= 3 ? this.source : null,
-            orig: this.target,
-            lineNumbers: true,
-            mode: 'markdown',
-            highlightDifferences: true,
-            connect: 'align',
-            collapseIdentical: true
-        });
+        try {
+            CodeMirror.MergeView(document.getElementById('wikiftEditorConstrast'), {
+                value: this.source,
+                origLeft: panes >= 3 ? this.source : null,
+                orig: this.target,
+                lineNumbers: true,
+                mode: 'markdown',
+                highlightDifferences: true,
+                connect: 'align',
+                collapseIdentical: true
+            });
+        } catch (d) {
+            // 异常后重新加载页面, 使其加载所需要的 js 文件
+            this.reloadPage();
+        }
+    }
+
+    reloadPage() {
+        window.location.reload();
     }
 
 }

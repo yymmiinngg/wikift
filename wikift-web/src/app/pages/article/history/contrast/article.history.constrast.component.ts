@@ -36,6 +36,7 @@ export class ArticleHistoryConstrastComponent implements OnInit {
     public article;
     // 文章历史版本
     public articleHistory;
+    public load;
 
     constructor(private route: ActivatedRoute,
         private router: Router,
@@ -48,7 +49,6 @@ export class ArticleHistoryConstrastComponent implements OnInit {
     }
 
     ngOnInit() {
-        // window.location.reload();
         this.initArticleInfomation();
         this.initArticleHistoryInfomation();
     }
