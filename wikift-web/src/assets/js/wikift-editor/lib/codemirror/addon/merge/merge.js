@@ -3,14 +3,14 @@
 
 // declare global: diff_match_patch, DIFF_INSERT, DIFF_DELETE, DIFF_EQUAL
 
-(function(mod) {
+(function (mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"), require("diff_match_patch"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror", "diff_match_patch"], mod);
   else // Plain browser env
     mod(CodeMirror, diff_match_patch);
-})(function(CodeMirror, diff_match_patch) {
+})(function (CodeMirror, diff_match_patch) {
   "use strict";
   var Pos = CodeMirror.Pos;
   var svgNS = "http://www.w3.org/2000/svg";
@@ -19,25 +19,29 @@
     this.mv = mv;
     this.type = type;
     this.classes = type == "left"
-      ? {chunk: "CodeMirror-merge-l-chunk",
-         start: "CodeMirror-merge-l-chunk-start",
-         end: "CodeMirror-merge-l-chunk-end",
-         insert: "CodeMirror-merge-l-inserted",
-         del: "CodeMirror-merge-l-deleted",
-         connect: "CodeMirror-merge-l-connect"}
-      : {chunk: "CodeMirror-merge-r-chunk",
-         start: "CodeMirror-merge-r-chunk-start",
-         end: "CodeMirror-merge-r-chunk-end",
-         insert: "CodeMirror-merge-r-inserted",
-         del: "CodeMirror-merge-r-deleted",
-         connect: "CodeMirror-merge-r-connect"};
+      ? {
+        chunk: "CodeMirror-merge-l-chunk",
+        start: "CodeMirror-merge-l-chunk-start",
+        end: "CodeMirror-merge-l-chunk-end",
+        insert: "CodeMirror-merge-l-inserted",
+        del: "CodeMirror-merge-l-deleted",
+        connect: "CodeMirror-merge-l-connect"
+      }
+      : {
+        chunk: "CodeMirror-merge-r-chunk",
+        start: "CodeMirror-merge-r-chunk-start",
+        end: "CodeMirror-merge-r-chunk-end",
+        insert: "CodeMirror-merge-r-inserted",
+        del: "CodeMirror-merge-r-deleted",
+        connect: "CodeMirror-merge-r-connect"
+      };
   }
 
   DiffView.prototype = {
     constructor: DiffView,
-    init: function(pane, orig, options) {
+    init: function (pane, orig, options) {
       this.edit = this.mv.edit;
-      this.orig = CodeMirror(pane, copyObj({value: orig, readOnly: !this.mv.options.allowEditingOriginals}, copyObj(options)));
+      this.orig = CodeMirror(pane, copyObj({ value: orig, readOnly: !this.mv.options.allowEditingOriginals }, copyObj(options)));
 
       this.diff = getDiff(asString(orig), asString(options.value));
       this.chunks = getChunks(this.diff);
@@ -48,7 +52,7 @@
       setScrollLock(this, true, false);
       registerScroll(this);
     },
-    setShowDifferences: function(val) {
+    setShowDifferences: function (val) {
       val = val !== false;
       if (val != this.showDifferences) {
         this.showDifferences = val;
@@ -68,8 +72,8 @@
 
   var updating = false;
   function registerUpdate(dv) {
-    var edit = {from: 0, to: 0, marked: []};
-    var orig = {from: 0, to: 0, marked: []};
+    var edit = { from: 0, to: 0, marked: [] };
+    var orig = { from: 0, to: 0, marked: [] };
     var debounceChange, updatingFast = false;
     function update(mode) {
       updating = true;
@@ -117,17 +121,17 @@
     dv.edit.on("markerCleared", setDealign);
     dv.orig.on("markerAdded", setDealign);
     dv.orig.on("markerCleared", setDealign);
-    dv.edit.on("viewportChange", function() { set(false); });
-    dv.orig.on("viewportChange", function() { set(false); });
+    dv.edit.on("viewportChange", function () { set(false); });
+    dv.orig.on("viewportChange", function () { set(false); });
     update();
     return update;
   }
 
   function registerScroll(dv) {
-    dv.edit.on("scroll", function() {
+    dv.edit.on("scroll", function () {
       syncScroll(dv, DIFF_INSERT) && makeConnections(dv);
     });
-    dv.orig.on("scroll", function() {
+    dv.orig.on("scroll", function () {
       syncScroll(dv, DIFF_DELETE) && makeConnections(dv);
     });
   }
@@ -177,8 +181,10 @@
   function getOffsets(editor, around) {
     var bot = around.after;
     if (bot == null) bot = editor.lastLine() + 1;
-    return {top: editor.heightAtLine(around.before || 0, "local"),
-            bot: editor.heightAtLine(bot, "local")};
+    return {
+      top: editor.heightAtLine(around.before || 0, "local"),
+      bot: editor.heightAtLine(bot, "local")
+    };
   }
 
   function setScrollLock(dv, val, action) {
@@ -206,7 +212,7 @@
   // FIXME maybe add a margin around viewport to prevent too many updates
   function updateMarks(editor, diff, state, type, classes) {
     var vp = editor.getViewport();
-    editor.operation(function() {
+    editor.operation(function () {
       if (state.from == state.to || vp.from - state.to > 20 || state.from - vp.to > 20) {
         clearMarks(editor, state.marked, classes);
         markChanges(editor, diff, type, state.marked, vp.from, vp.to, classes);
@@ -261,7 +267,7 @@
           var end = moveOver(pos, str, true);
           var a = posMax(top, pos), b = posMin(bot, end);
           if (!posEq(a, b))
-            marks.push(editor.markText(a, b, {className: cls}));
+            marks.push(editor.markText(a, b, { className: cls }));
           pos = end;
         }
       }
@@ -286,7 +292,7 @@
     for (var i = 0; i < dv.chunks.length; i++) {
       var ch = dv.chunks[i];
       if (ch.editFrom <= vpEdit.to && ch.editTo >= vpEdit.from &&
-          ch.origFrom <= vpOrig.to && ch.origTo >= vpOrig.from)
+        ch.origFrom <= vpOrig.to && ch.origTo >= vpOrig.from)
         drawConnectorsForChunk(dv, ch, sTopOrig, sTopEdit, w);
     }
   }
@@ -330,7 +336,7 @@
 
   function alignChunks(dv, force) {
     if (!dv.dealigned && !force) return;
-    if (!dv.orig.curOp) return dv.orig.operation(function() {
+    if (!dv.orig.curOp) return dv.orig.operation(function () {
       alignChunks(dv, force);
     });
 
@@ -383,7 +389,7 @@
     var elt = document.createElement("div");
     elt.className = "CodeMirror-merge-spacer";
     elt.style.height = size + "px"; elt.style.minWidth = "1px";
-    return cm.addLineWidget(line, elt, {height: size, above: above});
+    return cm.addLineWidget(line, elt, { height: size, above: above });
   }
 
   function drawConnectorsForChunk(dv, chunk, sTopOrig, sTopEdit, w) {
@@ -396,15 +402,15 @@
       var botLpx = dv.orig.heightAtLine(chunk.origTo, "local") - sTopOrig;
       var botRpx = dv.edit.heightAtLine(chunk.editTo, "local") - sTopEdit;
       if (flip) { var tmp = botLpx; botLpx = botRpx; botRpx = tmp; }
-      var curveTop = " C " + w/2 + " " + topRpx + " " + w/2 + " " + topLpx + " " + (w + 2) + " " + topLpx;
-      var curveBot = " C " + w/2 + " " + botLpx + " " + w/2 + " " + botRpx + " -1 " + botRpx;
+      var curveTop = " C " + w / 2 + " " + topRpx + " " + w / 2 + " " + topLpx + " " + (w + 2) + " " + topLpx;
+      var curveBot = " C " + w / 2 + " " + botLpx + " " + w / 2 + " " + botRpx + " -1 " + botRpx;
       attrs(dv.svg.appendChild(document.createElementNS(svgNS, "path")),
-            "d", "M -1 " + topRpx + curveTop + " L " + (w + 2) + " " + botLpx + curveBot + " z",
-            "class", dv.classes.connect);
+        "d", "M -1 " + topRpx + curveTop + " L " + (w + 2) + " " + botLpx + curveBot + " z",
+        "class", dv.classes.connect);
     }
     if (dv.copyButtons) {
       var copy = dv.copyButtons.appendChild(elt("div", dv.type == "left" ? "\u21dd" : "\u21dc",
-                                                "CodeMirror-merge-copy"));
+        "CodeMirror-merge-copy"));
       var editOriginals = dv.mv.options.allowEditingOriginals;
       copy.title = editOriginals ? "Push to left" : "Revert chunk";
       copy.chunk = chunk;
@@ -413,10 +419,12 @@
       if (editOriginals) {
         var topReverse = dv.orig.heightAtLine(chunk.editFrom, "local") - sTopEdit;
         var copyReverse = dv.copyButtons.appendChild(elt("div", dv.type == "right" ? "\u21dd" : "\u21dc",
-                                                         "CodeMirror-merge-copy-reverse"));
+          "CodeMirror-merge-copy-reverse"));
         copyReverse.title = "Push to right";
-        copyReverse.chunk = {editFrom: chunk.origFrom, editTo: chunk.origTo,
-                             origFrom: chunk.editFrom, origTo: chunk.editTo};
+        copyReverse.chunk = {
+          editFrom: chunk.origFrom, editTo: chunk.origTo,
+          origFrom: chunk.editFrom, origTo: chunk.editTo
+        };
         copyReverse.style.top = topReverse + "px";
         dv.type == "right" ? copyReverse.style.left = "2px" : copyReverse.style.right = "2px";
       }
@@ -426,12 +434,12 @@
   function copyChunk(dv, to, from, chunk) {
     if (dv.diffOutOfDate) return;
     to.replaceRange(from.getRange(Pos(chunk.origFrom, 0), Pos(chunk.origTo, 0)),
-                         Pos(chunk.editFrom, 0), Pos(chunk.editTo, 0));
+      Pos(chunk.editFrom, 0), Pos(chunk.editTo, 0));
   }
 
   // Merge view, containing 0, 1, or 2 diff views.
 
-  var MergeView = CodeMirror.MergeView = function(node, options) {
+  var MergeView = CodeMirror.MergeView = function (node, options) {
     if (!(this instanceof MergeView)) return new MergeView(node, options);
 
     this.options = options;
@@ -471,7 +479,7 @@
 
     if (options.collapseIdentical) {
       updating = true;
-      this.editor().operation(function() {
+      this.editor().operation(function () {
         collapseIdenticalStretches(self, options.collapseIdentical);
       });
       updating = false;
@@ -481,13 +489,13 @@
       alignChunks(this.left || this.right, true);
     }
 
-    var onResize = function() {
+    var onResize = function () {
       if (left) makeConnections(left);
       if (right) makeConnections(right);
     };
     CodeMirror.on(window, "resize", onResize);
-    var resizeInterval = setInterval(function() {
-      for (var p = wrapElt.parentNode; p && p != document.body; p = p.parentNode) {}
+    var resizeInterval = setInterval(function () {
+      for (var p = wrapElt.parentNode; p && p != document.body; p = p.parentNode) { }
       if (!p) { clearInterval(resizeInterval); CodeMirror.off(window, "resize", onResize); }
     }, 5000);
   };
@@ -496,11 +504,11 @@
     var lock = dv.lockButton = elt("div", null, "CodeMirror-merge-scrolllock");
     lock.title = "Toggle locked scrolling";
     var lockWrap = elt("div", [lock], "CodeMirror-merge-scrolllock-wrap");
-    CodeMirror.on(lock, "click", function() { setScrollLock(dv, !dv.lockScroll); });
+    CodeMirror.on(lock, "click", function () { setScrollLock(dv, !dv.lockScroll); });
     var gapElts = [lockWrap];
     if (dv.mv.options.revertButtons !== false) {
       dv.copyButtons = elt("div", null, "CodeMirror-merge-copybuttons-" + dv.type);
-      CodeMirror.on(dv.copyButtons, "click", function(e) {
+      CodeMirror.on(dv.copyButtons, "click", function (e) {
         var node = e.target || e.srcElement;
         if (!node.chunk) return;
         if (node.className == "CodeMirror-merge-copy-reverse") {
@@ -523,17 +531,17 @@
 
   MergeView.prototype = {
     constuctor: MergeView,
-    editor: function() { return this.edit; },
-    rightOriginal: function() { return this.right && this.right.orig; },
-    leftOriginal: function() { return this.left && this.left.orig; },
-    setShowDifferences: function(val) {
+    editor: function () { return this.edit; },
+    rightOriginal: function () { return this.right && this.right.orig; },
+    leftOriginal: function () { return this.left && this.left.orig; },
+    setShowDifferences: function (val) {
       if (this.right) this.right.setShowDifferences(val);
       if (this.left) this.left.setShowDifferences(val);
     },
-    rightChunks: function() {
+    rightChunks: function () {
       if (this.right) { ensureDiff(this.right); return this.right.chunks; }
     },
-    leftChunks: function() {
+    leftChunks: function () {
       if (this.left) { ensureDiff(this.left); return this.left.chunks; }
     }
   };
@@ -575,8 +583,10 @@
         var endOff = endOfLineClean(diff, i) ? 1 : 0;
         var cleanToEdit = edit.line + endOff, cleanToOrig = orig.line + endOff;
         if (cleanToEdit > cleanFromEdit) {
-          if (i) chunks.push({origFrom: startOrig, origTo: cleanFromOrig,
-                              editFrom: startEdit, editTo: cleanFromEdit});
+          if (i) chunks.push({
+            origFrom: startOrig, origTo: cleanFromOrig,
+            editFrom: startEdit, editTo: cleanFromEdit
+          });
           startEdit = cleanToEdit; startOrig = cleanToOrig;
         }
       } else {
@@ -584,8 +594,10 @@
       }
     }
     if (startEdit <= edit.line || startOrig <= orig.line)
-      chunks.push({origFrom: startOrig, origTo: orig.line + 1,
-                   editFrom: startEdit, editTo: edit.line + 1});
+      chunks.push({
+        origFrom: startOrig, origTo: orig.line + 1,
+        editFrom: startEdit, editTo: edit.line + 1
+      });
     return chunks;
   }
 
@@ -620,7 +632,7 @@
       if (toLocal <= n) { beforeE = chunk.editTo; beforeO = chunk.origTo; }
       else if (fromLocal <= n) { beforeE = chunk.editFrom; beforeO = chunk.origFrom; }
     }
-    return {edit: {before: beforeE, after: afterE}, orig: {before: beforeO, after: afterO}};
+    return { edit: { before: beforeE, after: afterE }, orig: { before: beforeO, after: afterO } };
   }
 
   function collapseSingle(cm, from, to) {
@@ -639,7 +651,7 @@
       cm.removeLineClass(from, "wrap", "CodeMirror-merge-collapsed-line");
     }
     widget.addEventListener("click", clear);
-    return {mark: mark, clear: clear};
+    return { mark: mark, clear: clear };
   }
 
   function collapseStretch(size, editors) {
@@ -676,11 +688,11 @@
     for (var i = 0; i < clear.length; i++) {
       if (clear[i]) {
         var line = i + off;
-        for (var size = 1; i < clear.length - 1 && clear[i + 1]; i++, size++) {}
+        for (var size = 1; i < clear.length - 1 && clear[i + 1]; i++ , size++) { }
         if (size > margin) {
-          var editors = [{line: line, cm: edit}];
-          if (mv.left) editors.push({line: getMatchingOrigLine(line, mv.left.chunks), cm: mv.left.orig});
-          if (mv.right) editors.push({line: getMatchingOrigLine(line, mv.right.chunks), cm: mv.right.orig});
+          var editors = [{ line: line, cm: edit }];
+          if (mv.left) editors.push({ line: getMatchingOrigLine(line, mv.left.chunks), cm: mv.left.orig });
+          if (mv.right) editors.push({ line: getMatchingOrigLine(line, mv.right.chunks), cm: mv.right.orig });
           var mark = collapseStretch(size, editors);
           if (mv.options.onCollapse) mv.options.onCollapse(mv, line, size, mark);
         }
@@ -706,7 +718,7 @@
 
   function attrs(elt) {
     for (var i = 1; i < arguments.length; i += 2)
-      elt.setAttribute(arguments[i], arguments[i+1]);
+      elt.setAttribute(arguments[i], arguments[i + 1]);
   }
 
   function copyObj(obj, target) {
@@ -717,11 +729,11 @@
 
   function moveOver(pos, str, copy, other) {
     var out = copy ? Pos(pos.line, pos.ch) : pos, at = 0;
-    for (;;) {
+    for (; ;) {
       var nl = str.indexOf("\n", at);
       if (nl == -1) break;
       ++out.line;
-      if (other) ++other.line;
+      if (other)++other.line;
       at = nl + 1;
     }
     out.ch = (at ? 0 : out.ch) + (str.length - at);

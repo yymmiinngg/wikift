@@ -26,6 +26,7 @@ import { ArticleHistoryConstrastComponent } from './article.history.constrast.co
 import { WikiftEditorConstrastModule } from '../../../../shared/directives/wikift-editor-constrast/wikift-editor-constrast.module';
 import { ArticleService } from '../../../../../services/article.service';
 import { ArticleHistoryService } from '../../../../../services/article.history.service';
+import { ToastyModule } from 'ng2-toasty';
 
 const ARTICLE_HISTORY_CONSTRAST_ROUTES: Routes = [
     { path: '', component: ArticleHistoryConstrastComponent }
@@ -38,6 +39,7 @@ const ARTICLE_HISTORY_CONSTRAST_ROUTES: Routes = [
         WikiftEditorConstrastModule,
         ModalModule.forRoot(),
         AlertModule.forRoot(),
+        ToastyModule.forRoot(),
         RouterModule.forChild(ARTICLE_HISTORY_CONSTRAST_ROUTES)
     ],
     exports: [],

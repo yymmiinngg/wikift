@@ -17,6 +17,7 @@
  */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastyService } from 'ng2-toasty';
 import { ArticleService } from '../../../../../services/article.service';
 import { ArticleModel } from '../../../../shared/model/article/article.model';
 import { ArticleHistoryService } from '../../../../../services/article.history.service';
@@ -36,9 +37,11 @@ export class ArticleHistoryConstrastComponent implements OnInit {
     public article;
     // 文章历史版本
     public articleHistory;
+    public load;
 
     constructor(private route: ActivatedRoute,
         private router: Router,
+        private toastyService: ToastyService,
         private articleService: ArticleService,
         private articleHistoryService: ArticleHistoryService) {
         this.route.params.subscribe((params) => {
@@ -48,7 +51,6 @@ export class ArticleHistoryConstrastComponent implements OnInit {
     }
 
     ngOnInit() {
-        // window.location.reload();
         this.initArticleInfomation();
         this.initArticleHistoryInfomation();
     }
@@ -67,6 +69,15 @@ export class ArticleHistoryConstrastComponent implements OnInit {
         this.articleHistoryService.getHistoryInfomation(this.articleId, this.articleHistoryVersion).subscribe(
             result => {
                 this.articleHistory = result.data;
+            }
+        );
+    }
+
+    restore() {
+        this.articleHistoryService.restoreHistoryVersion(this.articleId, this.articleHistoryVersion).subscribe(
+            result => {
+                this.toastyService.success('版本 ' + this.articleHistoryVersion + ' 还原成功!!!');
+                this.router.navigate(['/article/info/' + this.articleId]);
             }
         );
     }

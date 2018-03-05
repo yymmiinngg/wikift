@@ -41,10 +41,10 @@ import { AuthModule } from './auth/auth.module';
   ],
   providers: [
     SharedService,
-    // {
-    //   provide: LocationStrategy,
-    //   useClass: HashLocationStrategy
-    // }
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
+    }
   ],
   bootstrap: [AppComponent]
 })

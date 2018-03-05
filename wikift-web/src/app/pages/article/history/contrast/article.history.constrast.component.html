@@ -15,7 +15,14 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
+<ng2-toasty [position]="'top-center'"></ng2-toasty>
 <section class="content content--full">
+  <div class="toolbar" style="margin-bottom: 10px;">
+    文章对比
+    <div class="actions">
+      <a (click)="restore()" class="actions__item btn btn-primary btn-small">还原该版本</a>
+    </div>
+  </div>
   <div *ngIf="article && articleHistory">
     <wikift-editor-constrast source="{{article.content}}" target="{{articleHistory.content}}"></wikift-editor-constrast>
   </div>
