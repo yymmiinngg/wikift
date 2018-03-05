@@ -51,4 +51,9 @@ export class ArticleHistoryService {
         return this.http.get(ApiConfig.API_ARTICLE_HISTORY + articleId + '/' + version, options).map(ResultUtils.extractData);
     }
 
+    restoreHistoryVersion(articleId, version) {
+        const options = HttpUtils.getDefaultRequestOptionsByToken();
+        return this.http.post(ApiConfig.API_ARTICLE_HISTORY + articleId + '/' + version + '/restore', '', options).map(ResultUtils.extractData);
+    }
+
 }

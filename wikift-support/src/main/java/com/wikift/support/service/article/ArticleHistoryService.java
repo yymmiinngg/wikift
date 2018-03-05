@@ -13,4 +13,6 @@ public interface ArticleHistoryService {
 
     ArticleHistoryEntity getByVersionAndArticleId(String version, Long articleId);
 
+    ArticleEntity restoreVersion(String version, Long articleId);
+
 }

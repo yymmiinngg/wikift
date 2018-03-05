@@ -53,7 +53,6 @@ export class UserService {
      * 登录
      */
     login(param: LoginParamModel) {
-        console.log(`用户 ${param.username} 正在登录...`);
         Cookie.set(CommonConfig.AUTH_USER_NAME, param.username);
         const params = HttpUtils.getParams();
         params.append('username', param.username);
@@ -65,15 +64,15 @@ export class UserService {
         return this.http.post(ApiConfig.AUTHORIZATION_API, param.toJson(), options)
             .map(res => res.json())
             .subscribe(
-            data => {
-                this.saveToken(data);
-                return true;
-            },
-            err => {
-                CookieUtils.clearBy(CommonConfig.AUTH_USER_NAME);
-                this.toastyService.error('登录失败, 请检查您的用户名或密码');
-                return false;
-            });
+                data => {
+                    this.saveToken(data);
+                    return true;
+                },
+                err => {
+                    CookieUtils.clearBy(CommonConfig.AUTH_USER_NAME);
+                    this.toastyService.error('登录失败, 请检查您的用户名或密码');
+                    return false;
+                });
     }
 
     /**
@@ -81,8 +80,10 @@ export class UserService {
      * @param token token
      */
     saveToken(token) {
-        const expireDate = new Date().getTime() + (1000 * token.expires_in);
-        Cookie.set(CommonConfig.AUTH_TOKEN, token.access_token, expireDate);
+        const expire = new Date();
+        const time = Date.now() + ((3600 * 1000) * 1); // 保存1小时cookie
+        expire.setTime(time);
+        Cookie.set(CommonConfig.AUTH_TOKEN, token.access_token, expire);
         this.router.navigate(['/']);
     }
 
