@@ -10,6 +10,11 @@ wikift是一套开源的易用的知识管理系统.
 
 在使用该系统时, 出现bug请提交到 [bug提交](http://jira.ttxit.com/projects/WIKIFT)
 
+## wikift 问答系统
+
+**注意**: 在问答时, 问题专题勿必为 `wikift` 专题
+[wikift 问答](http://wiki.ttxit.com/display/WIKIFT/questions/onboarding)
+
 ## 编译源码
 
 ```bash
@@ -26,6 +31,11 @@ mvn package assembly:assembly docker:build -X
 
 ```bash
 mvn clean package assembly:assembly docker:push -X
+```
+
+## 开始新版本开发
+```bash
+mvn versions:set -DnewVersion=1.5.0 -X
 ```
 
 ## 运行在docker
