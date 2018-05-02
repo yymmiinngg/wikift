@@ -44,8 +44,8 @@ public class ArticleTypeEntity {
     @Column(name = "at_code")
     private String code;
 
-    @Column(name = "at_title")
-    private String title;
+    @Column(name = "at_name")
+    private String name;
 
     @Column(name = "at_create_time")
     @CreatedDate

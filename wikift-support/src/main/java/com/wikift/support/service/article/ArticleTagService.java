@@ -18,6 +18,6 @@ public interface ArticleTagService {
 
     List<CounterEntity> getAllByArticlesCounterAndTop(Long top);
 
-    ArticleTagEntity getByTitle(String title);
+    ArticleTagEntity getByTitle(String name);
 
 }

@@ -20,6 +20,8 @@ package com.wikift.support.service.article;
 import com.wikift.model.article.ArticleTypeEntity;
 import com.wikift.support.repository.article.ArticleTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,8 +33,8 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
     private ArticleTypeRepository articleTypeRepository;
 
     @Override
-    public List<ArticleTypeEntity> findAll() {
-        return (List<ArticleTypeEntity>) articleTypeRepository.findAll();
+    public Page<ArticleTypeEntity> findAll(Pageable pageable) {
+        return articleTypeRepository.findAll(pageable);
     }
 
 }

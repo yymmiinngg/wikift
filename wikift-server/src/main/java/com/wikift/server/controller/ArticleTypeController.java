@@ -36,7 +36,7 @@ public class ArticleTypeController {
     @PreAuthorize("hasAuthority(('USER'))")
     @RequestMapping(value = "article/type/list", method = RequestMethod.GET)
     CommonResult<ArticleTypeEntity> list() {
-        return CommonResult.success(articleTypeService.findAll());
+        return CommonResult.success(articleTypeService.findAll(null));
     }
 
 }

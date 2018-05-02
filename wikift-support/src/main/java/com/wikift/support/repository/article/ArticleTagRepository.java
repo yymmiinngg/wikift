@@ -33,7 +33,7 @@ public interface ArticleTagRepository extends PagingAndSortingRepository<Article
      * @param top 排行数
      * @return 标签集
      */
-    @Query(value = "SELECT ats.at_title AS dataKey, COUNT(atr.atr_article_id) AS dataValue " +
+    @Query(value = "SELECT ats.at_name AS dataKey, COUNT(atr.atr_article_id) AS dataValue " +
             "FROM article_tag AS ats " +
             "LEFT OUTER JOIN article_tag_relation AS atr ON ats.at_id = atr.atr_article_tag_id " +
             "GROUP BY dataKey " +
@@ -45,9 +45,9 @@ public interface ArticleTagRepository extends PagingAndSortingRepository<Article
     /**
      * 根据标签名称查询标签信息
      *
-     * @param title 标签名称
+     * @param name 标签名称
      * @return 标签信息
      */
-    ArticleTagEntity findByTitle(String title);
+    ArticleTagEntity findByName(String name);
 
 }

@@ -49,7 +49,7 @@ public class CommentController {
         Assert.notNull(articleId, MessageUtils.getParamNotNull("articleId"));
         ArticleEntity entity = new ArticleEntity();
         entity.setId(articleId);
-        return CommonResult.success(commentService.getAllCommentByArticle(entity, PageAndSortUtils.getPage(page, size)));
+        return CommonResult.success(commentService.getAllCommentByArticle(entity, PageAndSortUtils.getPageAndSortAndCreateTimeByDESC(page, size)));
     }
 
     @PreAuthorize("hasAuthority(('USER'))")

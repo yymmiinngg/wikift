@@ -2,6 +2,11 @@
 
 wikift是一套开源的易用的知识管理系统.
 
+# Contact us
+  
+QQ Group: 339232226
+WeChat Group: Face-to-face plus group, password: 3568
+
 ## 更多关于 wikift 的文档
 
 [wikift 文档](http://wiki.ttxit.com/display/WIKIFT)

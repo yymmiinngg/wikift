@@ -258,6 +258,12 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             nativeQuery = true)
     Integer viewArticle(Integer userId, Integer articleId, Integer viewCount, String viewDevice);
 
+    @Modifying
+    @Query(value = "INSERT INTO users_article_view_relation(uavr_article_id, uavr_view_count) " +
+            "VALUES (?1, ?2)",
+            nativeQuery = true)
+    Integer viewArticle(Long articleId, Integer viewCount);
+
     /**
      * 更新文章的访问数据总数
      *
