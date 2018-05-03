@@ -131,12 +131,13 @@ public interface ArticleRepository extends PagingAndSortingRepository<ArticleEnt
             "LEFT OUTER JOIN space_article_relation AS sar ON a.a_id = sar.sar_article_id " +
             "LEFT OUTER JOIN space AS s ON s.s_id = sar.sar_space_id " +
             "LEFT OUTER JOIN (SELECT car.car_article_id, count(car.car_comments_id) AS comments_count FROM comments_article_relation AS car GROUP BY car.car_article_id ) AS c ON a.a_id = c.car_article_id " +
-            "WHERE uar.uar_user_id = ?1 " +
+            "WHERE uar.uar_user_id = :userId " +
             "GROUP BY a_id, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id " +
-            "ORDER BY a.a_create_time DESC \n#pageable\n",
+            "ORDER BY a.a_create_time " +
+            "DESC \n#pageable\n",
             countQuery = "SELECT COUNT(a.a_id) FROM article AS a",
             nativeQuery = true)
-    Page<ArticleEntity> findAllToUserAndCreateTime(Long userId, Pageable pageable);
+    Page<ArticleEntity> findAllToUserAndCreateTime(@Param(value = "userId") Long userId, Pageable pageable);
 
     @Query(value = "SELECT a.a_id, a.a_title, a.a_content, a.a_create_time, IFNULL(SUM(uavr.uavr_view_count) , 0) AS view_count, IFNULL(COUNT(DISTINCT uafr.uafr_user_id), 0) AS fabulou_count, uar.uar_user_id, atr.atr_article_type_id, sar.sar_space_id, IFNULL(c.comments_count, 0) AS comments_count " +
             "FROM article AS a " +
