@@ -56,6 +56,7 @@ public class UserController {
         entity.setId(0l);
         entity.setUsername(param.getUsername());
         entity.setPassword(ShaUtils.hash256(param.getPassword()));
+        entity.setAliasName(param.getUsername());
         UserTypeEntity userType = new UserTypeEntity();
         userType.setId(1L);
         entity.setUserType(userType);
