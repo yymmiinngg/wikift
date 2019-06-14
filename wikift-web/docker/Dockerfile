@@ -10,7 +10,7 @@ WORKDIR /wikift
 
 ADD wikift-1.0.0.tar.gz ./
 
-WORKDIR /wikift/wikift-1.0.0
+WORKDIR /wikift/wikift-1.5.0
 
 RUN curl --silent --location https://rpm.nodesource.com/setup_8.x | bash -
 

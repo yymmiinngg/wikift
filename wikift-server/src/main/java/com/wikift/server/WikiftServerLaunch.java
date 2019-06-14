@@ -30,7 +30,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAsync
 @EnableScheduling
 @ComponentScan(value = "com.wikift")
-@PropertySource(value = { "file:/etc/wikift/wikift.conf" })
+@PropertySource(value = { "classpath:wikift.example.conf" })
 public class WikiftServerLaunch {
 
     public static void main(String[] args) {

@@ -40,37 +40,39 @@ import javax.naming.Name;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entry(objectClasses = {"organizationalPerson","person","top"})
+@Entry(objectClasses = { "organizationalPerson", "person", "top" })
 public final class LdapUserModel {
 
-    @Id
-    @JsonIgnore
-    private Name dn;
+	@Id
+	@JsonIgnore
+	private Name dn;
 
-    @Attribute(name="cn")
-    private String cn;
+	@Attribute(name = "cn")
+	private String cn;
 
-    @Attribute(name="sn")
-    private String sn;
+	@Attribute(name = "sn")
+	private String sn;
 
-    private String description;
+	private String description;
 
-    private String title;
+	private String title;
 
-    private String givenName;
+	private String givenName;
 
-    private String name;
+	private String name;
 
-    private String mail;
+	private String mail;
 
-    private String mailNickname;
+	private String mailNickname;
 
-    private String company;
+	private String company;
 
-    private String department;
+	private String department;
 
-    private String email;
+	private String email;
 
-    private String emailAddress;
+	private String emailAddress;
+
+	private String sAMAccountName;
 
 }
